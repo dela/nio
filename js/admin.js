@@ -185,7 +185,6 @@ $(document).ready(function() {
         $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
             scrollEasing:"easeInOutQuad"
         }); 
-        console.log(table[1]);
     }
     
     function populateNoStatusTable(){
@@ -298,13 +297,21 @@ $(document).ready(function() {
                         $("#popUp-unapproved").empty();
                         $.ajax({
                             type: "POST",
-                            url: "ajax/nioTables.php",
+                            url: "ajax/nioUnapproved.php",
                             dataType: 'json',
                             data: {
                                nioID: nio_id
                             },
-                            success : function(){
-                                 $("#popUp-unapproved").append("<h1>"+nio_id+"</h1>");  
+                            success : function(data){
+                                console.log(data);
+                                 $("#popUp-unapproved").append("<h1>"+nio_id+"</h1>");
+                                 var empID=data['genDetails']['empID'];
+                                 var empName=data['genDetails']['empName'];
+                                 var appDate=data['genDetails']['dateApplied'];
+                                 $("#popUp-unapproved").append("<h1>"+empID+"</h1>");
+                                 $("#popUp-unapproved").append("<h1>"+empName+"</h1>");
+                                 $("#popUp-unapproved").append("<h1>"+appDate+"</h1>");
+                                 
                             }
                         });  
                     }
