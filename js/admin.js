@@ -282,7 +282,20 @@ $(document).ready(function() {
                     buttons:[
                     {
                         text: "Accept",
-                        click: function() { 
+                        click: function() {
+                            $.ajax({
+                            type: "POST",
+                            url: "ajax/changeNioStatus.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id,
+                               status: 1
+                            },
+                            success : function(data){
+                                console.log(data);
+                                alert("success");
+                            }
+                        });  
                         },
                         'class':"button-green"
                     },
@@ -304,14 +317,13 @@ $(document).ready(function() {
                             },
                             success : function(data){
                                 console.log(data);
-                                 $("#popUp-unapproved").append("<h1>"+nio_id+"</h1>");
+                                 $("#popUp-unapproved").append("<h1> NIO ID: "+nio_id+"</h1>");
                                  var empID=data['genDetails']['empID'];
                                  var empName=data['genDetails']['empName'];
                                  var appDate=data['genDetails']['dateApplied'];
-                                 $("#popUp-unapproved").append("<h1>"+empID+"</h1>");
-                                 $("#popUp-unapproved").append("<h1>"+empName+"</h1>");
-                                 $("#popUp-unapproved").append("<h1>"+appDate+"</h1>");
-                                 
+                                 $("#popUp-unapproved").append("<h1>ID: "+empID+"</h1>");
+                                 $("#popUp-unapproved").append("<h1>NAME: "+empName+"</h1>");
+                                 $("#popUp-unapproved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
                             }
                         });  
                     }
