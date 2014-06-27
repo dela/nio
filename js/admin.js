@@ -150,13 +150,13 @@ $(document).ready(function() {
                 if($(this).parent().attr('tableNumber')==1)
                     populateNoStatusTable();
                 if($(this).parent().attr('tableNumber')==2){
-                 populateUnapprovedTable();
+                    populateUnapprovedTable();
                 }
             }
         }
     });
     
-    function populateUnapprovedTable(){
+    function populateUnapprovedTable(callBackUnapprovedTable){
         // AJAX Data Loading Logic
         $.ajax({
             type: "POST",
@@ -164,28 +164,29 @@ $(document).ready(function() {
             dataType: 'json',
             data: {
                 tableNumber : 2,
-                record : table[tableNumber-1]
+                record : table[1]
             },
-            success :function( data ) {
-                console.log(data);
-                $(".table-row-unapprovedTable").append(" <tr class=\"table-row-selectable\" tableNumber=2 nio_id="+data[0]['nioID']+"><td>"+
-                    data[0]['empID']+"</td><td>"+data[0]['empName']+"</td><td>"+
-                    data[0]['appDate']+"</td><td>"+data[0]['nioID']+
-                    "</td><td>"+data[0]['startDate']+"</td> <td>"+data[0]['duration']+"</td></tr>"); 
-                $(".admin-table-container").mCustomScrollbar("update");
-                $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
-                    scrollEasing:"easeInOutQuad"
-                });  
-                incrementTable(2);
-            }
+            success : callBackUnapprovedTable
         });
     }
  
- 
-    function incrementTable(tableNumber){
-        table[tableNumber-1]++;
+    function callBackUnapprovedTable(data){
+        var i=0;
+        while(data[i]){
+            $(".table-row-unapprovedTable").append(" <tr class=\"table-row-selectable\" tableNumber=2 nio_id="+data[i]['nioID']+"><td>"+
+                data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
+                data[i]['appDate']+"</td><td>"+data[i]['nioID']+
+                "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['duration']+"</td></tr>"); 
+            $(".admin-table-container").mCustomScrollbar("update");
+            $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
+                scrollEasing:"easeInOutQuad"
+            }); 
+            ++i;
+            table[1]++;
+        }
+        console.log(table[1]);
     }
- 
+    
     function populateNoStatusTable(){
         // AJAX Data Loading Logic
         $(".table-row-noStatusTable").append(" <tr class=\"table-row-selectable\" tableNumber=1><td>"+index+"</td><td>#2331212</td><td>Sharath</td><td>Feb 21,2013</td><td>Paid</td> </tr>"); 
@@ -195,6 +196,7 @@ $(document).ready(function() {
         });
        
     }
+    
     function onLoad(){
         index=0;
         var i=0;
@@ -252,15 +254,9 @@ $(document).ready(function() {
         
         $("#table-unapprovedTable .table-row-unapprovedTable").empty();
       
-        var flag=1;
-        index=0;
-        
-        while(flag&& table[1]<25){
-            populateUnapprovedTable();
-            index++;
-            if(index>25)
-                flag=0;
-        }
+        table[1]=1;      //reset to fetch the first record.
+             
+        populateUnapprovedTable(callBackUnapprovedTable);
     });
     //-----------------Approved Table-----------------------
 
