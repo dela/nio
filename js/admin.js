@@ -272,13 +272,14 @@ $(document).ready(function() {
             case 2:
                 nio_id = $(this).attr('nio_id');
                 console.log(nio_id);
-                $('.admin-sheet').show();
                 $("#popUp-unapproved").dialog({
                     modal:true,
                     draggable:false,
                     title: "Unapproved NIO",
                     closeText: "hide",
                     dialogClass: 'no-close success-dialog',
+                    width: 700,
+                    height: 450,
                     buttons:[
                     {
                         text: "Accept",
@@ -295,7 +296,17 @@ $(document).ready(function() {
                     ],
                     open: function( event, ui ) {        
                         $("#popUp-unapproved").empty();
-                        $("#popUp-unapproved").append("<h1>"+nio_id+"</h1>");   
+                        $.ajax({
+                            type: "POST",
+                            url: "ajax/nioTables.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id
+                            },
+                            success : function(){
+                                 $("#popUp-unapproved").append("<h1>"+nio_id+"</h1>");  
+                            }
+                        });  
                     }
                 });
                 break;
@@ -577,7 +588,7 @@ $(document).ready(function() {
         $(".admin-table-div").hide();
         $("#table-unapprovedTable").show();
         
-         $("#table-unapprovedTable .table-row-unapprovedTable").empty();
+        $("#table-unapprovedTable .table-row-unapprovedTable").empty();
       
         table[1]=1;      //reset to fetch the first record.
              
