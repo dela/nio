@@ -108,20 +108,14 @@
                                 <td>EMPLOYEE NAME</td>
                                 <td>APPLICATION DATE </td>
                                 <td>NIO_ID</td>
-                                <td>DATE</td>
+                                <td>START DATE</td>
+                                <td>END DATE</td>
                                 <td>DURATION</td>
                             </tr>
                         </table>
                         <div class="admin-table-container">
                             <table class="flatTable table-row-unapprovedTable">
-                                <tr class="table-row-selectable" nio_id=123 tableNumber=2>
-                                    <td>#2331212</td>  
-                                    <td>Rajesh</td>
-                                    <td>Feb 21,2013</td>
-                                    <td>134573</td>
-                                    <td>Feb 21,2013</td>
-                                    <td>2 Days</td>
-                                </tr>
+                                
                             </table>
                         </div>
                     </div>

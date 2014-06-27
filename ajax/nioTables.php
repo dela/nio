@@ -35,7 +35,7 @@ if ($tableNumber == 2) {
 
         $appDate = $row['date_applied'];
 
-        $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate, 'duration' => $duration);
+        $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate,'endDate' => $appDate, 'duration' => $duration);
     }
 }
 $jsonData = $array;

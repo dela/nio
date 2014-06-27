@@ -176,14 +176,15 @@ $(document).ready(function() {
             $(".table-row-unapprovedTable").append(" <tr class=\"table-row-selectable\" tableNumber=2 nio_id="+data[i]['nioID']+"><td>"+
                 data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
                 data[i]['appDate']+"</td><td>"+data[i]['nioID']+
-                "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['duration']+"</td></tr>"); 
-            $(".admin-table-container").mCustomScrollbar("update");
-            $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
-                scrollEasing:"easeInOutQuad"
-            }); 
+                "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['endDate']+"</td> <td>"
+                +data[i]['duration']+"</td></tr>");  
             ++i;
             table[1]++;
         }
+        $(".admin-table-container").mCustomScrollbar("update");
+        $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
+            scrollEasing:"easeInOutQuad"
+        }); 
         console.log(table[1]);
     }
     
@@ -575,6 +576,12 @@ $(document).ready(function() {
         $("#table-unapproved").addClass('template-textWhite');
         $(".admin-table-div").hide();
         $("#table-unapprovedTable").show();
+        
+         $("#table-unapprovedTable .table-row-unapprovedTable").empty();
+      
+        table[1]=1;      //reset to fetch the first record.
+             
+        populateUnapprovedTable(callBackUnapprovedTable);
     });
  
  
