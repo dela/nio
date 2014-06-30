@@ -1,7 +1,7 @@
 <?php
 //This file has the variables that are used to connect to DB
 
-$serverName = "localhost";
+$serverName = "10.60.6.38";
 $serverUser = "root";
 $serverPassword = "";
 $databaseHRM = "hr_mysql";
