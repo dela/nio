@@ -38,6 +38,7 @@ if ($_GET["id"]) {
             <script src="src/Plugins/jquery.datepicker.js" type="text/javascript"></script>     
             <script src="src/Plugins/jquery.dropdown.js" type="text/javascript"></script>     
             <script src="src/Plugins/jquery.colorselect.js" type="text/javascript"></script>    
+             <script src="src/Plugins/jquery.calendar.js" type="text/javascript"></script>  
 
             <script type="text/javascript">
                 if (!DateAdd || typeof (DateDiff) != "function") {
