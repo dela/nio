@@ -16,9 +16,9 @@ if ($tableNumber == 2|| $tableNumber == 3) {
     $recordResult = mysqli_query($nio_conn, $query);
     while ($record = mysqli_fetch_array($recordResult)) {
 
-        $empID = $record['employee_id'];
+        $empID = $record['emp_id'];
         $nioID = $record['nio_id'];
-        $duration = $record['total_min'];
+        $duration = $record['nio_duration'];
 
         $query = "SELECT * FROM hs_hr_employee WHERE emp_number=$empID";
         $result = mysqli_query($hrm_conn, $query);
@@ -36,7 +36,7 @@ if ($tableNumber == 2|| $tableNumber == 3) {
         $result = mysqli_query($nio_conn, $query);
         $row = mysqli_fetch_array($result);
 
-        $appDate = $row['date_applied'];
+        $appDate = $row['nio_date_applied'];
 
         $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate,'endDate' => $appDate, 'duration' => $duration);
     }
