@@ -26,7 +26,7 @@ $nioRequestID=$row[0];
 $query="SELECT * FROM hs_hr_nio_request WHERE nio_request_id=$nioRequestID";
 $result=  mysqli_query($nio_conn, $query);
 $row=  mysqli_fetch_array($result);
-$dateApplied=$row['date_applied'];
+$dateApplied=$row['nio_date_applied'];
 
 $array['genDetails']=array("empID"=>$empID,"empName"=>$empName,"dateApplied"=>$dateApplied);
 
