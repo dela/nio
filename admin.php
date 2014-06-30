@@ -120,27 +120,21 @@
                         </div>
                     </div>
 
-                    <div class="admin-table-div" id="table-approvedTable">
-                        <table class="flatTable-heading template-lightBack">
+                    <div class="admin-table-div" id="table-approvedTable" tableNumber=3>
+                        <table class="flatTable-heading template-lightBack" tableNumber=3>
                             <tr class="headingTr template-lightBack">
                                 <td>EMPLOYEE ID</td>
                                 <td>EMPLOYEE NAME</td>
-                                <td>DATE </td>
-                                <td>NIO ID</td>
-                                <td>DATE</td>
+                                <td>APPLICATION DATE </td>
+                                <td>NIO_ID</td>
+                                <td>START DATE</td>
+                                <td>END DATE</td>
                                 <td>DURATION</td>
                             </tr>
                         </table>
                         <div class="admin-table-container">
                             <table class="flatTable table-row-approvedTable">
-                                <tr class="table-row-selectable" nio_id="123"  tableNumber=3>
-                                    <td>#2331212</td>
-                                    <td>Prasad</td>
-                                    <td>Feb 21,2013</td>
-                                    <td>34634</td>
-                                    <td>Feb 21,2013</td>
-                                    <td>2 Days</td>
-                                </tr>
+                               
                             </table>
                         </div>
                     </div>

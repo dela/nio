@@ -152,6 +152,9 @@ $(document).ready(function() {
                 if($(this).parent().attr('tableNumber')==2){
                     populateUnapprovedTable();
                 }
+                if($(this).parent().attr('tableNumber')==3){
+                    populateApprovedTable();
+                }
             }
         }
     });
@@ -180,6 +183,37 @@ $(document).ready(function() {
                 +data[i]['duration']+"</td></tr>");  
             ++i;
             table[1]++;
+        }
+        $(".admin-table-container").mCustomScrollbar("update");
+        $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
+            scrollEasing:"easeInOutQuad"
+        }); 
+    }
+    
+    function populateApprovedTable(callBackApprovedTable){
+        // AJAX Data Loading Logic
+        $.ajax({
+            type: "POST",
+            url: "ajax/nioTables.php",
+            dataType: 'json',
+            data: {
+                tableNumber : 3,
+                record : table[2]
+            },
+            success : callBackApprovedTable
+        });
+    }
+ 
+    function callBackApprovedTable(data){
+        var i=0;
+        while(data[i]){
+            $(".table-row-approvedTable").append(" <tr class=\"table-row-selectable\" tableNumber=3 nio_id="+data[i]['nioID']+"><td>"+
+                data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
+                data[i]['appDate']+"</td><td>"+data[i]['nioID']+
+                "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['endDate']+"</td> <td>"
+                +data[i]['duration']+"</td></tr>");  
+            ++i;
+            table[2]++;
         }
         $(".admin-table-container").mCustomScrollbar("update");
         $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
@@ -245,7 +279,13 @@ $(document).ready(function() {
 
     $("#table-approved").click(function() {
         $(".admin-table-div").hide();
-        $("#table-approvedTable").show(); 
+        $("#table-approvedTable").show();
+        
+         $("#table-approvedTable .table-row-approvedTable").empty();
+      
+        table[2]=1;      //reset to fetch the first record.
+             
+        populateApprovedTable(callBackApprovedTable);
     });
 
     $("#table-unapproved").click(function() {
@@ -323,7 +363,7 @@ $(document).ready(function() {
                         $("#popUp-unapproved").empty();
                         $.ajax({
                             type: "POST",
-                            url: "ajax/nioUnapproved.php",
+                            url: "ajax/nioDetails.php",
                             dataType: 'json',
                             data: {
                                nioID: nio_id
@@ -345,16 +385,74 @@ $(document).ready(function() {
             case 3:
                 nio_id = $(this).attr('nio_id');
                 console.log(nio_id);
-                $('.admin-sheet').show();
                 $("#popUp-approved").dialog({
                     modal:true,
                     draggable:false,
-                    title: "Leave or NIO not applied",
+                    title: "Approved NIO",
                     closeText: "hide",
                     dialogClass: 'no-close success-dialog',
+                    width: 700,
+                    height: 450,
+                    buttons:[
+                    {
+                        text: "Pending",
+                        click: function() {
+                            $.ajax({
+                            type: "POST",
+                            url: "ajax/changeNioStatus.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id,
+                               status: 0
+                            },
+                            success : function(data){
+                                console.log(data);
+                                alert("Pending");
+                            }
+                        });  
+                        },
+                        'class':"button-green"
+                    },
+                    {
+                        text: "Reject",
+                        click: function() {
+                             $.ajax({
+                            type: "POST",
+                            url: "ajax/changeNioStatus.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id,
+                               status: -1
+                            },
+                            success : function(data){
+                                console.log(data);
+                                alert("Rejected");
+                            }
+                        });  
+                        },
+                        'class':"button-red"
+                    }
+                    ],
                     open: function( event, ui ) {        
                         $("#popUp-approved").empty();
-                        $("#popUp-approved").append("<h1>"+nio_id+"</h1>");   
+                        $.ajax({
+                            type: "POST",
+                            url: "ajax/nioDetails.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id
+                            },
+                            success : function(data){
+                                console.log(data);
+                                 $("#popUp-approved").append("<h1> NIO ID: "+nio_id+"</h1>");
+                                 var empID=data['genDetails']['empID'];
+                                 var empName=data['genDetails']['empName'];
+                                 var appDate=data['genDetails']['dateApplied'];
+                                 $("#popUp-approved").append("<h1>ID: "+empID+"</h1>");
+                                 $("#popUp-approved").append("<h1>NAME: "+empName+"</h1>");
+                                 $("#popUp-approved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
+                            }
+                        });  
                     }
                 });
                 break;

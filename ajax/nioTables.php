@@ -8,8 +8,11 @@ $tableNumber = (int) $_POST['tableNumber'];
 $recordNumber = (int) $_POST['record'] - 1;
 
 $array = array();
-if ($tableNumber == 2) {
-    $query = "SELECT * FROM hs_hr_nio WHERE nio_status=0 LIMIT $recordNumber,25";
+if ($tableNumber == 2|| $tableNumber == 3) {
+    if($tableNumber==2)
+        $query = "SELECT * FROM hs_hr_nio WHERE nio_status=0 LIMIT $recordNumber,25";
+    else
+      $query = "SELECT * FROM hs_hr_nio WHERE nio_status=1 LIMIT $recordNumber,25";  
     $recordResult = mysqli_query($nio_conn, $query);
     while ($record = mysqli_fetch_array($recordResult)) {
 
