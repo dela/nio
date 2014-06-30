@@ -1938,7 +1938,7 @@
             var dateshow = CalDateShow(start, end, !isallday, true);
             var off = getbuddlepos(pos.left, pos.top);
             if (off.hide) {
-                $("#prong2").hide()
+                $("#prong2").show()
             }
             else {
                 $("#prong2").show()
