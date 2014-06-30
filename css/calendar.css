@@ -1,16 +1,19 @@
 .calmain
 {
-border-bottom:0px solid #c3d9ff;
-	background:#fcb334;
+border-bottom:2px solid #fcb334;
+	background:transparent;
+      
+       
 }
 .printborder {
-	border-left:0px solid #c3d9ff
+	border-left:0px solid #c3d9ff;
+            overflow-y: hidden;
 }
 
 .scolltimeevent
 {
  	position:relative;
-	overflow-y:scroll;
+	overflow-y:hidden;
 	overflow-x:hidden;
 	border-top:1px solid #a2bbdd;
 	border-left:1px solid #a2bbdd;
@@ -29,11 +32,12 @@ border-bottom:0px solid #c3d9ff;
 	line-height:14px
  }
 #gridcontainer {
-	height:300px;
-	background:#fcb334;
+	
+	background:transparent;
 	position:relative;
 	-webkit-user-select:none;
 	-khtml-user-select:none;
+        
 }
 .wk-dayname {
 	font-weight:normal;
@@ -110,6 +114,9 @@ border-bottom:0px solid #c3d9ff;
 .chromeColor {
 	background:#CC6600;
 	border-color:#CC6600;
+        width: 75%;
+        left: 190px;
+        position: absolute;
 }
 .tg-timedevents {
 	background-color:#fff;
@@ -343,17 +350,21 @@ border-bottom:0px solid #c3d9ff;
 	overflow:hidden;
 	color:white;
 	white-space:nowrap;
-	width:100%
+	width:100%;
+        font-size: 10px;
 }
 .mv-container {
-	height:100%;
+	
 	position:relative;
 	line-height:14px;
 	white-space:nowrap;
+        height:15px;
 }
 .mv-container th{
     font-size:12px;
-    background-color: #FFD633;
+    background-color: #fcb334;
+    border-left:1px solid #e68a2e;
+      border-right:1px solid #e68a2e;
 }
 .bg-exists .mv-container {
 	background-color:transparent
@@ -366,11 +377,13 @@ border-bottom:0px solid #c3d9ff;
 	position:absolute;
 	table-layout:fixed;
 	top:0;
-	left:0;
-	width:100%;
-	background:#ffd633;
+	left:190px;;
+	width:75%;
+	background:#fcb334;
 	color:#111;
+        border: 1px solid #e68a2e;
         
+        height:35px;
 }
 .mv-dayname {
 	font-weight:normal
@@ -378,19 +391,22 @@ border-bottom:0px solid #c3d9ff;
 
 .mv-event-container {
 	overflow:hidden;
-	position:absolute;
-	left:0;
-	width:100%;
-	top:21px;
+	position:relative;
+	left:190px;;
+	width:75%;
+	top:16px;
 	bottom:0;
 	background:white;
-       
+        border-right:1px solid #fcb334;
+
 }
 .month-row {
 	position:absolute;
 	left:0;
 	width:100%;
-	overflow:hidden
+	overflow:hidden;
+        
+        
 }
 .bg-exists .month-row {
 	opacity:0.9;
@@ -406,19 +422,21 @@ border-bottom:0px solid #c3d9ff;
 }
 .st-bg {
 	border-left:1px solid #fcb334;
+        background-color: #EBEBE0;
+  
 }
 .st-bg-today {
-	background-color:#ffc
+	background-color:#8585AD;
 }
 .bg-exists .st-bg-today {
-	background-color:#eee;
+	background-color:#8585AD;
 	border:1px solid #579;
 	opacity:0.8;
 }
 .st-dtitle {
 	border-left:1px solid #fcb334;
 	border-top:1px solid #fcb334;
-	background-color:#fff;
+	background-color:#EBEBE0;
 	color:#444;
 	padding-right:2px;
 	text-align:right;
@@ -430,11 +448,11 @@ border-bottom:0px solid #c3d9ff;
 	filter:alpha(opacity=80)
 }
 .st-dtitle-nonmonth {
-	background-color:#FFF;
+	background-color:#BCBCB3;
 	color:#111;
 }
 .st-dtitle-today {
-	background-color:#ffc;
+	background-color:#8585AD;
 }
 
 .st-more {
@@ -456,9 +474,9 @@ border-bottom:0px solid #c3d9ff;
 }
 .cc {
 	position:absolute;
-	border:1px solid gray;
+	border:0px solid gray;
 	background-color:white;
-	visibility:hidden
+	visibility:hidden;
 }
 .cc-titlebar {
 	background-color:#e8eef7
@@ -505,11 +523,13 @@ border-bottom:0px solid #c3d9ff;
 }
 
 .bubble {
-	POSITION: absolute; VISIBILITY: hidden; FONT-SIZE: 9pt; TOP: 0px; LEFT: 0px;
+	POSITION: absolute; VISIBILITY: hidden; FONT-SIZE: 9pt; TOP: 80px; LEFT: 60px;
         z-index: 100;
 }
 .bubble-table {
-	WIDTH: 100%; TABLE-LAYOUT: fixed
+	WIDTH: 100%; TABLE-LAYOUT: fixed;
+        border-top:2px solid #fcb334;
+        border-bottom:2px solid #fcb334;
 }
 .bubble-cell-side {
 	WIDTH: 25px
@@ -544,7 +564,7 @@ border-bottom:0px solid #c3d9ff;
      
 }
 .bubble-closebutton {
-	POSITION: absolute; WIDTH: 15px; BACKGROUND: url(images/calendar/combined.gif) 0px -50px; HEIGHT: 15px; TOP: 10px; CURSOR: pointer; RIGHT: 10px
+	POSITION: absolute; WIDTH: 15px; BACKGROUND: url(images/calendar/combined.gif) 0px -50px; HEIGHT: 15px; TOP: 15px; CURSOR: pointer; RIGHT: 40px
 }
 
 .bubble-top {
@@ -706,4 +726,13 @@ border-bottom:0px solid #c3d9ff;
 .monthdayshow:hover
 {
     text-decoration:underline;
+}
+
+#calhead
+{
+    background-color: #fcb334;
+    width:74.7%;
+    left:190px;
+    position: relative;
+    border: 1px solid #e68a2e;
 }
