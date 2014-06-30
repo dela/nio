@@ -968,7 +968,7 @@
                     else {
                         o.dayshow = day.getDate();
                     }
-                   // o.abbr = dateFormat.call(day, i18n.xgcalendar.dateformat.fulldayvalue);
+                    // o.abbr = dateFormat.call(day, i18n.xgcalendar.dateformat.fulldayvalue);
                     htb.push(Tp(titletemp, o));
                 }
                 htb.push("</tr>");
@@ -1828,7 +1828,7 @@
                 temparr.push('<table class="bubble-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="bubble-cell-side">');
                 temparr.push('<td class="bubble-cell-side">  <tr><td class="bubble-mid" colSpan="3"><div style="overflow: hidden" id="bubbleContent1"><div><div></div><div class="cb-root">');
                 temparr.push('<table class="cb-table" cellSpacing="0" cellPadding="0"><tbody><tr>');
-                temparr.push(i18n.xgcalendar.time, ':<br><td class=cb-value><div id="bbit-cal-buddle-timeshow"></div>       <div id="bubbleClose1" class="bubble-closebutton"></div>  </td></tr><tr><th class="cb-key"></td></tr></tbody></table>');
+                temparr.push(i18n.xgcalendar.time, ':<br><td class=cb-value><div id="bbit-cal-buddle-timeshow"></div>     <div id="bubbleClose1" class="bubble-closebutton"></div>  </td></tr><tr><th class="cb-key"></td></tr></tbody></table>');
                 // temparr.push(i18n.xgcalendar.content, ':</th><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><input id="bbit-cal-what" class="textbox-fill-input"/></div></div><div class="cb-example">');
                 // temparr.push(i18n.xgcalendar.example,);
                 //temparr.push(i18n.xgcalendar.create_event, '&nbsp;');
@@ -1857,6 +1857,7 @@
                     var datestart = $("#bbit-cal-start").val();
                     var dateend = $("#bbit-cal-end").val();
                     var allday = $("#bbit-cal-allday").val();
+
                     var f = /^[^\$\<\>]+$/.test(what);
                     if (!f) {
                         alert(i18n.xgcalendar.invalid_title);
@@ -1924,6 +1925,7 @@
                     else {
                         if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
                             option.EditCmdhandler.call(this, ['0', $("#bbit-cal-what").val(), $("#bbit-cal-start").val(), $("#bbit-cal-end").val(), $("#bbit-cal-allday").val()]);
+
                         }
                         $("#bbit-cal-buddle").css("visibility", "hidden");
                         realsedragevent();
@@ -1944,13 +1946,16 @@
                 $("#prong2").show()
             }
             $("#bbit-cal-buddle-timeshow").html(dateshow);
+
             var calwhat = $("#bbit-cal-what").val("");
             $("#bbit-cal-allday").val(isallday ? "1" : "0");
             $("#bbit-cal-start").val(dateFormat.call(start, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm"));
+
             $("#bbit-cal-end").val(dateFormat.call(end, i18n.xgcalendar.dateformat.fulldayvalue + " HH:mm"));
             buddle.css({"visibility": "visible", left: off.left, top: off.top});
             calwhat.blur().focus(); //add 2010-01-26 blur() fixed chrome 
             $(document).one("mousedown", function() {
+
                 $("#bbit-cal-buddle").css("visibility", "hidden");
                 realsedragevent();
             });
@@ -2575,30 +2580,7 @@
             if (_dragdata) {
                 var d = _dragdata;
                 switch (d.type) {
-                    case 1: //day view
-                        var wrapid = new Date().getTime();
-                        tp = d.target.offset().top;
-                        if (!d.cpwrap) {
-                            var gh = gH(d.sy, d.sy + 42, tp);
-                            var ny = gP(gh.sh, gh.sm);
-                            var tempdata = buildtempdayevent(gh.sh, gh.sm, gh.eh, gh.em, gh.h);
-                            d.cpwrap = $("<div class='ca-evpi drag-chip-wrapper' style='top:" + ny + "px'/>").html(tempdata);
-                            $(d.target).find("div.tg-col-overlaywrapper").append(d.cpwrap);
-                            d.cgh = gh;
-                        }
-                        var pos = d.cpwrap.offset();
-                        pos.left = pos.left + 30;
-                        d.cpwrap.attr("id", wrapid);
-                        var start = strtodate(d.target.attr("abbr") + " " + d.cgh.sh + ":" + d.cgh.sm);
-                        var end = strtodate(d.target.attr("abbr") + " " + d.cgh.eh + ":" + d.cgh.em);
-                       
-                        
-                        _dragevent = function() {
-                            $("#" + wrapid).remove();
-                            $("#bbit-cal-buddle").css("visibility", "hidden");
-                        };
-                        quickadd(start, end, false, pos);
-                        break;
+                    case 1: //day view                
                     case 2: //week view
                     case 3: //month view					
                         var source = e.srcElement || e.target;
@@ -2620,16 +2602,32 @@
                         var firstday = option.vstart;
                         var start = DateAdd("d", si, firstday);
                         var end = DateAdd("d", ei, firstday);
+                       // starti=strtodate(start);
+                        // alert(start + end );
                        
+                      //   $("#date").val(start);
+                      //      alert($("#date").val());
+                      //  $("#date").attr('text', start);
+                     //   alert($("#date").attr('text'));
+                   
+
                         _dragevent = function() {
                             $("#" + lassoid).remove();
                         };
                         quickadd(start, end, true, {left: e.pageX, top: e.pageY});
+                        
+                    
+                     
+                     
+                     
+                     
+                     
                         break;
                     case 4: // event moving
                         if (d.cpwrap) {
                             var start = DateAdd("d", d.cdi, option.vstart);
                             var end = DateAdd("d", d.cdi, option.vstart);
+
                             var gh = gW(d.ny, d.ny + d.h);
                             start.setHours(gh.sh, gh.sm);
                             end.setHours(gh.eh, gh.em);
