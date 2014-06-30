@@ -35,7 +35,7 @@ while($rowEmployee=  mysqli_fetch_array($resultEmployee)){
     }
     $min=$min/60;
     echo $rowEmployee[0].$date.$min;
-    $query="INSERT INTO hs_hr_attendance_nio (emp_id,date,total_min) VALUES ('$rowEmployee[0]','$date','$min')";
+    $query="INSERT INTO hs_hr_attendance_nio (emp_id,date,duration) VALUES ('$rowEmployee[0]','$date','$min')";
     $resultFlag=  mysqli_query($nio_conn,$query);
 }
 }
