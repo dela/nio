@@ -968,7 +968,7 @@
                     else {
                         o.dayshow = day.getDate();
                     }
-                    o.abbr = dateFormat.call(day, i18n.xgcalendar.dateformat.fulldayvalue);
+                   // o.abbr = dateFormat.call(day, i18n.xgcalendar.dateformat.fulldayvalue);
                     htb.push(Tp(titletemp, o));
                 }
                 htb.push("</tr>");

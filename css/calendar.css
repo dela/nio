@@ -721,11 +721,11 @@ border-bottom:2px solid #fcb334;
 }
 .monthdayshow
 {
-    cursor:pointer;
+    
 }
 .monthdayshow:hover
 {
-    text-decoration:underline;
+    
 }
 
 #calhead
