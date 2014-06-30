@@ -24,6 +24,7 @@
     <body class="template-bg" >
 
         <?php
+        
         require_once 'header.php';
         ?>
 
@@ -76,6 +77,8 @@
 
         <div id="gridcontainer" >
         </div>
+        
+        <input id="hiddendate" style="display:none;" >
 
 
 

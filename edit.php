@@ -255,6 +255,7 @@ if ($_GET["id"]) {
                         error.appendTo(form).css(newpos);
                     }
                   
+                  $("#date").val($("#hiddendate").val());
                   
                   
                 });
@@ -270,7 +271,11 @@ if ($_GET["id"]) {
                 }      
             </style>
     </head>
-    <body >    
+    <body > 
+        <?php
+       // session_start();
+   //   $abcd=$_SESSION["startdate"];
+        ?>
         <div>      
 
             <div style="clear: both">         
@@ -296,6 +301,7 @@ if ($_GET["id"]) {
                             }
                             ?>                    
                             <input MaxLength="10" class="required date" id="stpartdate" name="stpartdate" style="padding-left:2px;width:90px;" type="text" />
+                            <input MaxLength="10" class="required date" id="date" name="stpartdate" style="padding-left:2px;width:90px;" type="text" value="<?php  ?>"  />               
                             <input MaxLength="5" class="required time " id="stparttime" name="stparttime" style="width:40px;" type="text" value="<?php echo isset($event) ? $sarr[1] : ""; ?>" />To                       
                             <input MaxLength="10" class="required date" id="etpartdate" name="etpartdate" style="padding-left:2px;width:90px;" type="text" value="<?php echo isset($event) ? $earr[0] : ""; ?>" />                       
                             <input MaxLength="50" class="required time" id="etparttime" name="etparttime" style="width:40px;" type="text" value="<?php echo isset($event) ? $earr[1] : ""; ?>" />                                            
