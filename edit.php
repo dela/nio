@@ -91,6 +91,7 @@ if ($_GET["id"]) {
                 }
                 $(document).ready(function() {
                     //debugger;
+                   
                     var DATA_FEED_URL = "php/datafeed.php";
                     var arrT = [];
                     var tt = "{0}:{1}";
@@ -112,7 +113,7 @@ if ($_GET["id"]) {
                         },
                         items: arrT
                     });
-
+                    
                     if ("#IsAllDayEvent".checked)
                     {
                         $("#stpartdate").datepicker({picker: "<button class='calpick'></button>"});
@@ -253,6 +254,7 @@ if ($_GET["id"]) {
                         var form = $("#fmEdit");
                         error.appendTo(form).css(newpos);
                     }
+                  
                 });
             </script>      
             <style type="text/css">     
