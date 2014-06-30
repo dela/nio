@@ -1,8 +1,8 @@
-<!DOCTYPE">
+ <!DOCTYPE">
 <html>
     <head>
         <title>NIO</title>
-        <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.css"/>
+       
 
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>
 
@@ -32,13 +32,8 @@
 
 
             <div id="caltoolbar" class="ctoolbar">
-                <div id="faddbtn" class="fbutton">
 
-                </div>
 
-                <div id="showtodaybtn" class="fbutton">
-                    <div></div>
-                </div>
 
                 <!--
                                     <div id="showdaybtn" class="fbutton">
@@ -46,17 +41,19 @@
                                     </div>
                                     <div  id="showweekbtn" class="fbutton ">
                                         <div><span title='Week' class="showweekview">Week</span></div>
-                                    </div> -->
+                  
+                </div> -->
+                <div id="sfprevbtn" title="Prev"  class="fbutton">
+                    <span class="fprev"></span>
+                </div>
                 <div  id="showmonthbtn" class="fbutton fcurrent">
                     <div><span title='Month' class="showmonthview">Month</span></div>
 
                 </div>
 
 
-                <div id="sfprevbtn" title="Prev"  class="fbutton">
-                    <span class="fprev"></span>
 
-                </div>
+
                 <div id="sfnextbtn" title="Next" class="fbutton">
                     <span class="fnext"></span>
                 </div>
@@ -68,26 +65,20 @@
                     </div>
                 </div>
 
-                <div class="clear"></div>
             </div>
         </div>
-        <div style="padding:1px;">
 
-            <div class="t1 chromeColor">
-                &nbsp;</div>
-            <div class="t2 chromeColor">
-                &nbsp;</div>
-            <div id="dvCalMain" class="calmain printborder">
-                <div id="gridcontainer" style="overflow-y: visible;">
-                </div>
-            </div>
-            <div class="t2 chromeColor">
 
-                &nbsp;</div>
-            <div class="t1 chromeColor">
-                &nbsp;
-            </div>   
+        <div class="t1 chromeColor">
+            &nbsp;</div>
+        <div class="t2 chromeColor">
+            &nbsp;</div>
+
+        <div id="gridcontainer" >
         </div>
+
+
+
 
 
 
