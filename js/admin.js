@@ -59,20 +59,40 @@ $(document).ready(function() {
         }
         else{
             //NIO chart
-            textToPass="Total number of NIOs";
-            seriesToPass=[{
-                name: 'NIOs rejected',
-                data: [3, 5, 6, 2, 8, 1, 6, 7]
-            }, {
-                name: 'NIOs accepted',
-                data: [1, 0, 7, 4, 2, 8, 3, 3]
+            nioChartPageNumber=1;
+            function (callBackNIO){
+                $.ajax({
+                    dataType: 'json',
+                    url: 'ajax/nioGraph.php',
+                    type: 'post',
+                    data:{
+                        page: nioChartPageNumber
+                    },
+                    success: callBackNIO
+                });
             }
-            ];
-            dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
-            createGraph(textToPass,seriesToPass,dataToPass);
+            
         }
     });
     
+    
+    function callBackNIO(data){
+        console.log(data);
+        
+        textToPass="Total number of NIOs";
+        seriesToPass=[{
+            name: 'NIOs Applied',
+            data: [5, 3, 4, 7, 2,5, 3, 4],
+            stack: 'male'
+        },  {
+            name: 'NIOs Accepted',
+            data: [2, 5, 6, 2, 1,5, 3, 4],
+            stack: 'female'
+        }
+        ];
+        dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
+        createGraph(textToPass,seriesToPass,dataToPass);
+    }
     //----------------------------------------------------------
     
     
@@ -281,7 +301,7 @@ $(document).ready(function() {
         $(".admin-table-div").hide();
         $("#table-approvedTable").show();
         
-         $("#table-approvedTable .table-row-approvedTable").empty();
+        $("#table-approvedTable .table-row-approvedTable").empty();
       
         table[2]=1;      //reset to fetch the first record.
              
@@ -324,37 +344,37 @@ $(document).ready(function() {
                         text: "Accept",
                         click: function() {
                             $.ajax({
-                            type: "POST",
-                            url: "ajax/changeNioStatus.php",
-                            dataType: 'json',
-                            data: {
-                               nioID: nio_id,
-                               status: 1
-                            },
-                            success : function(data){
-                                console.log(data);
-                                alert("Accepted");
-                            }
-                        });  
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: 1
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Accepted");
+                                }
+                            });  
                         },
                         'class':"button-green"
                     },
                     {
                         text: "Reject",
                         click: function() {
-                             $.ajax({
-                            type: "POST",
-                            url: "ajax/changeNioStatus.php",
-                            dataType: 'json',
-                            data: {
-                               nioID: nio_id,
-                               status: -1
-                            },
-                            success : function(data){
-                                console.log(data);
-                                alert("Rejected");
-                            }
-                        });  
+                            $.ajax({
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: -1
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Rejected");
+                                }
+                            });  
                         },
                         'class':"button-red"
                     }
@@ -366,17 +386,17 @@ $(document).ready(function() {
                             url: "ajax/nioDetails.php",
                             dataType: 'json',
                             data: {
-                               nioID: nio_id
+                                nioID: nio_id
                             },
                             success : function(data){
                                 console.log(data);
-                                 $("#popUp-unapproved").append("<h1> NIO ID: "+nio_id+"</h1>");
-                                 var empID=data['genDetails']['empID'];
-                                 var empName=data['genDetails']['empName'];
-                                 var appDate=data['genDetails']['dateApplied'];
-                                 $("#popUp-unapproved").append("<h1>ID: "+empID+"</h1>");
-                                 $("#popUp-unapproved").append("<h1>NAME: "+empName+"</h1>");
-                                 $("#popUp-unapproved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
+                                $("#popUp-unapproved").append("<h1> NIO ID: "+nio_id+"</h1>");
+                                var empID=data['genDetails']['empID'];
+                                var empName=data['genDetails']['empName'];
+                                var appDate=data['genDetails']['dateApplied'];
+                                $("#popUp-unapproved").append("<h1>ID: "+empID+"</h1>");
+                                $("#popUp-unapproved").append("<h1>NAME: "+empName+"</h1>");
+                                $("#popUp-unapproved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
                             }
                         });  
                     }
@@ -398,37 +418,37 @@ $(document).ready(function() {
                         text: "Pending",
                         click: function() {
                             $.ajax({
-                            type: "POST",
-                            url: "ajax/changeNioStatus.php",
-                            dataType: 'json',
-                            data: {
-                               nioID: nio_id,
-                               status: 0
-                            },
-                            success : function(data){
-                                console.log(data);
-                                alert("Pending");
-                            }
-                        });  
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: 0
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Pending");
+                                }
+                            });  
                         },
                         'class':"button-green"
                     },
                     {
                         text: "Reject",
                         click: function() {
-                             $.ajax({
-                            type: "POST",
-                            url: "ajax/changeNioStatus.php",
-                            dataType: 'json',
-                            data: {
-                               nioID: nio_id,
-                               status: -1
-                            },
-                            success : function(data){
-                                console.log(data);
-                                alert("Rejected");
-                            }
-                        });  
+                            $.ajax({
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: -1
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Rejected");
+                                }
+                            });  
                         },
                         'class':"button-red"
                     }
@@ -440,17 +460,17 @@ $(document).ready(function() {
                             url: "ajax/nioDetails.php",
                             dataType: 'json',
                             data: {
-                               nioID: nio_id
+                                nioID: nio_id
                             },
                             success : function(data){
                                 console.log(data);
-                                 $("#popUp-approved").append("<h1> NIO ID: "+nio_id+"</h1>");
-                                 var empID=data['genDetails']['empID'];
-                                 var empName=data['genDetails']['empName'];
-                                 var appDate=data['genDetails']['dateApplied'];
-                                 $("#popUp-approved").append("<h1>ID: "+empID+"</h1>");
-                                 $("#popUp-approved").append("<h1>NAME: "+empName+"</h1>");
-                                 $("#popUp-approved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
+                                $("#popUp-approved").append("<h1> NIO ID: "+nio_id+"</h1>");
+                                var empID=data['genDetails']['empID'];
+                                var empName=data['genDetails']['empName'];
+                                var appDate=data['genDetails']['dateApplied'];
+                                $("#popUp-approved").append("<h1>ID: "+empID+"</h1>");
+                                $("#popUp-approved").append("<h1>NAME: "+empName+"</h1>");
+                                $("#popUp-approved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
                             }
                         });  
                     }
@@ -604,17 +624,19 @@ $(document).ready(function() {
             }
         }
         else{
-            leaveChartPageNumber--;
-            if(leaveChartPageNumber==0){
-                ++leaveChartPageNumber;
+            nioChartPageNumber--;
+            if(nioChartPageNumber==0){
+                ++nioChartPageNumber;
             }else{ 
                 textToPass="Total number of NIOs";
                 seriesToPass=[{
-                    name: 'NIOs rejected',
-                    data: [2, 2, 3, 2, 1, 10, 12, 8]
-                }, {
-                    name: 'NIOs accepted',
-                    data: [-3, -4, 4, 2, 5, 20, 13, 6]
+                    name: 'NIOs Applied',
+                    data: [5, 3, 4, 7, 2,5, 3, 4],
+                    stack: 'male'
+                },  {
+                    name: 'NIOs Accepted',
+                    data: [2, 5, 6, 2, 1,5, 3, 4],
+                    stack: 'female'
                 }
                 ];
                 dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
@@ -652,11 +674,13 @@ $(document).ready(function() {
                 
                 textToPass="Total number of NIOs";
                 seriesToPass=[{
-                    name: 'NIOs rejected',
-                    data: [3, 5, 6, 2, 8, 1, 6, 7]
-                }, {
-                    name: 'NIOs accepted',
-                    data: [1, 0, 7, 4, 2, 8, 3, 3]
+                    name: 'NIOs Applied',
+                    data: [5, 3, 4, 7, 2,5, 3, 4],
+                    stack: 'male'
+                },  {
+                    name: 'NIOs Accepted',
+                    data: [2, 5, 6, 2, 1,5, 3, 4],
+                    stack: 'female'
                 }
                 ];
                 dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
