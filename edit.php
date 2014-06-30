@@ -41,6 +41,7 @@ if ($_GET["id"]) {
              <script src="src/Plugins/jquery.calendar.js" type="text/javascript"></script>  
 
             <script type="text/javascript">
+            
                 if (!DateAdd || typeof (DateDiff) != "function") {
                     var DateAdd = function(interval, number, idate) {
                         number = parseInt(number);
@@ -134,7 +135,7 @@ if ($_GET["id"]) {
                         $("#etpartdate").val(sd);
                         $("#stparttime").val("09:00").show();
                         $("#etparttime").val("17:00").show();
-
+                      
 
                     });
 
