@@ -255,6 +255,8 @@ if ($_GET["id"]) {
                         error.appendTo(form).css(newpos);
                     }
                   
+                  
+                  
                 });
             </script>      
             <style type="text/css">     
