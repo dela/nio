@@ -143,7 +143,7 @@
             if ($.browser.msie6) {
                 cpHA.push('<iframe style="position:absolute;z-index:-1;width:100%;height:205px;top:0;left:0;scrolling:no;" frameborder="0" src="about:blank"></iframe>');
             }
-            cpHA.push("<table class='dp-maintable' cellspacing='0' cellpadding='0' style='width:300px;'><tbody><tr><td>");
+            cpHA.push("<table class='dp-maintable' cellspacing='0' cellpadding='0' style='width:300px;'><tbody><tr style='height:37px'><td>");
             //caption bar goes here
             cpHA.push("<table class='bbit-dp-top' cellspacing='0'><tr><td class='bbit-dp-top-left'> <a id='BBIT_DP_LEFTBTN' href='javascript:void(0);' title='", i18n.datepicker.prev_month_title, "'>&nbsp;</a></td><td class='bbit-dp-top-center' align='center'><em><button id='BBIT_DP_YMBTN'></button></em></td><td class='bbit-dp-top-right'><a id='BBIT_DP_RIGHTBTN' href='javascript:void(0);' title='", i18n.datepicker.next_month_title, "'>&nbsp;</a></td></tr></table>");
             cpHA.push("</td></tr>");
