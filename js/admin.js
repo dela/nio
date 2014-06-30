@@ -293,7 +293,7 @@ $(document).ready(function() {
                             },
                             success : function(data){
                                 console.log(data);
-                                alert("success");
+                                alert("Accepted");
                             }
                         });  
                         },
@@ -301,7 +301,20 @@ $(document).ready(function() {
                     },
                     {
                         text: "Reject",
-                        click: function() { 
+                        click: function() {
+                             $.ajax({
+                            type: "POST",
+                            url: "ajax/changeNioStatus.php",
+                            dataType: 'json',
+                            data: {
+                               nioID: nio_id,
+                               status: -1
+                            },
+                            success : function(data){
+                                console.log(data);
+                                alert("Rejected");
+                            }
+                        });  
                         },
                         'class':"button-red"
                     }
