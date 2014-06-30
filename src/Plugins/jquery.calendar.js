@@ -309,7 +309,7 @@
 
         //no height specified in options, we get page height.
         if (!option.height) {
-            option.height = document.documentElement.clientHeight;
+            option.height = document.documentElement.clientHeights;
         }
         //
         gridcontainer.css("overflow-y", "visible").height(option.height - 8);
