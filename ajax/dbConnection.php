@@ -2,8 +2,8 @@
 //This file has the variables that are used to connect to DB
 
 $serverName = "10.60.6.38";
-$serverUser = "root";
-$serverPassword = "";
+$serverUser = "nio";
+$serverPassword = "nio";
 $databaseHRM = "hr_mysql";
 $databaseNIO = "nio_database";
 
