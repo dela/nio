@@ -16,18 +16,10 @@ while($row=  mysqli_fetch_array($result)){
     $nioApplied[]=$row['nio_applied_count'];
     $nioAccepted[]=$row['nio_accepted_count'];
 }
-$series[]=array(
-            'name'=> 'NIOs Applied',
-                'data'=>  $nioApplied,
-                'stack'=> 'nioapplied'
-            );
-$series[]=array(
-            'name'=> 'NIOs Accepted',
-                'data'=>  $nioAccepted,
-                'stack'=> 'nioaccepted'
-            );
+$series[]=$nioApplied;
+$series[]=$nioAccepted;
 
-$series[]=array($series,$data);
+$series[]=$data;
 
 echo json_encode($series);
 

@@ -60,39 +60,41 @@ $(document).ready(function() {
         else{
             //NIO chart
             nioChartPageNumber=1;
-            function (callBackNIO){
-                $.ajax({
-                    dataType: 'json',
-                    url: 'ajax/nioGraph.php',
-                    type: 'post',
-                    data:{
-                        page: nioChartPageNumber
-                    },
-                    success: callBackNIO
-                });
-            }
+            nioChart();
             
         }
     });
     
-    
-    function callBackNIO(data){
-        console.log(data);
-        
-        textToPass="Total number of NIOs";
-        seriesToPass=[{
-            name: 'NIOs Applied',
-            data: [5, 3, 4, 7, 2,5, 3, 4],
-            stack: 'male'
-        },  {
-            name: 'NIOs Accepted',
-            data: [2, 5, 6, 2, 1,5, 3, 4],
-            stack: 'female'
-        }
-        ];
-        dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
-        createGraph(textToPass,seriesToPass,dataToPass);
+    function nioChart(){
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/nioGraph.php',
+            type: 'post',
+            data:{
+                page: nioChartPageNumber
+            },
+            success: function(data){
+                console.log(data[0]);
+                seriesToPass=[{
+                    name: 'NIOs Applied',
+                    data: data[0][0],
+                    stack: 'male'
+                },  {
+                    name: 'NIOs Accepted',
+                    data: data[1][0],
+                    stack: 'female'
+                }
+                ];
+                alert(seriesToPass);
+                dataToPass=data[2];
+                alert(dataToPass);
+                textToPass="Total number of NIOs";
+                createGraph(textToPass,seriesToPass,dataToPass);
+            }
+        });
     }
+    
+   
     //----------------------------------------------------------
     
     
@@ -628,7 +630,7 @@ $(document).ready(function() {
             if(nioChartPageNumber==0){
                 ++nioChartPageNumber;
             }else{ 
-                textToPass="Total number of NIOs";
+                /* textToPass="Total number of NIOs";
                 seriesToPass=[{
                     name: 'NIOs Applied',
                     data: [5, 3, 4, 7, 2,5, 3, 4],
@@ -640,7 +642,8 @@ $(document).ready(function() {
                 }
                 ];
                 dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
-                createGraph(textToPass,seriesToPass,dataToPass);
+                createGraph(textToPass,seriesToPass,dataToPass);*/
+                nioChart();
             }
         }
     });
@@ -672,7 +675,7 @@ $(document).ready(function() {
             }
             else{
                 
-                textToPass="Total number of NIOs";
+                /* textToPass="Total number of NIOs";
                 seriesToPass=[{
                     name: 'NIOs Applied',
                     data: [5, 3, 4, 7, 2,5, 3, 4],
@@ -684,7 +687,8 @@ $(document).ready(function() {
                 }
                 ];
                 dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
-                createGraph(textToPass,seriesToPass,dataToPass);
+                createGraph(textToPass,seriesToPass,dataToPass);*/
+                nioChart();
             }
         }
     });
