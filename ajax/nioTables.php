@@ -37,7 +37,7 @@ if ($tableNumber == 2|| $tableNumber == 3) {
         $row = mysqli_fetch_array($result);
 
         $appDate = $row['nio_date_applied'];
-
+        $appDate=date("d-m-Y", strtotime($appDate));
         $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate,'endDate' => $appDate, 'duration' => $duration);
     }
 }
