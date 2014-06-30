@@ -43,6 +43,7 @@ body
 	padding: 0;
 	height: 100%;
 	width:100%;
+ 
         
 }
 
@@ -190,12 +191,13 @@ span.showtoday
 span.fprev
 {
     width:18px;
-    background:url("./images/icons/leftarrow.png") no-repeat 1px bottom;
+    background:url("./images/icons/leftarrow.png") repeat 0px ;
 }
 span.fnext
 {
     width:18px;
-    background:url("./images/icons/rightarrow.png") no-repeat 1px bottom;
+
+    background:url("./images/icons/rightarrow.png")repeat 0px;
 }
 span.showdayflash
 {
@@ -389,22 +391,24 @@ div.cHead div.ptogtitle input
 
 div.ctoolbar
 {
-    BORDER-RIGHT: #99bbe8 1px solid;	
+    BORDER-RIGHT: #99bbe8 0px solid;	
     BORDER-TOP: #99bbe8 0px solid;	
   /*  BACKGROUND: #ccc url(images/calendar/tbg.gif)  repeat-x 50% top;	*/
     OVERFLOW: hidden;	
-    BORDER-LEFT: #99bbe8 1px solid;
-    BORDER-BOTTOM: #99bbe8 1px solid;	
+    BORDER-LEFT: #99bbe8 0px solid;
+    BORDER-BOTTOM: #99bbe8 0px solid;	
     POSITION: relative;
     HEIGHT: 25px
        ;
     background-color: #fcb334;
+    width: 60%;
+    left:320px;
 }
 div.ctoolbar div.fbutton 
 {	
-    PADDING-RIGHT: 1px;
+    PADDING-RIGHT: 5px;
     DISPLAY: block;	
-    PADDING-LEFT: 1px;	
+    PADDING-LEFT: 5px;	
     FLOAT: left;	
     PADDING-BOTTOM: 1px;	
     CURSOR: pointer;	
@@ -436,7 +440,7 @@ div.ctoolbar div.fbutton.fcurrent
 
 div.ctoolbar div.fbutton.fcurrent div
 {
-    padding: 1px 2px;
+    padding: 1px 10px;
     
 }
 	
@@ -455,8 +459,8 @@ div.ctoolbar div.fshowdatep
 {
     PADDING-RIGHT: 1px;
     DISPLAY: block;	
-    PADDING-LEFT: 1px;	
-    FLOAT: left;	
+    PADDING-LEFT:10px;	
+    float:left;	
     PADDING-BOTTOM: 1px;	
     CURSOR:default;	
     PADDING-TOP: 1px;	
@@ -581,3 +585,4 @@ div.ViewgBlock>div.loading
 	opacity:0;
 	background-color:#000;
 }
+
