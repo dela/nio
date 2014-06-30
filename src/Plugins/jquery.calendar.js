@@ -2591,7 +2591,8 @@
                         d.cpwrap.attr("id", wrapid);
                         var start = strtodate(d.target.attr("abbr") + " " + d.cgh.sh + ":" + d.cgh.sm);
                         var end = strtodate(d.target.attr("abbr") + " " + d.cgh.eh + ":" + d.cgh.em);
-             
+                       
+                        
                         _dragevent = function() {
                             $("#" + wrapid).remove();
                             $("#bbit-cal-buddle").css("visibility", "hidden");
@@ -2619,6 +2620,7 @@
                         var firstday = option.vstart;
                         var start = DateAdd("d", si, firstday);
                         var end = DateAdd("d", ei, firstday);
+                       
                         _dragevent = function() {
                             $("#" + lassoid).remove();
                         };
