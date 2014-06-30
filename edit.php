@@ -110,25 +110,33 @@ if ($_GET["id"]) {
                         },
                         items: arrT
                     });
-                    var check = $("#IsAllDayEvent").click(function(e) {
-                        if (this.checked) {
-                            $("#stparttime").val("00:00").hide();
-                            $("#etparttime").val("00:00").hide();
-                        }
-                        else {
-                            var d = new Date();
-                            var p = 60 - d.getMinutes();
-                            if (p > 30)
-                                p = p - 30;
-                            d = DateAdd("n", p, d);
-                            $("#stparttime").val(getHM(d)).show();
-                            $("#etparttime").val(getHM(DateAdd("h", 1, d))).show();
-                        }
-                    });
-                    if (check[0].checked) {
-                        $("#stparttime").val("00:00").hide();
-                        $("#etparttime").val("00:00").hide();
+
+                    if ("#IsAllDayEvent".checked)
+                    {
+                        $("#stpartdate").datepicker({picker: "<button class='calpick'></button>"});
+                        var sd = document.forms["nio_form"]["stpartdate"].value;
+                        // $("#etpartdate").hide();
+                        $("#etpartdate").val(sd).show();
+                        $("#stparttime").val("09:00").show();
+                        $("#etparttime").val("17:00").show();
                     }
+                    else
+                    {
+                        $("#stpartdate,#etpartdate").datepicker({picker: "<button class='calpick'></button>"});
+                    }
+
+
+
+                    var check = $("#IsAllDayEvent").click(function(e) {
+                        var sd = document.forms["nio_form"]["stpartdate"].value;
+                        // $("#etpartdate").hide();
+                        $("#etpartdate").val(sd);
+                        $("#stparttime").val("09:00").show();
+                        $("#etparttime").val("17:00").show();
+
+
+                    });
+
                     $("#Savebtn").click(function() {
                         var st = document.forms["nio_form"]["stparttime"].value;
                         var et = document.forms["nio_form"]["etparttime"].value;
@@ -152,12 +160,12 @@ if ($_GET["id"]) {
                             else {
                                 $("#fmEdit").submit();
                             }
-                            
+
                         }
                         else
-                            {
-                                $("#fmEdit").submit();
-                            }
+                        {
+                            $("#fmEdit").submit();
+                        }
 
 
 
@@ -192,7 +200,7 @@ if ($_GET["id"]) {
                         }
                     });
 
-                    $("#stpartdate,#etpartdate").datepicker({picker: "<button class='calpick'></button>"});
+                    //   $("#stpartdate,#etpartdate").datepicker({picker: "<button class='calpick'></button>"});
                     var cv = $("#colorvalue").val();
                     if (cv == "")
                     {
@@ -248,7 +256,7 @@ if ($_GET["id"]) {
             <style type="text/css">     
                 .calpick     {        
                     width:16px;   
-                    height:30px;     
+                    height:20px;     
                     border:none;        
                     cursor:pointer;        
                     background:url("images/cal-month.png") no-repeat center 2px;        
