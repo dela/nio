@@ -46,21 +46,31 @@
             <input    type="text" name="description"  id="description"   >
             <br>
             Start:
-            <input  style="width:100px;" type="date" name="startdate" id="startdate" value="" >
+            <input  style="width:105px;" type="date" name="startdate" id="startdate" value="" >
             <select   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" >
                 <?php for ($i = 0; $i < 24; $i++): ?>
                     <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
                 <?php endfor ?>   
             </select>To
             <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" >
-                
+                <?php for ($i = 0; $i < 24; $i++): ?>
+                    <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                <?php endfor ?>   
             </select>
-           
+
             <br>
             End :
-            <input  style="width:100px;"  type="date" name="enddate" id="enddate" value="" >
-            <select  id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" ></select>To
-            <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" ></select>
+            <input  style="width:105px;"  type="date" name="enddate" id="enddate" value="" >
+            <select  id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" >
+                <?php for ($i = 0; $i < 24; $i++): ?>
+                    <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                <?php endfor ?>   
+            </select>To
+            <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" >
+                <?php for ($i = 0; $i < 24; $i++): ?>
+                    <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                <?php endfor ?>   
+            </select>
 
             <br>
 
