@@ -1,10 +1,6 @@
-#admin-settings{
-    display: none;
-}
-
 .admin-flip-container{
     width: 150px;
-    height : 430px;
+    height : 285px;
     position: relative;
     margin-left: 40px;
     top: 26px;
@@ -69,7 +65,7 @@
     position:absolute;
     margin-left : 40px;
     list-style: none;
-    left : 200px;   
+    left : 110px;   
     width : 1070px;
     top : 140px;
     margin-bottom: 30px;
@@ -237,7 +233,6 @@ ul{
     padding-top: 5px;
     padding-bottom: 5px;
 }
-
 
 .settings-general-options{
     width: 33%;
