@@ -55,17 +55,16 @@ $(document).ready(function() {
             }
             ];
             dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
-            createGraph(textToPass,seriesToPass,dataToPass);
+            createGraphLeave(textToPass,seriesToPass,dataToPass);
         }
         else{
             //NIO chart
             nioChartPageNumber=1;
-            nioChart();
-            
+            nioChart(); 
         }
     });
     
-    function nioChart(){
+    function nioChart(nioChartCallBack){
         $.ajax({
             dataType: 'json',
             url: 'ajax/nioGraph.php',
@@ -74,27 +73,28 @@ $(document).ready(function() {
                 page: nioChartPageNumber
             },
             success: function(data){
-                console.log(data[0]);
-                seriesToPass=[{
-                    name: 'NIOs Applied',
-                    data: data[0][0],
-                    stack: 'male'
-                },  {
-                    name: 'NIOs Accepted',
-                    data: data[1][0],
-                    stack: 'female'
-                }
-                ];
-                alert(seriesToPass);
                 dataToPass=data[2];
-                alert(dataToPass);
                 textToPass="Total number of NIOs";
-                createGraph(textToPass,seriesToPass,dataToPass);
+                var nioApplied=[0,0,0,0,0,0,0,0];
+                var nioAccepted=[0,0,0,0,0,0,0,0];
+                var i=0;
+                while(data[0][i]){
+                    nioApplied[i]=parseInt(data[0][i],10);
+                    nioAccepted[i]=parseInt(data[1][i],10);
+                  ++i;  
+                }
+                if(i==8)
+                createGraphNIO(textToPass,nioAccepted,nioApplied,dataToPass);
+                else
+                    decrementNIOChartPage();
             }
         });
     }
     
-   
+    
+    function decrementNIOChartPage(){
+        nioChartPageNumber--;
+    }
     //----------------------------------------------------------
     
     
@@ -114,6 +114,7 @@ $(document).ready(function() {
         $("#settings-nio-tab").addClass('template-lightColor');
        
         $("#settings-general-tab").removeClass('template-lightColor');
+         $("#settings-general-tab").removeClass('template-darkBack');
         $("#settings-general-tab").addClass('template-textWhite');
         $("#settings-general-tab").addClass('template-lightBack');  
     });
@@ -280,7 +281,7 @@ $(document).ready(function() {
         }
         ];
         dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
-        createGraph(textToPass,seriesToPass,dataToPass);
+        createGraphLeave(textToPass,seriesToPass,dataToPass);
         
         for(i=0;i<25;i++)
         {
@@ -356,8 +357,10 @@ $(document).ready(function() {
                                 success : function(data){
                                     console.log(data);
                                     alert("Accepted");
+                                    
                                 }
-                            });  
+                            });
+                            $( this ).dialog( "close" );
                         },
                         'class':"button-green"
                     },
@@ -374,9 +377,10 @@ $(document).ready(function() {
                                 },
                                 success : function(data){
                                     console.log(data);
-                                    alert("Rejected");
+                                    alert("Rejected"); 
                                 }
                             });  
+                              $( this ).dialog( "close" );
                         },
                         'class':"button-red"
                     }
@@ -397,8 +401,8 @@ $(document).ready(function() {
                                 var empName=data['genDetails']['empName'];
                                 var appDate=data['genDetails']['dateApplied'];
                                 $("#popUp-unapproved").append("<h1>ID: "+empID+"</h1>");
-                                $("#popUp-unapproved").append("<h1>NAME: "+empName+"</h1>");
-                                $("#popUp-unapproved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
+                                $("#popUp-unapproved").append("<h1>Name: "+empName+"</h1>");
+                                $("#popUp-unapproved").append("<h1>Applied On: "+appDate+"</h1>");   
                             }
                         });  
                     }
@@ -622,7 +626,7 @@ $(document).ready(function() {
                 }
                 ];
                 dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
-                createGraph(textToPass,seriesToPass,dataToPass);
+                createGraphLeave(textToPass,seriesToPass,dataToPass);
             }
         }
         else{
@@ -630,19 +634,6 @@ $(document).ready(function() {
             if(nioChartPageNumber==0){
                 ++nioChartPageNumber;
             }else{ 
-                /* textToPass="Total number of NIOs";
-                seriesToPass=[{
-                    name: 'NIOs Applied',
-                    data: [5, 3, 4, 7, 2,5, 3, 4],
-                    stack: 'male'
-                },  {
-                    name: 'NIOs Accepted',
-                    data: [2, 5, 6, 2, 1,5, 3, 4],
-                    stack: 'female'
-                }
-                ];
-                dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
-                createGraph(textToPass,seriesToPass,dataToPass);*/
                 nioChart();
             }
         }
@@ -665,31 +656,12 @@ $(document).ready(function() {
                 }
                 ];
                 dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
-                createGraph(textToPass,seriesToPass,dataToPass);
+                createGraphLeave(textToPass,seriesToPass,dataToPass);
             }
         }
         else{
             nioChartPageNumber++;
-            if(nioChartPageNumber==6){
-                --nioChartPageNumber;
-            }
-            else{
-                
-                /* textToPass="Total number of NIOs";
-                seriesToPass=[{
-                    name: 'NIOs Applied',
-                    data: [5, 3, 4, 7, 2,5, 3, 4],
-                    stack: 'male'
-                },  {
-                    name: 'NIOs Accepted',
-                    data: [2, 5, 6, 2, 1,5, 3, 4],
-                    stack: 'female'
-                }
-                ];
-                dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
-                createGraph(textToPass,seriesToPass,dataToPass);*/
                 nioChart();
-            }
         }
     });
     
@@ -754,7 +726,7 @@ $(document).ready(function() {
     });
  
  
-    function createGraph(text,series,data){
+    function createGraphLeave(text,series,data){        //Creation of Leave Graph
      
         //data means the names on x axis
         //text means the y axis name
@@ -829,9 +801,6 @@ $(document).ready(function() {
                     borderColor :'#F9D597' 
                 }
             },
-            scrollbar: {
-                enabled: true
-            },
             series: series,
             column: {
                 borderColor: '#F9D597'
@@ -839,7 +808,67 @@ $(document).ready(function() {
         }
         $('.admin-graph-container').highcharts(options);
     }
- 
+    
+    function createGraphNIO(text,nioAccepted,nioApplied,names){         //Creation of NIO Graph
+     
+        //data means the names on x axis
+        //text means the y axis name
+        //series is the data of the two columns and their respective names.
+     
+        options={
+            colors: ['#E77817', '#fcb334'],
+            chart: {
+                backgroundColor : '#F9D597',
+                type: 'column',
+                renderTo: 'admin-graph-container',
+                borderColor: '#F9D597',
+                plotBorderColor: '#F9D597'
+            },
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: names
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: text
+                }
+            },
+            tooltip: {
+                headerFormat: '<span>{point.key}</span><table style="font-size:10px;font-family: Segoe UI;font-weight:bold">',
+                pointFormat: '<tr><td style="=font-size:10px;font-family: Segoe UI;color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="font-size:10px;font-family: Segoe UI;padding:0"><b>{point.y}</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                 series:{
+                    animation: false,
+                    borderColor :'#F9D597' 
+                }
+            },column: {
+                borderColor: '#F9D597'
+            },
+            series: [ {
+                name: 'NIO Applied',
+                data: nioApplied
+    
+            },{
+                name: 'NIO Accepted',
+                data: nioAccepted
+    
+            }
+        ]
+        }
+        $('.admin-graph-container').highcharts(options);
+    }
 });
     
 //---------------------------------------------------------------

@@ -27,7 +27,7 @@ $query="SELECT * FROM hs_hr_nio_request WHERE nio_request_id=$nioRequestID";
 $result=  mysqli_query($nio_conn, $query);
 $row=  mysqli_fetch_array($result);
 $dateApplied=$row['nio_date_applied'];
-
+$dateApplied=date('d-m-y',strtotime($dateApplied));
 $array['genDetails']=array("empID"=>$empID,"empName"=>$empName,"dateApplied"=>$dateApplied);
 
 $jsonData=$array;
