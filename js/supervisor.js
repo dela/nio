@@ -177,16 +177,39 @@ $(document).ready(function() {
             scrollEasing:"easeInOutQuad"
         }); 
     }
+ 
     
-    function populateNoStatusTable(){
+    function populateNoStatusTable(callBackNoStatusTable){
         // AJAX Data Loading Logic
-        $(".table-row-noStatusTable").append(" <tr class=\"table-row-selectable\" tableNumber=1><td>"+index+"</td><td>#2331212</td><td>Sharath</td><td>Feb 21,2013</td><td>Paid</td> </tr>"); 
-        $(".admin-table-container").mCustomScrollbar("update");
-        $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
-            scrollEasing:"easeInOutQuad"
+        $.ajax({
+            type: "POST",
+            url: "ajax/nioTables.php",
+            dataType: 'json',
+            data: {
+                tableNumber : 1,
+                record : table[0]
+            },
+            success : callBackNoStatusTable
         });
        
     }
+    
+    function callBackNoStatusTable(data){
+        var i=0;
+        while(data[i]){
+            $(".table-row-noStatusTable").append(" <tr class=\"table-row-selectable\" tableNumber=1 attID="+data[i]['attID']+">"+
+                "<td>"+data[i]['attID']+"</td><td>"+data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
+                data[i]['date']+"</td><td>"+data[i]['duration']+
+                "</td></tr>");  
+            ++i;
+            table[0]++;
+        }
+        $(".admin-table-container").mCustomScrollbar("update");
+        $(".admin-table-container").mCustomScrollbar("scrollTo","h2:last",{
+            scrollEasing:"easeInOutQuad"
+        }); 
+    }
+    
     
     function onLoad(){
         index=0;
@@ -217,10 +240,8 @@ $(document).ready(function() {
         dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
         createGraphLeave(textToPass,seriesToPass,dataToPass);
         
-        for(i=0;i<25;i++)
-        {
-            populateNoStatusTable();
-        }
+          $("#table-noStatusTable .table-row-noStatusTable").empty();
+        populateNoStatusTable(callBackNoStatusTable);
     }
   
     $(onLoad);
@@ -232,6 +253,12 @@ $(document).ready(function() {
     $("#table-noStatus").click(function() {
         $(".admin-table-div").hide();
         $("#table-noStatusTable").show();
+        
+         $("#table-noStatusTable .table-row-noStatusTable").empty();
+      
+        table[0]=1;      //reset to fetch the first record.
+             
+        populateNoStatusTable(callBackNoStatusTable);
     });
 
     $("#table-approved").click(function() {
@@ -270,7 +297,11 @@ $(document).ready(function() {
                 nio_id = $(this).attr('nio_id');
                 console.log(nio_id);
                 $("#popUp-unapproved").dialog({
-                    position:{ my: "center", at: "center", of: window },
+                    position:{
+                        my: "center", 
+                        at: "center", 
+                        of: window
+                    },
                     modal:true,
                     draggable:false,
                     title: "Unapproved NIO [NIO ID:"+nio_id+"]",
@@ -351,13 +382,9 @@ $(document).ready(function() {
                                 $("#popUp-unapproved").append("<table style='width: 100%'>"+
                                     "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>"+nio_id+"</td><td style='text-align: left'><b>Applied On: </b></td><td style='text-align: left'>"+appDate+"</td></tr>"+
                                     "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>"+empName+"</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>"+empID+"</td></tr>"+
-                                     "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>"+reason+"</td><td style='text-align: left'><b>Request ID: </b></td><td style='text-align: left'>"+reqID+"</td></tr>"+
+                                    "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>"+reason+"</td><td style='text-align: left'><b>Request ID: </b></td><td style='text-align: left'>"+reqID+"</td></tr>"+
                                     "</table>"); 
                        
-                          
-                     
-                               
-                               
                                 $("#popUp-unapproved").append("<table style='width: 100%'>"+
                                     "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
                                 $("#popUp-unapproved").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%' disabled>"+description+"</textarea>");
@@ -388,14 +415,18 @@ $(document).ready(function() {
                 nio_id = $(this).attr('nio_id');
                 console.log(nio_id);
                 $("#popUp-approved").dialog({
-                    position:{ my: "center", at: "center", of: window },
+                    position:{
+                        my: "center", 
+                        at: "center", 
+                        of: window
+                    },
                     modal:true,
                     draggable:false,
-                    title: "Approved NIO",
+                    title: "Approved NIO [NIO ID:"+nio_id+"]",
                     closeText: "hide",
                     dialogClass: 'no-close success-dialog',
                     width: 700,
-                    height: 450,
+                    height: 550,
                     buttons:[
                     {
                         text: "Pending",
@@ -466,15 +497,11 @@ $(document).ready(function() {
                                 var description="On a business trip to Australia";
                                 var reason="Business Trip";
                                 $("#popUp-approved").append("<table style='width: 100%'>"+
-                                    "<tr><td style='text-align: left'><b>NIO ID: </b>"+nio_id+"</td><td><b>Request ID: </b>"+reqID+"</td><td style='text-align: right'><b>Applied On: </b>"+appDate+"</td></tr></table>"); 
+                                    "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>"+nio_id+"</td><td style='text-align: left'><b>Applied On: </b></td><td style='text-align: left'>"+appDate+"</td></tr>"+
+                                    "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>"+empName+"</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>"+empID+"</td></tr>"+
+                                    "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>"+reason+"</td><td style='text-align: left'><b>Request ID: </b></td><td style='text-align: left'>"+reqID+"</td></tr>"+
+                                    "</table>"); 
                        
-                                $("#popUp-approved").append("<table style='width: 100%'>"+
-                                    "<tr><td style='text-align: left'><b>Employee Name: </b>"+empName+"</td><td style='text-align: right'><b>Employee ID: </b>"+empID+"</td></tr></table>"); 
-                          
-                                $("#popUp-approved").append("<table style='width: 100%'>"+
-                                    "<tr><td style='text-align: left'><b>Reason: </b>"+reason+"</td></tr></table>"); 
-                               
-                               
                                 $("#popUp-approved").append("<table style='width: 100%'>"+
                                     "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
                                 $("#popUp-approved").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%' disabled>"+description+"</textarea>");

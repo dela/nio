@@ -1,7 +1,7 @@
 <!DOCTYPE">
 <html>
     <head>
-        <title>NIO</title>
+        <title>NIO-Administrator</title>
         
         <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css"/>
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>

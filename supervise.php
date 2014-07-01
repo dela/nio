@@ -1,7 +1,7 @@
 <!DOCTYPE">
 <html>
     <head>
-        <title>NIO</title>
+        <title>NIO-Supervise</title>
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.css"/>
         <link rel="stylesheet" type="text/css"  href="fonts/custom_fonts.css"/>
         <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css"/>
@@ -75,18 +75,12 @@
                                 <td>EMPLOYEE ID</td>
                                 <td>EMPLOYEE NAME</td>
                                 <td>DATE</td>
-                                <td>STATUS</td>
+                                <td>DURATION</td>
                             </tr>
                         </table>
                         <div class="admin-table-container">
                             <table class="flatTable table-row-noStatusTable">
-                                <tr class="table-row-selectable" tableNumber=1>
-                                    <td>345</td>
-                                    <td>#2331212</td>
-                                    <td>Sharath</td>
-                                    <td>Feb 21,2013</td>
-                                    <td>Paid</td>
-                                </tr>
+                                
                             </table>
                         </div>
                     </div>

@@ -41,6 +41,22 @@ if ($tableNumber == 2|| $tableNumber == 3) {
         $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate,'endDate' => $appDate, 'duration' => $duration);
     }
 }
+else{
+    $query="SELECT * FROM hs_hr_nio_attendance WHERE flag=0";           //select people with flag=0 means not worked for min hours
+    $result=  mysqli_query($nio_conn, $query);
+    while($row=mysqli_fetch_array($result)){
+        $date=$row['date'];
+        $date=date('d-m-Y',  strtotime($date));
+        $duration=$row['duration'];
+        $attID=$row['att_id'];
+        $empID=$row['emp_id'];
+        $query="SELECT * FROM hs_hr_employee WHERE emp_number='$empID'";
+        $employee=  mysqli_query($hrm_conn, $query);
+        $employee=  mysqli_fetch_array($employee);
+        $empName=$employee['emp_firstname']." ".$employee['emp_lastname'];
+        $array[]=array('date'=>$date,'duration'=>$duration,'attID'=>$attID,'empID'=>$empID,'empName'=>$empName);
+    }
+}
 $jsonData = $array;
 echo json_encode($jsonData);
 ?>
