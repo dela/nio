@@ -291,7 +291,105 @@ $(document).ready(function() {
         console.log(table.attr('tableNumber'));
         tableNumber = parseInt($(this).attr('tableNumber'), 10);
         switch (tableNumber) {
-            case 1: //
+            case 1: 
+                var attID=$(this).attr('attID');
+                
+                $("#popUp-noStatus").dialog({
+                    position:{
+                        my: "center", 
+                        at: "center", 
+                        of: window
+                    },
+                    modal:true,
+                    draggable:false,
+                    title: "Absent without Notifying [ATT ID:"+attID+"]",
+                    closeText: "hide",
+                    dialogClass: 'no-close success-dialog',
+                    width: 700,
+                    height: 550,
+                    buttons:[
+                    {
+                        text: "Accept",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: 1
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Accepted");
+                                    
+                                }
+                            });
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
+                            $( this ).dialog( "close" );
+                        },
+                        'class':"button-green"
+                    },
+                    {
+                        text: "Reject",
+                        click: function() {
+                            $.ajax({
+                                type: "POST",
+                                url: "ajax/changeNioStatus.php",
+                                dataType: 'json',
+                                data: {
+                                    nioID: nio_id,
+                                    status: -1
+                                },
+                                success : function(data){
+                                    console.log(data);
+                                    alert("Rejected"); 
+                                }
+                            });  
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
+                            $( this ).dialog( "close" );
+                        },
+                        'class':"button-red"
+                    }
+                    ],
+                    open: function( event, ui ) {        
+                        $("#popUp-noStatus").empty();
+                        $.ajax({
+                            type: "POST",
+                            url: "ajax/noNotify.php",
+                            dataType: 'json',
+                            data: {
+                                attID: attID
+                            },
+                            success : function(data){
+                                console.log(data);
+                                var empID=data['genDetails']['empID'];
+                                var empName=data['genDetails']['empName'];
+                                var date=data['genDetails']['date'];
+                                
+                                $("#popUp-noStatus").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>ATT ID: </b></td><td style='text-align: left'>"+attID+"</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>"+date+"</td></tr>"+
+                                    "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>"+empName+"</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>"+empID+"</td></tr>"+
+                                   
+                                    "</table>"); 
+                       
+                                $("#popUp-noStatus").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
+                                $("#popUp-noStatus").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%'></textarea>");
+                                
+                            }
+                        });  
+                    }
+                });
+                
                 break;
             case 2:
                 nio_id = $(this).attr('nio_id');
