@@ -18,8 +18,8 @@
         <link href="css/main.css" rel="stylesheet" type="text/css" /> 
         <link href="css/custom.css" rel="stylesheet" type="text/css" />
         <link href="css/dropdown.css" rel="stylesheet" />  
-        <script src="src/Plugins/jquery.dropdown.js" type="text/javascript"></script>
-        <script src="src/Plugins/jquery.validate.js" type="text/javascript"></script>     
+        <script src="js/timepick.js" type="text/javascript"></script>
+
 
 
 
@@ -45,15 +45,22 @@
             Description:
             <input    type="text" name="description"  id="description"   >
             <br>
-            Start date :
+            Start:
             <input  style="width:100px;" type="date" name="startdate" id="startdate" value="" >
-            <input   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:40px;" type="text" value="" />To
-            <input  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:40px;" type="text" value="" />
+            <select   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" >
+                <?php for ($i = 0; $i < 24; $i++): ?>
+                    <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                <?php endfor ?>   
+            </select>To
+            <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" >
+                
+            </select>
+           
             <br>
-            End date    :
+            End :
             <input  style="width:100px;"  type="date" name="enddate" id="enddate" value="" >
-            <input   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:40px;" type="text" value="" />To
-            <input  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:40px;" type="text" value="" />
+            <select  id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" ></select>To
+            <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" ></select>
 
             <br>
 
@@ -318,20 +325,14 @@
                     }
                 });
 
-                $("#stparttime").dropdown({
-                    dropheight: 150,
-                    dropwidth: 60,
-                    selectedchange: function() {
-                    },
-                    items: arrT
-                });
-                $("#etparttime").dropdown({
-                    dropheight: 150,
-                    dropwidth: 60,
-                    selectedchange: function() {
-                    },
-                    items: arrT
-                });
+
+
+                var arrT = [];
+                var tt = "{0}:{1}";
+                for (var i = 0; i < 24; i++) {
+                    arrT.push({text: StrFormat(tt, [i >= 10 ? i : "0" + i, "00"])}, {text: StrFormat(tt, [i >= 10 ? i : "0" + i, "30"])});
+                }
+
                 $("#stparttime").val("09:00").show();
                 $("#etparttime").val("17:00").show();
 
