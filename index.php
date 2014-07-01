@@ -18,8 +18,7 @@
         <link href="css/main.css" rel="stylesheet" type="text/css" /> 
         <link href="css/custom.css" rel="stylesheet" type="text/css" />
         <link href="css/dropdown.css" rel="stylesheet" />  
-        <script src="js/timepick.js" type="text/javascript"></script>
-
+     
 
 
 
@@ -57,8 +56,25 @@
                     <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
                 <?php endfor ?>   
             </select>
-
             <br>
+            /***inbetween dates***/<br>
+            <div id="inbetween">
+
+                <input  style="width:105px;"  type="date" name="inbetweendate" id="inbetweendate" value="" >
+                <select  id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" >
+                    <?php for ($i = 0; $i < 24; $i++): ?>
+                        <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                    <?php endfor ?>   
+                </select>To
+                <select  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:75px;" type="text" value="" >
+                    <?php for ($i = 0; $i < 24; $i++): ?>
+                        <option value="<?= $i; ?>"><?= $i % 12 ? $i % 12 : 12 ?>:00 <?= $i >= 12 ? 'pm' : 'am' ?></option>
+                    <?php endfor ?>   
+                </select>
+            </div>
+
+            /***inbetween dates***/<br>
+
             End :
             <input  style="width:105px;"  type="date" name="enddate" id="enddate" value="" >
             <select  id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:75px;" type="text" value="" >
@@ -161,6 +177,7 @@
         <script src="src/Plugins/jquery.ifrmdailog.js" defer="defer" type="text/javascript"></script>
         <script src="src/Plugins/wdCalendar_lang_US.js" type="text/javascript"></script>    
         <script src="src/Plugins/jquery.calendar.js" type="text/javascript"></script>   
+           <script src="js/timepick.js" type="text/javascript"></script>
 
         <script type="text/javascript">
             $(document).ready(function() {

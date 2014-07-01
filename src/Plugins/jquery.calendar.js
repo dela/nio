@@ -2622,6 +2622,7 @@
                         var end = DateAdd("d", ei, firstday);
                         var startdate=start.toDateString();
                         var enddate=end.toDateString();
+                         var datediff= ei-si;
                         // starti=strtodate(start);
                         //alert(start + end );
                        // var startarray = start.split(" ");
@@ -2629,6 +2630,7 @@
                     //  var startingtime=start.getTime();
                         $("#startdate").val(startdate);
                         $("#enddate").val(enddate);
+                       
 
 
                         //alert(startday);
