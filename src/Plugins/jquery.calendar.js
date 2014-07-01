@@ -2622,6 +2622,7 @@
                         var end = DateAdd("d", ei, firstday);
                         var startdate=start.toDateString();
                         var enddate=end.toDateString();
+                         var datediff= ei-si;
                         // starti=strtodate(start);
                         //alert(start + end );
                        // var startarray = start.split(" ");
@@ -2629,8 +2630,17 @@
                     //  var startingtime=start.getTime();
                         $("#startdate").val(startdate);
                         $("#enddate").val(enddate);
+                      if(datediff>1){
+                       for(si;si<ei;si++)
+                           {
+                               var inbetween=DateAdd("d", si, firstday);
+                               var inbetweendate=inbetween.toDateString();
+                               $("#inbetween").append('<input>');
+                               $("#inbetweendate").val(inbetweendate);
+                               //alert(inbetweendate);
+                           }
 
-
+                      }
                         //alert(startday);
 
 
