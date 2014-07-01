@@ -2609,9 +2609,7 @@
                       //      alert($("#date").val());
                       //  $("#date").attr('text', start);
                      //   alert($("#date").attr('text'));
-                   
-
-                        _dragevent = function() {
+                          _dragevent = function() {
                             $("#" + lassoid).remove();
                         };
                         quickadd(start, end, true, {left: e.pageX, top: e.pageY});
@@ -2627,7 +2625,6 @@
                         if (d.cpwrap) {
                             var start = DateAdd("d", d.cdi, option.vstart);
                             var end = DateAdd("d", d.cdi, option.vstart);
-
                             var gh = gW(d.ny, d.ny + d.h);
                             start.setHours(gh.sh, gh.sm);
                             end.setHours(gh.eh, gh.em);
