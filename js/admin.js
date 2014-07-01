@@ -60,8 +60,7 @@ $(document).ready(function() {
         else{
             //NIO chart
             nioChartPageNumber=1;
-            nioChart();
-            
+            nioChart(); 
         }
     });
     
@@ -115,6 +114,7 @@ $(document).ready(function() {
         $("#settings-nio-tab").addClass('template-lightColor');
        
         $("#settings-general-tab").removeClass('template-lightColor');
+         $("#settings-general-tab").removeClass('template-darkBack');
         $("#settings-general-tab").addClass('template-textWhite');
         $("#settings-general-tab").addClass('template-lightBack');  
     });
@@ -726,7 +726,7 @@ $(document).ready(function() {
     });
  
  
-    function createGraphLeave(text,series,data){
+    function createGraphLeave(text,series,data){        //Creation of Leave Graph
      
         //data means the names on x axis
         //text means the y axis name
@@ -809,7 +809,7 @@ $(document).ready(function() {
         $('.admin-graph-container').highcharts(options);
     }
     
-    function createGraphNIO(text,nioAccepted,nioApplied,names){
+    function createGraphNIO(text,nioAccepted,nioApplied,names){         //Creation of NIO Graph
      
         //data means the names on x axis
         //text means the y axis name

@@ -289,7 +289,7 @@
 
                             <div class="admin-table-container">
                                 <table class="flatTable table-row-unapprovedTable" >
-                                    <tr class="table-row-selectable" nio_id=123 tableNumber=2>
+                                    <tr class="table-row-selectabl">
                                         <td>#2331212</td>  
                                         <td>Rajesh</td>
                                         <td>Feb 21,2013</td>
@@ -312,7 +312,7 @@
                             </table>
                             <div class="admin-table-container">
                                 <table class="flatTable table-row-approvedTable">
-                                    <tr class="table-row-selectable" nio_id="123"  tableNumber=3>
+                                    <tr class="table-row-selectable">
                                         <td>#2331212</td>
                                         <td>Prasad</td>
                                         <td>Feb 21,2013</td>
