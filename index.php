@@ -17,6 +17,9 @@
         <link href="css/alert.css" rel="stylesheet" type="text/css" /> 
         <link href="css/main.css" rel="stylesheet" type="text/css" /> 
         <link href="css/custom.css" rel="stylesheet" type="text/css" />
+        <link href="css/dropdown.css" rel="stylesheet" />  
+        <script src="src/Plugins/jquery.dropdown.js" type="text/javascript"></script>
+        <script src="src/Plugins/jquery.validate.js" type="text/javascript"></script>     
 
 
 
@@ -27,10 +30,10 @@
         <?php
         require_once 'header.php';
         ?>
-       
+
         <div id ="nioform">
 
-            
+
 
             NIO Reason :
             <input  type="text" name="Reason"  id="reason"   >
@@ -43,11 +46,14 @@
             <input    type="text" name="description"  id="description"   >
             <br>
             Start date :
-            <input   type="date" name="startdate" id="startdate" value="" >
+            <input  style="width:100px;" type="date" name="startdate" id="startdate" value="" >
+            <input   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:40px;" type="text" value="" />To
+            <input  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:40px;" type="text" value="" />
             <br>
             End date    :
-            <input    type="date" name="enddate" id="enddate" value="" >
-
+            <input  style="width:100px;"  type="date" name="enddate" id="enddate" value="" >
+            <input   id="stparttime" class="required time  bbit-dropdown" name="stparttime" style="width:40px;" type="text" value="" />To
+            <input  id="etparttime" class="required time bbit-dropdown" name="etparttime" style="width:40px;" type="text" value="" />
 
             <br>
 
@@ -141,6 +147,7 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
+
 
                 var view = "month";
 
@@ -311,8 +318,35 @@
                     }
                 });
 
+                $("#stparttime").dropdown({
+                    dropheight: 150,
+                    dropwidth: 60,
+                    selectedchange: function() {
+                    },
+                    items: arrT
+                });
+                $("#etparttime").dropdown({
+                    dropheight: 150,
+                    dropwidth: 60,
+                    selectedchange: function() {
+                    },
+                    items: arrT
+                });
+                $("#stparttime").val("09:00").show();
+                $("#etparttime").val("17:00").show();
+
+
             });
+
+
         </script>    
+        <script>
+            $(document).ready(function() {
+
+
+            });
+        </script>
+
 
     </body>
 </html>
