@@ -296,13 +296,13 @@
             option.enableDrag = false;
         }
         //template for month and date
-        var __SCOLLEVENTTEMP = "<DIV style=\"WIDTH:${width};top:${top};left:${left};\" title=\"${title}\" class=\"chip chip${i} ${drag}\"><div class=\"dhdV\" style=\"display:none\">${data}</div><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}\" class=ct>&nbsp;</DIV><DL style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; HEIGHT: ${height}px; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\"><DT style=\"BACKGROUND-COLOR:${bgcolor2}\">${starttime} - ${endtime} ${icon}</DT><DD><SPAN>${content}</SPAN></DD><DIV class='resizer' style='display:${redisplay}'><DIV class=rszr_icon>&nbsp;</DIV></DIV></DL><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; BORDER-RIGHT-COLOR: ${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb1>&nbsp;</DIV><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BORDER-TOP-COLOR:${bdcolor}; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb2>&nbsp;</DIV></DIV>";
-        var __ALLDAYEVENTTEMP = '<div class="rb-o ${eclass}" id="${id}" title="${title}" style="color:${color};"><div class="dhdV" style="display:none">${data}</div><div class="${extendClass} rb-m" style="background-color:${color}">${extendHTML}<div class="rb-i">${content}</div></div></div>';
+      //  var __SCOLLEVENTTEMP = "<DIV style=\"WIDTH:${width};top:${top};left:${left};\" title=\"${title}\" class=\"chip chip${i} ${drag}\"><div class=\"dhdV\" style=\"display:none\">${data}</div><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}\" class=ct>&nbsp;</DIV><DL style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; HEIGHT: ${height}px; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\"><DT style=\"BACKGROUND-COLOR:${bgcolor2}\">${starttime} - ${endtime} ${icon}</DT><DD><SPAN>${content}</SPAN></DD><DIV class='resizer' style='display:${redisplay}'><DIV class=rszr_icon>&nbsp;</DIV></DIV></DL><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; BORDER-RIGHT-COLOR: ${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb1>&nbsp;</DIV><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BORDER-TOP-COLOR:${bdcolor}; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb2>&nbsp;</DIV></DIV>";
+        var __ALLDAYEVENTTEMP = '<div class="rb-o " id="${id}" title="${title}" style="color:${color};"><div class="dhdV" style="display:none">${data}</div><div class="${extendClass} rb-m" style="background-color:${color}">${extendHTML}<div class="rb-i">${content}</div></div></div>';
         var __MonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         var __LASSOTEMP = "<div class='drag-lasso' style='left:${left}px;top:${top}px;width:${width}px;height:${height}px;'>&nbsp;</div>";
         //for dragging var
         var _dragdata;
-        var _dragevent;
+      var _dragevent;
 
         //clear DOM
         clearcontainer();
@@ -500,8 +500,8 @@
             }
             html.push("</tr></tbody></table>");
             html.push("</div>");
-            var bH = GetMonthViewBodyHeight() - GetMonthViewHeaderHeight();
-
+           // var bH = GetMonthViewBodyHeight() - GetMonthViewHeaderHeight();
+           var bH = 580;
             html.push("<div id=\"mvEventContainer\" class=\"mv-event-container\" style=\"height:", bH, "px;", "\">");
             BuilderMonthBody(html, showday, config.weekstartday, events, bH);
             html.push("</div>");
@@ -1657,6 +1657,22 @@
                             $("#bbit-cs-buddle").css("visibility", "hidden");
                             return false;
                         });
+                        
+                        /*
+                         lbtn.click(function(e) {
+                            if (!option.EditCmdhandler) {
+                                alert("EditCmdhandler" + i18n.xgcalendar.i_undefined);
+                            }
+                            else {
+                                if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
+                                    option.EditCmdhandler.call(this, $("#bbit-cs-buddle").data("cdata"));
+                                }
+                            }
+                            $("#bbit-cs-buddle").css("visibility", "hidden");
+                            return false;
+                        });  */
+                        
+                        
                         bud.click(function() {
                             return false
                         });
@@ -2592,7 +2608,7 @@
                                 break;
                             }
                             d.fdi = d.sdi = getdi(d.xa, d.ya, d.sx, d.sy);
-                            d.lasso = $("<div style='z-index: 10; display: block' class='drag-lasso-container'/>");
+                            d.lasso = $("<div style='z-index:3; display: block' class='drag-lasso-container'/>");
                             $(document.body).append(d.lasso);
                             addlasso(d.lasso, d.sdi, d.fdi, d.xa, d.ya, d.h);
                         }
@@ -2602,24 +2618,32 @@
                         var firstday = option.vstart;
                         var start = DateAdd("d", si, firstday);
                         var end = DateAdd("d", ei, firstday);
-                       // starti=strtodate(start);
-                        // alert(start + end );
-                       
-                      //   $("#date").val(start);
-                      //      alert($("#date").val());
-                      //  $("#date").attr('text', start);
-                     //   alert($("#date").attr('text'));
-                          _dragevent = function() {
+                        // starti=strtodate(start);
+                        //alert(start + end );
+                        $("#startdate").val(start);
+                         $("#enddate").val(end);
+
+
+
+
+                        //   $("#date").val(start);
+                        //      alert($("#date").val());
+                        //  $("#date").attr('text', start);
+                        //   alert($("#date").attr('text'));
+                        _dragevent = function() {
                             $("#" + lassoid).remove();
+                        
                         };
                         quickadd(start, end, true, {left: e.pageX, top: e.pageY});
+
+
                         
+                      
+                       
                     
-                     
-                     
-                     
-                     
-                     
+
+
+
                         break;
                     case 4: // event moving
                         if (d.cpwrap) {

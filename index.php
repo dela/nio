@@ -1,8 +1,8 @@
- <!DOCTYPE">
+<!DOCTYPE">
 <html>
     <head>
         <title>NIO</title>
-       
+
 
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>
 
@@ -16,17 +16,46 @@
         <link href="css/dp.css" rel="stylesheet" type="text/css" /> 
         <link href="css/alert.css" rel="stylesheet" type="text/css" /> 
         <link href="css/main.css" rel="stylesheet" type="text/css" /> 
+        <link href="css/custom.css" rel="stylesheet" type="text/css" />
 
 
 
         <!--  End of calender page scripts  -->
     </head>
-    <body class="template-bg" >
+    <body style="overflow-y: hidden;" class="template-bg" >
 
         <?php
-        
         require_once 'header.php';
         ?>
+       
+        <div id ="nioform">
+
+            
+
+            NIO Reason :
+            <input  type="text" name="Reason"  id="reason"   >
+
+            <br>
+            Location   :
+            <input    type="text" name="location"  id="location"   >
+            <br>
+            Description:
+            <input    type="text" name="description"  id="description"   >
+            <br>
+            Start date :
+            <input   type="date" name="startdate" id="startdate" value="" >
+            <br>
+            End date    :
+            <input    type="date" name="enddate" id="enddate" value="" >
+
+
+            <br>
+
+            <input id="save" type="submit" value="Submit">
+
+        </div>
+
+
 
 
         <div id="calhead" style="padding-left:1px;padding-right:1px;">          
@@ -65,20 +94,25 @@
 
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
 
-        <div class="t1 chromeColor">
-            &nbsp;</div>
-        <div class="t2 chromeColor">
-            &nbsp;</div>
+
+
+
+
+
+
+
+
+
 
         <div id="gridcontainer" >
         </div>
-        
-        <input id="hiddendate" style="display:none;" >
+
+
 
 
 
@@ -107,6 +141,7 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
+
                 var view = "month";
 
                 var DATA_FEED_URL = "php/datafeed.php";
@@ -228,30 +263,7 @@
                     $("#showdaybtn").addClass("fcurrent");
                 }
                 //to show day view
-                $("#showdaybtn").click(function(e) {
-                    //document.location.href="#day";
-                    $("#caltoolbar div.fcurrent").each(function() {
-                        $(this).removeClass("fcurrent");
-                    })
-                    $(this).addClass("fcurrent");
-                    var p = $("#gridcontainer").swtichView("day").BcalGetOp();
-                    if (p && p.datestrshow) {
-                        $("#txtdatetimeshow").text(p.datestrshow);
-                    }
-                });
-                //to show week view
-                $("#showweekbtn").click(function(e) {
-                    //document.location.href="#week";
-                    $("#caltoolbar div.fcurrent").each(function() {
-                        $(this).removeClass("fcurrent");
-                    })
-                    $(this).addClass("fcurrent");
-                    var p = $("#gridcontainer").swtichView("week").BcalGetOp();
-                    if (p && p.datestrshow) {
-                        $("#txtdatetimeshow").text(p.datestrshow);
-                    }
 
-                });
                 //to show month view
                 $("#showmonthbtn").click(function(e) {
                     //document.location.href="#month";
@@ -301,8 +313,6 @@
 
             });
         </script>    
-
-
 
     </body>
 </html>

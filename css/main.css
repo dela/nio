@@ -47,29 +47,17 @@ body
         
 }
 
-div, span, td
-{
-	font-family: "Lucida Grande","Lucida Sans Unicode",Arial,Verdana,sans-serif;
-}
 a:link, a:visited
 {
 	text-decoration: none;
 	color: #333;
-}
-input
-{
-	border: solid 1px #fcb334;	
 }
 
 select
 {
 	border: #3C7FB1 1px solid;
 }
-input[type='text']
-{
-	border: solid 1px #fcb334;	
-	height:25px;
-}
+
 input[type='checkbox']
 {
 	border: none;
@@ -400,7 +388,7 @@ div.ctoolbar
     POSITION: relative;
     HEIGHT: 25px
        ;
-    background-color: #fcb334;
+    background-color: #e68a2e;
     width: 60%;
     left:320px;
 }
@@ -432,10 +420,10 @@ div.ctoolbar div.fbutton span
 
 div.ctoolbar div.fbutton.fcurrent
 {
-    border: #fcb334 1px solid;
+    border: #e68a2e 1px solid;
     padding: 0;
     cursor: pointer;
-    background-color: #fcb334;
+    background-color: #e68a2e;
 }
 
 div.ctoolbar div.fbutton.fcurrent div
