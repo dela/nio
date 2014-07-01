@@ -11,7 +11,7 @@ $query="SELECT * FROM hs_hr_nio WHERE nio_id=$nioID";
 $result=  mysqli_query($nio_conn, $query);
 $rowNIO= mysqli_fetch_array($result);
 
-$empID= $rowNIO['employee_id'];
+$empID= $rowNIO['emp_id'];
 
 $query="SELECT * FROM hs_hr_employee WHERE emp_number=$empID";
 $result=  mysqli_query($hrm_conn, $query);
