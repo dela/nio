@@ -131,15 +131,16 @@
 
 #nioform
 {
-    left:1129px;
+    left:1008px;
     position:absolute;
     height: 100%;
     background-color: #e68a2e;
     border:4px black;
     overflow-y: scroll;
-    padding-left: 30px;
+    padding-left: 15px;
     width: 25%;
     border-left:1px solid #fcb334;
+    padding-top:30px;
         
 }
 

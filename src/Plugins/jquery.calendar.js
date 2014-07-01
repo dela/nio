@@ -296,13 +296,13 @@
             option.enableDrag = false;
         }
         //template for month and date
-      //  var __SCOLLEVENTTEMP = "<DIV style=\"WIDTH:${width};top:${top};left:${left};\" title=\"${title}\" class=\"chip chip${i} ${drag}\"><div class=\"dhdV\" style=\"display:none\">${data}</div><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}\" class=ct>&nbsp;</DIV><DL style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; HEIGHT: ${height}px; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\"><DT style=\"BACKGROUND-COLOR:${bgcolor2}\">${starttime} - ${endtime} ${icon}</DT><DD><SPAN>${content}</SPAN></DD><DIV class='resizer' style='display:${redisplay}'><DIV class=rszr_icon>&nbsp;</DIV></DIV></DL><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; BORDER-RIGHT-COLOR: ${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb1>&nbsp;</DIV><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BORDER-TOP-COLOR:${bdcolor}; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb2>&nbsp;</DIV></DIV>";
+        //  var __SCOLLEVENTTEMP = "<DIV style=\"WIDTH:${width};top:${top};left:${left};\" title=\"${title}\" class=\"chip chip${i} ${drag}\"><div class=\"dhdV\" style=\"display:none\">${data}</div><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}\" class=ct>&nbsp;</DIV><DL style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; HEIGHT: ${height}px; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\"><DT style=\"BACKGROUND-COLOR:${bgcolor2}\">${starttime} - ${endtime} ${icon}</DT><DD><SPAN>${content}</SPAN></DD><DIV class='resizer' style='display:${redisplay}'><DIV class=rszr_icon>&nbsp;</DIV></DIV></DL><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BACKGROUND-COLOR:${bgcolor1}; BORDER-TOP-COLOR: ${bdcolor}; BORDER-RIGHT-COLOR: ${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb1>&nbsp;</DIV><DIV style=\"BORDER-BOTTOM-COLOR:${bdcolor}; BORDER-TOP-COLOR:${bdcolor}; BORDER-RIGHT-COLOR:${bdcolor}; BORDER-LEFT-COLOR:${bdcolor}\" class=cb2>&nbsp;</DIV></DIV>";
         var __ALLDAYEVENTTEMP = '<div class="rb-o " id="${id}" title="${title}" style="color:${color};"><div class="dhdV" style="display:none">${data}</div><div class="${extendClass} rb-m" style="background-color:${color}">${extendHTML}<div class="rb-i">${content}</div></div></div>';
         var __MonthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         var __LASSOTEMP = "<div class='drag-lasso' style='left:${left}px;top:${top}px;width:${width}px;height:${height}px;'>&nbsp;</div>";
         //for dragging var
         var _dragdata;
-      var _dragevent;
+        var _dragevent;
 
         //clear DOM
         clearcontainer();
@@ -500,8 +500,8 @@
             }
             html.push("</tr></tbody></table>");
             html.push("</div>");
-           // var bH = GetMonthViewBodyHeight() - GetMonthViewHeaderHeight();
-           var bH = 580;
+            // var bH = GetMonthViewBodyHeight() - GetMonthViewHeaderHeight();
+            var bH = 580;
             html.push("<div id=\"mvEventContainer\" class=\"mv-event-container\" style=\"height:", bH, "px;", "\">");
             BuilderMonthBody(html, showday, config.weekstartday, events, bH);
             html.push("</div>");
@@ -1598,8 +1598,8 @@
             }
             if (data != null) {
                 if (option.quickDeleteUrl != "" && data[8] == 1 && option.readonly != true) {
-                    var csbuddle = '<div id="bbit-cs-buddle" style="z-index: 180; width: 400px;visibility:hidden;" class="bubble"><table class="bubble-table" cellSpacing="0" cellPadding="0"><tbody><tr><div id="tr1" class="bubble-corner"></div>  <tr><td class="bubble-mid" colSpan="3"><div style="overflow: hidden" id="bubbleContent1"><div><div></div><div class="cb-root"><table class="cb-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><div id="bbit-cs-what" title="'
-                            + i18n.xgcalendar.click_to_detail + '" class="textbox-fill-div lk" style="cursor:pointer;"></div></div></div></td></tr><tr><td class=cb-value><div id="bbit-cs-buddle-timeshow"></div></td></tr></tbody></table><input id="bbit-cs-id" type="hidden" value=""/>[ <span id="bbit-cs-delete" class="lk">'
+                    //     var csbuddle = '<div id="bbit-cs-buddle" style="z-index: 180; width: 400px;visibility:hidden;" class="bubble"><table class="bubble-table" cellSpacing="0" cellPadding="0"><tbody><tr><div id="tr1" class="bubble-corner"></div>  <tr><td class="bubble-mid" colSpan="3"><div style="overflow: hidden" id="bubbleContent1"><div><div></div><div class="cb-root"><table class="cb-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><div id="bbit-cs-what" title="'
+                    +i18n.xgcalendar.click_to_detail + '" class="textbox-fill-div lk" style="cursor:pointer;"></div></div></div></td></tr><tr><td class=cb-value><div id="bbit-cs-buddle-timeshow"></div></td></tr></tbody></table><input id="bbit-cs-id" type="hidden" value=""/>[ <span id="bbit-cs-delete" class="lk">'
                             + i18n.xgcalendar.i_delete + '</span> ]&nbsp; <SPAN id="bbit-cs-editLink" class="lk">'
                             + i18n.xgcalendar.update_detail + ' <StrONG>&gt;&gt;</StrONG></SPAN></div></div></div><div id="br1" class="bubble-corner"></div></tr></tbody></table><div id="bubbleClose2" class="bubble-closebutton"></div><div id="prong1" class="prong"><div class=bubble-sprite></div></div></div>';
                     var bud = $("#bbit-cs-buddle");
@@ -1657,22 +1657,22 @@
                             $("#bbit-cs-buddle").css("visibility", "hidden");
                             return false;
                         });
-                        
+
                         /*
                          lbtn.click(function(e) {
-                            if (!option.EditCmdhandler) {
-                                alert("EditCmdhandler" + i18n.xgcalendar.i_undefined);
-                            }
-                            else {
-                                if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
-                                    option.EditCmdhandler.call(this, $("#bbit-cs-buddle").data("cdata"));
-                                }
-                            }
-                            $("#bbit-cs-buddle").css("visibility", "hidden");
-                            return false;
-                        });  */
-                        
-                        
+                         if (!option.EditCmdhandler) {
+                         alert("EditCmdhandler" + i18n.xgcalendar.i_undefined);
+                         }
+                         else {
+                         if (option.EditCmdhandler && $.isFunction(option.EditCmdhandler)) {
+                         option.EditCmdhandler.call(this, $("#bbit-cs-buddle").data("cdata"));
+                         }
+                         }
+                         $("#bbit-cs-buddle").css("visibility", "hidden");
+                         return false;
+                         });  */
+
+
                         bud.click(function() {
                             return false
                         });
@@ -1844,12 +1844,14 @@
                 temparr.push('<table class="bubble-table" cellSpacing="0" cellPadding="0"><tbody><tr><td class="bubble-cell-side">');
                 temparr.push('<td class="bubble-cell-side">  <tr><td class="bubble-mid" colSpan="3"><div style="overflow: hidden" id="bubbleContent1"><div><div></div><div class="cb-root">');
                 temparr.push('<table class="cb-table" cellSpacing="0" cellPadding="0"><tbody><tr>');
-                temparr.push(i18n.xgcalendar.time, ':<br><td class=cb-value><div id="bbit-cal-buddle-timeshow"></div>     <div id="bubbleClose1" class="bubble-closebutton"></div>  </td></tr><tr><th class="cb-key"></td></tr></tbody></table>');
+                temparr.push(i18n.xgcalendar.time, ':<br><td class=cb-value><div id="bbit-cal-buddle-timeshow"></div>     <div id="bubbleClose1" class="bubble-closebutton"></div>  </td></tr><tr></td></tr></tbody></table>\n\
+</div></div></div><tr><td><td><td></tr></tbody></table><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>\n\
+');
                 // temparr.push(i18n.xgcalendar.content, ':</th><td class="cb-value"><div class="textbox-fill-wrapper"><div class="textbox-fill-mid"><input id="bbit-cal-what" class="textbox-fill-input"/></div></div><div class="cb-example">');
                 // temparr.push(i18n.xgcalendar.example,);
                 //temparr.push(i18n.xgcalendar.create_event, '&nbsp;');
-                temparr.push(i18n.xgcalendar.update_detail, ' <SPAN id="bbit-cal-editLink" class="lk"> <StrONG>&gt;&gt;</StrONG></SPAN></div></div></div><tr><td><td><td></tr></tbody></table><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>');
-
+                //     temparr.push(i18n.xgcalendar.update_detail, ' <SPAN id="bbit-cal-editLink" class="lk"> <StrONG>&gt;&gt;</StrONG></SPAN></div></div></div><tr><td><td><td></tr></tbody></table><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>');
+                //     temparr.push(i18n.xgcalendar.update_detail, ' </div></div></div><tr><td><td><td></tr></tbody></table><div id="prong2" class="prong"><div class=bubble-sprite></div></div></div>');
 
 
 
@@ -2618,12 +2620,18 @@
                         var firstday = option.vstart;
                         var start = DateAdd("d", si, firstday);
                         var end = DateAdd("d", ei, firstday);
+                        var startdate=start.toDateString();
+                        var enddate=end.toDateString();
                         // starti=strtodate(start);
                         //alert(start + end );
-                        $("#startdate").val(start);
-                         $("#enddate").val(end);
+                       // var startarray = start.split(" ");
+                      //  var startday = startarray[0] + '-' + startarray[1] + '/' + startarray[2] + '/' + startarray[3];
+                    //  var startingtime=start.getTime();
+                        $("#startdate").val(startdate);
+                        $("#enddate").val(enddate);
 
 
+                        //alert(startday);
 
 
                         //   $("#date").val(start);
@@ -2632,15 +2640,14 @@
                         //   alert($("#date").attr('text'));
                         _dragevent = function() {
                             $("#" + lassoid).remove();
-                        
+
                         };
                         quickadd(start, end, true, {left: e.pageX, top: e.pageY});
 
 
-                        
-                      
-                       
-                    
+
+
+
 
 
 
