@@ -407,20 +407,43 @@ $(document).ready(function() {
                             },
                             success : function(data){
                                 console.log(data);
-                                $("#popUp-unapproved").append("<h3> NIO ID: "+nio_id+"</h3>");
                                 var empID=data['genDetails']['empID'];
                                 var empName=data['genDetails']['empName'];
                                 var appDate=data['genDetails']['dateApplied'];
                                 var reqID=data['genDetails']['requestID'];
-                              
-                                $("#popUp-unapproved").append("<h3>ID: "+empID+"</h3>");
-                                $("#popUp-unapproved").append("<h3>Name: "+empName+"</h3>");
-                                $("#popUp-unapproved").append("<h3>Applied On: "+appDate+"</h3>");  
-                                $("#popUp-unapproved").append("<h3>Request ID: "+reqID+"</h3>");
-                                $("#popUp-unapproved").append('<table class="flatTable-heading template-lightBack">'+
-                                    '<tr class="headingTr template-lightBack"><td>NIO_ID</td><td>DATE</td><td>NIO_ID</td><td>DATE</td></tr>');
+                                var description="On a business trip to Australia";
+                                var reason="Business Trip";
+                                $("#popUp-unapproved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>NIO ID: </b>"+nio_id+"</td><td><b>Request ID: </b>"+reqID+"</td><td style='text-align: right'><b>Applied On: </b>"+appDate+"</td></tr></table>"); 
+                       
+                                $("#popUp-unapproved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Employee Name: </b>"+empName+"</td><td style='text-align: right'><b>Employee ID: </b>"+empID+"</td></tr></table>"); 
+                          
+                                $("#popUp-unapproved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Reason: </b>"+reason+"</td></tr></table>"); 
+                               
+                               
+                                $("#popUp-unapproved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
+                                $("#popUp-unapproved").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%' disabled>"+description+"</textarea>");
                                 
+                                $("#popUp-unapproved").append('<table class="flatTable-heading template-lightBack">'+
+                                    '<tr class="headingTr template-lightBack"><td>Date</td><td>Start Time</td><td>End Time</td><td>Duration</td></tr>');
                                 $("#popUp-unapproved").append('</table>');
+                                
+                                var i=0;
+                                while(data[i]){
+                                    $("#popUp-unapproved").append('<table class="flatTable table-row-approvedTable">'+
+                                        '<tr class="table-row-selectable">'+
+                                        ' <td>'+data[i]['date']+'</td>'+
+                                        ' <td>'+data[i]['startTime']+'</td>'+
+                                        ' <td>'+data[i]['endTime']+'</td>'+
+                                        ' <td>'+data[i]['duration']+'</td>'+
+                                        ' </tr>'+
+                                        '</table>');
+                                    ++i;
+                                }
+                                
                             }
                         });  
                     }
@@ -500,15 +523,42 @@ $(document).ready(function() {
                             },
                             success : function(data){
                                 console.log(data);
-                                $("#popUp-approved").append("<h1> NIO ID: "+nio_id+"</h1>");
                                 var empID=data['genDetails']['empID'];
                                 var empName=data['genDetails']['empName'];
                                 var appDate=data['genDetails']['dateApplied'];
                                 var reqID=data['genDetails']['requestID'];
-                                $("#popUp-approved").append("<h1>ID: "+empID+"</h1>");
-                                $("#popUp-approved").append("<h1>Name: "+empName+"</h1>");
-                                $("#popUp-approved").append("<h1>Applied On: "+appDate+"</h1>");  
-                                $("#popUp-approved").append("<h1>RequestID: "+reqID+"</h1>");
+                                var description="On a business trip to Australia";
+                                var reason="Business Trip";
+                                $("#popUp-approved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>NIO ID: </b>"+nio_id+"</td><td><b>Request ID: </b>"+reqID+"</td><td style='text-align: right'><b>Applied On: </b>"+appDate+"</td></tr></table>"); 
+                       
+                                $("#popUp-approved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Employee Name: </b>"+empName+"</td><td style='text-align: right'><b>Employee ID: </b>"+empID+"</td></tr></table>"); 
+                          
+                                $("#popUp-approved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Reason: </b>"+reason+"</td></tr></table>"); 
+                               
+                               
+                                $("#popUp-approved").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
+                                $("#popUp-approved").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%' disabled>"+description+"</textarea>");
+                                
+                                $("#popUp-approved").append('<table class="flatTable-heading template-lightBack">'+
+                                    '<tr class="headingTr template-lightBack"><td>Date</td><td>Start Time</td><td>End Time</td><td>Duration</td></tr>');
+                                $("#popUp-approved").append('</table>');
+                                
+                                var i=0;
+                                while(data[i]){
+                                    $("#popUp-approved").append('<table class="flatTable table-row-approvedTable">'+
+                                        '<tr class="table-row-selectable">'+
+                                        ' <td>'+data[i]['date']+'</td>'+
+                                        ' <td>'+data[i]['startTime']+'</td>'+
+                                        ' <td>'+data[i]['endTime']+'</td>'+
+                                        ' <td>'+data[i]['duration']+'</td>'+
+                                        ' </tr>'+
+                                        '</table>');
+                                    ++i;
+                                }
                             }
                         });  
                     }
@@ -765,13 +815,7 @@ $(document).ready(function() {
         //series is the data of the two columns and their respective names.
      
         options={
-            drilldown:{
-                animation: false
-            },
-            loading:{
-                showDuration: 0  
-            },
-            colors: ['#E77817', '#E68A2E'],
+            colors: ['#E77817', '#fcb334'],
             chart: {
                 backgroundColor : '#F9D597',
                 type: 'column',

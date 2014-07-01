@@ -289,7 +289,7 @@
 
                             <div class="admin-table-container">
                                 <table class="flatTable table-row-unapprovedTable" >
-                                    <tr class="table-row-selectabl">
+                                    <tr class="table-row-selectable">
                                         <td>#2331212</td>  
                                         <td>Rajesh</td>
                                         <td>Feb 21,2013</td>
