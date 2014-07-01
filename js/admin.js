@@ -81,10 +81,10 @@ $(document).ready(function() {
                 while(data[0][i]){
                     nioApplied[i]=parseInt(data[0][i],10);
                     nioAccepted[i]=parseInt(data[1][i],10);
-                  ++i;  
+                    ++i;  
                 }
                 if(i==8)
-                createGraphNIO(textToPass,nioAccepted,nioApplied,dataToPass);
+                    createGraphNIO(textToPass,nioAccepted,nioApplied,dataToPass);
                 else
                     decrementNIOChartPage();
             }
@@ -114,7 +114,7 @@ $(document).ready(function() {
         $("#settings-nio-tab").addClass('template-lightColor');
        
         $("#settings-general-tab").removeClass('template-lightColor');
-         $("#settings-general-tab").removeClass('template-darkBack');
+        $("#settings-general-tab").removeClass('template-darkBack');
         $("#settings-general-tab").addClass('template-textWhite');
         $("#settings-general-tab").addClass('template-lightBack');  
     });
@@ -326,6 +326,7 @@ $(document).ready(function() {
     $("body").delegate(".table-row-selectable","click",function() {
         var nio_id;
         var table = $(this).closest('table');
+        var element=$(this);
         console.log(table.attr('tableNumber'));
         tableNumber = parseInt($(this).attr('tableNumber'), 10);
         switch (tableNumber) {
@@ -337,7 +338,7 @@ $(document).ready(function() {
                 $("#popUp-unapproved").dialog({
                     modal:true,
                     draggable:false,
-                    title: "Unapproved NIO",
+                    title: "Unapproved NIO [NIO ID:"+nio_id+"]",
                     closeText: "hide",
                     dialogClass: 'no-close success-dialog',
                     width: 700,
@@ -360,6 +361,11 @@ $(document).ready(function() {
                                     
                                 }
                             });
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
                             $( this ).dialog( "close" );
                         },
                         'class':"button-green"
@@ -380,7 +386,12 @@ $(document).ready(function() {
                                     alert("Rejected"); 
                                 }
                             });  
-                              $( this ).dialog( "close" );
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
+                            $( this ).dialog( "close" );
                         },
                         'class':"button-red"
                     }
@@ -396,13 +407,20 @@ $(document).ready(function() {
                             },
                             success : function(data){
                                 console.log(data);
-                                $("#popUp-unapproved").append("<h1> NIO ID: "+nio_id+"</h1>");
+                                $("#popUp-unapproved").append("<h3> NIO ID: "+nio_id+"</h3>");
                                 var empID=data['genDetails']['empID'];
                                 var empName=data['genDetails']['empName'];
                                 var appDate=data['genDetails']['dateApplied'];
-                                $("#popUp-unapproved").append("<h1>ID: "+empID+"</h1>");
-                                $("#popUp-unapproved").append("<h1>Name: "+empName+"</h1>");
-                                $("#popUp-unapproved").append("<h1>Applied On: "+appDate+"</h1>");   
+                                var reqID=data['genDetails']['requestID'];
+                              
+                                $("#popUp-unapproved").append("<h3>ID: "+empID+"</h3>");
+                                $("#popUp-unapproved").append("<h3>Name: "+empName+"</h3>");
+                                $("#popUp-unapproved").append("<h3>Applied On: "+appDate+"</h3>");  
+                                $("#popUp-unapproved").append("<h3>Request ID: "+reqID+"</h3>");
+                                $("#popUp-unapproved").append('<table class="flatTable-heading template-lightBack">'+
+                                    '<tr class="headingTr template-lightBack"><td>NIO_ID</td><td>DATE</td><td>NIO_ID</td><td>DATE</td></tr>');
+                                
+                                $("#popUp-unapproved").append('</table>');
                             }
                         });  
                     }
@@ -436,6 +454,12 @@ $(document).ready(function() {
                                     alert("Pending");
                                 }
                             });  
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
+                            $( this ).dialog( "close" );
                         },
                         'class':"button-green"
                     },
@@ -454,7 +478,13 @@ $(document).ready(function() {
                                     console.log(data);
                                     alert("Rejected");
                                 }
-                            });  
+                            }); 
+                            element.css({
+                                "margin":"0px",
+                                "padding":"0px"
+                            });
+                            element.remove();
+                            $( this ).dialog( "close" );
                         },
                         'class':"button-red"
                     }
@@ -474,9 +504,11 @@ $(document).ready(function() {
                                 var empID=data['genDetails']['empID'];
                                 var empName=data['genDetails']['empName'];
                                 var appDate=data['genDetails']['dateApplied'];
+                                var reqID=data['genDetails']['requestID'];
                                 $("#popUp-approved").append("<h1>ID: "+empID+"</h1>");
-                                $("#popUp-approved").append("<h1>NAME: "+empName+"</h1>");
-                                $("#popUp-approved").append("<h1>APPLICATION DATE: "+appDate+"</h1>");   
+                                $("#popUp-approved").append("<h1>Name: "+empName+"</h1>");
+                                $("#popUp-approved").append("<h1>Applied On: "+appDate+"</h1>");  
+                                $("#popUp-approved").append("<h1>RequestID: "+reqID+"</h1>");
                             }
                         });  
                     }
@@ -661,7 +693,7 @@ $(document).ready(function() {
         }
         else{
             nioChartPageNumber++;
-                nioChart();
+            nioChart();
         }
     });
     
@@ -766,18 +798,6 @@ $(document).ready(function() {
                     }
                 }
             },
-            legend: {
-                align: 'right',
-                x: -70,
-                verticalAlign: 'top',
-                y: 20,
-                floating: true,
-                backgroundColor: 'transparent',
-                borderColor: '#F9D597',
-                borderWidth: 1,
-                shadow: false,
-                layout: 'vertical'
-            },
             tooltip: {
                 formatter: function() {
                     return '<b>' + this.x + '</b><br/>' +
@@ -839,7 +859,7 @@ $(document).ready(function() {
             tooltip: {
                 headerFormat: '<span>{point.key}</span><table style="font-size:10px;font-family: Segoe UI;font-weight:bold">',
                 pointFormat: '<tr><td style="=font-size:10px;font-family: Segoe UI;color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="font-size:10px;font-family: Segoe UI;padding:0"><b>{point.y}</b></td></tr>',
+                '<td style="font-size:10px;font-family: Segoe UI;padding:0"><b>{point.y}</b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -849,11 +869,12 @@ $(document).ready(function() {
                     pointPadding: 0.2,
                     borderWidth: 0
                 },
-                 series:{
+                series:{
                     animation: false,
                     borderColor :'#F9D597' 
                 }
-            },column: {
+            },
+            column: {
                 borderColor: '#F9D597'
             },
             series: [ {
@@ -865,7 +886,7 @@ $(document).ready(function() {
                 data: nioAccepted
     
             }
-        ]
+            ]
         }
         $('.admin-graph-container').highcharts(options);
     }
