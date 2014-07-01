@@ -2630,13 +2630,14 @@
                     //  var startingtime=start.getTime();
                         $("#startdate").val(startdate);
                         $("#enddate").val(enddate);
+                    
                       if(datediff>1){
                        for(si;si<ei;si++)
                            {
-                               var inbetween=DateAdd("d", si, firstday);
-                               var inbetweendate=inbetween.toDateString();
-                               $("#inbetween").append('<input>');
-                               $("#inbetweendate").val(inbetweendate);
+                               var inbetween=DateAdd("d", si, firstday).toDateString();
+                             //  var inbetweendate=inbetween.toDateString();
+                               $("#inbetween").append('<input value='+inbetween+'><br>');
+                              // $("#inbetweendate").val(inbetweendate);
                                //alert(inbetweendate);
                            }
 
