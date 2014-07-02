@@ -1,0 +1,88 @@
+.nio-cal-contents{
+    width: 100%;
+    height: 85.5%;
+    background-color: transparent;
+    position: relative;
+}
+
+#nio-calendar{
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 75%;
+    height: 100%;
+    background-color: transparent;
+}
+
+.nio-selected-contents{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    background-color: white;
+    width: 25%;
+}
+
+.nio-cal-control{
+    position: relative;
+    bottom: 0px;
+    height: 10%;
+    width: 100%;
+    background-color: #E68A2E;
+}
+
+.nio-cal-info{
+    position: relative;
+    top: 0px;
+    height: 11%;
+    width: 100%;
+    background-color: #E68A2E;
+}
+
+.nio-apply-form{
+     position: relative;
+    width: 100%;
+    height: 79%;
+    background-color: #F9D597;
+    overflow-y:scroll;
+}
+
+#nio-apply-reason{
+    width: 90%;
+    padding: 1%;
+    margin-top: 2%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+#nio-apply-add-description{
+    width: 90%;
+    padding: 1%;
+    margin-top: 2%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+.nio-cal-button{
+    width: 30%;
+    margin: 3%;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 2%;
+    position: absolute;
+    cursor: pointer;
+}
+
+#nio-cal-applyButton{
+   background-color: green; 
+   left: 1%;
+}
+
+#nio-cal-cancelButton{
+    background-color: red;
+    float: right;
+    right: 1%;
+    
+}

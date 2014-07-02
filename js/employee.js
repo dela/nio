@@ -2,6 +2,30 @@ var recordNumber=1;
 
 //-------------------Application of NIO---------------------------------
 
+ $('#nio-calendar').fullCalendar({
+        theme: true,
+        firstDay: 1,
+        aspectRatio: 2.05,
+        header: {
+            center: 'title',
+            right: 'today next nextYear',
+            left: 'prevYear prev'
+        },
+        weekMode: 'liquid',
+        selectable: true,
+        select:function(start, end, jsEvent, view){
+            var startDate=start;
+            var endDate=end;
+            var i=startDate;
+            var format;
+            while(i<endDate){
+          
+                $('.nio-apply-dates').append("<tr><td>"+i.format("MMM Do YY")+"</td></tr>");
+                i.add('days',1);
+            }  
+        }
+        
+    });
 
 
 
