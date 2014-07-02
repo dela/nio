@@ -1,5 +1,12 @@
 var recordNumber=1;
 
+//-------------------Application of NIO---------------------------------
+
+
+
+
+//-------------------Employee NIO History--------------------------
+
 function populateNIOHistoryTable(callBackNIOHistoryTable){
         $.ajax({
             type: "POST",
@@ -35,3 +42,5 @@ function onLoad(){
     
 
 onLoad();
+
+
