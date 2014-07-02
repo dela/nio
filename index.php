@@ -24,7 +24,7 @@
 
         <!--  End of calender page scripts  -->
     </head>
-    <body style="overflow-y: hidden;" class="template-bg" >
+    <body style="overflow-y:visible;" class="template-bg" >
 
         <?php
         require_once 'header.php';
@@ -231,7 +231,7 @@
                     {
                         case 1:
                             t = "Loading data...";
-                            break;
+                          
                         case 2:
                         case 3:
                         case 4:
