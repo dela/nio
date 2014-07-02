@@ -10,6 +10,64 @@ $(document).ready(function() {
     //   $('#day').show();
 
 
+
+//graph for day 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     $('#day').highcharts({
         chart: {
             type: 'bar',
@@ -99,7 +157,7 @@ $(document).ready(function() {
                 data: [4, 24, 2, 10]
             }, {
                 name: 'Work',
-                data: [40, 20, 42, 34]
+                data: [40, 20, 42,34]
             }], colors: ['#E77817', '#fcb334']
     });
 
