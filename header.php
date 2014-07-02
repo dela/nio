@@ -8,8 +8,8 @@
         <div id="template-navigation" class="template-darkBack">
             <div class="template-quicknav">
                 <ul>
-                    <a href="index.php"> <li class="template-navList">Apply For NIO </li></a>
-                    <a href="niohistory.php"> <li class="template-navList">NIO History</li> </a>
+                    <a href="applyNIO.php"> <li class="template-navList">Apply For NIO </li></a>
+                    <a href="index.php"> <li class="template-navList">NIO History</li> </a>
                     <a href="summary.php"> <li class="template-navList">Work Summary</li></a>
                     <a href="supervise.php"> <li class="template-navList">Supervise</li></a>
                     <a href="admin.php"> <li class="template-navList">Admin</li></a>
