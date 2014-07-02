@@ -1,7 +1,6 @@
 $(document).ready(function() {
     var checkUpdate = 15000;            //check for update in how much time
     var i = 1;      //flips
-    var k = 1;      //flips
     var leaveChartPageNumber;  //page in leave chart  
     var nioChartPageNumber;     //page in nio chart
     var tableNumber=1;
@@ -434,6 +433,10 @@ $(document).ready(function() {
                                 "padding":"0px"
                             });
                             element.remove();
+                            if(chartNumber==2){
+                                nioChartPageNumber=1;
+                                 nioChart();
+                            }
                             $( this ).dialog( "close" );
                         },
                         'class':"button-green"
@@ -459,6 +462,10 @@ $(document).ready(function() {
                                 "padding":"0px"
                             });
                             element.remove();
+                            if(chartNumber==2){
+                                nioChartPageNumber=1;
+                                 nioChart();
+                            }
                             $( this ).dialog( "close" );
                         },
                         'class':"button-red"
@@ -551,6 +558,10 @@ $(document).ready(function() {
                                 "padding":"0px"
                             });
                             element.remove();
+                            if(chartNumber==2){
+                                nioChartPageNumber=1;
+                                 nioChart();
+                            }
                             $( this ).dialog( "close" );
                         },
                         'class':"button-green"
@@ -576,6 +587,10 @@ $(document).ready(function() {
                                 "padding":"0px"
                             });
                             element.remove();
+                            if(chartNumber==2){
+                                nioChartPageNumber=1;
+                                 nioChart();
+                            }
                             $( this ).dialog( "close" );
                         },
                         'class':"button-red"

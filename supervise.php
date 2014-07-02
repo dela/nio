@@ -75,7 +75,7 @@
                                 <td>EMPLOYEE ID</td>
                                 <td>EMPLOYEE NAME</td>
                                 <td>DATE</td>
-                                <td>DURATION</td>
+                                <td>IN OFFICE</td>
                             </tr>
                         </table>
                         <div class="admin-table-container">

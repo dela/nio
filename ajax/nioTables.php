@@ -38,6 +38,7 @@ if ($tableNumber == 2|| $tableNumber == 3) {
 
         $appDate = $row['nio_date_applied'];
         $appDate=date("d-m-Y", strtotime($appDate));
+        $duration= ($duration/60)."h ".($duration%60)."m";
         $array[] = array('empID' => $empID, 'empName' => $empName, 'appDate' => $appDate, 'nioID' => $nioID, 'startDate' => $appDate,'endDate' => $appDate, 'duration' => $duration);
     }
 }
@@ -54,6 +55,7 @@ else{
         $employee=  mysqli_query($hrm_conn, $query);
         $employee=  mysqli_fetch_array($employee);
         $empName=$employee['emp_firstname']." ".$employee['emp_lastname'];
+        $duration= ($duration/60)."h ".($duration%60)."m";
         $array[]=array('date'=>$date,'duration'=>$duration,'attID'=>$attID,'empID'=>$empID,'empName'=>$empName);
     }
 }
