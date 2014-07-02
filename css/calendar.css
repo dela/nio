@@ -425,6 +425,7 @@ border-bottom:2px solid #fcb334;
 .st-bg {
 	border-left:1px solid #fcb334;
         background-color: #EBEBE0;
+        border-bottom: 1px solid #fcb334;
   
 }
 .st-bg-today {
