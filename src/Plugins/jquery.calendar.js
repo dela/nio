@@ -501,7 +501,7 @@
             html.push("</tr></tbody></table>");
             html.push("</div>");
             // var bH = GetMonthViewBodyHeight() - GetMonthViewHeaderHeight();
-            var bH = 580;
+            var bH =510;
             html.push("<div id=\"mvEventContainer\" class=\"mv-event-container\" style=\"height:", bH, "px;", "\">");
             BuilderMonthBody(html, showday, config.weekstartday, events, bH);
             html.push("</div>");
