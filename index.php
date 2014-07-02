@@ -183,7 +183,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 
-       
+           
                 var view = "month";
                
                 var DATA_FEED_URL = "php/datafeed.php";
@@ -265,6 +265,7 @@
                     
                   //  $("#gridcontainer").show();
                    //document.location.href="#month";
+                  
                     $("#gridcontainer").reload();
                     $("#caltoolbar div.fcurrent").each(function() {
                         $("#showmonthbtn").removeClass("fcurrent");
