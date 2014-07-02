@@ -5,7 +5,6 @@ $(document).ready(function() {
     var leaveChartPageNumber;  //page in leave chart  
     var nioChartPageNumber;     //page in nio chart
     var tableNumber=1;
-    var index = 0 ;
     var chartNumber=1;          //
     var options;                //used in chart
     var textToPass;         // used in chart
@@ -54,7 +53,7 @@ $(document).ready(function() {
                 data: [-3, -4, 4, 2, 5, 20, 13, 6]
             }
             ];
-            dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
+            dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
             createGraphLeave(textToPass,seriesToPass,dataToPass);
         }
         else{
@@ -237,7 +236,7 @@ $(document).ready(function() {
             data: [-3, -4, 4, 2, 5, 20, 13, 6]
         }
         ];
-        dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
+        dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
         createGraphLeave(textToPass,seriesToPass,dataToPass);
         
           $("#table-noStatusTable .table-row-noStatusTable").empty();
@@ -292,7 +291,7 @@ $(document).ready(function() {
         tableNumber = parseInt($(this).attr('tableNumber'), 10);
         switch (tableNumber) {
             case 1: 
-                var attID=$(this).attr('attID');
+                var caseID=$(this).attr('attID');
                 
                 $("#popUp-noStatus").dialog({
                     position:{
@@ -302,21 +301,21 @@ $(document).ready(function() {
                     },
                     modal:true,
                     draggable:false,
-                    title: "Absent without Notifying [ATT ID:"+attID+"]",
+                    title: "Absent without Notifying [CASE ID:"+caseID+"]",
                     closeText: "hide",
                     dialogClass: 'no-close success-dialog',
                     width: 700,
                     height: 550,
                     buttons:[
                     {
-                        text: "Accept",
+                        text: "Send Reminder",
                         click: function() {
                             $.ajax({
                                 type: "POST",
                                 url: "ajax/changeNioStatus.php",
                                 dataType: 'json',
                                 data: {
-                                    nioID: nio_id,
+                                    caseID: caseID,
                                     status: 1
                                 },
                                 success : function(data){
@@ -332,32 +331,7 @@ $(document).ready(function() {
                             element.remove();
                             $( this ).dialog( "close" );
                         },
-                        'class':"button-green"
-                    },
-                    {
-                        text: "Reject",
-                        click: function() {
-                            $.ajax({
-                                type: "POST",
-                                url: "ajax/changeNioStatus.php",
-                                dataType: 'json',
-                                data: {
-                                    nioID: nio_id,
-                                    status: -1
-                                },
-                                success : function(data){
-                                    console.log(data);
-                                    alert("Rejected"); 
-                                }
-                            });  
-                            element.css({
-                                "margin":"0px",
-                                "padding":"0px"
-                            });
-                            element.remove();
-                            $( this ).dialog( "close" );
-                        },
-                        'class':"button-red"
+                        'class':"orange-button"
                     }
                     ],
                     open: function( event, ui ) {        
@@ -367,7 +341,7 @@ $(document).ready(function() {
                             url: "ajax/noNotify.php",
                             dataType: 'json',
                             data: {
-                                attID: attID
+                                caseID: caseID
                             },
                             success : function(data){
                                 console.log(data);
@@ -375,15 +349,45 @@ $(document).ready(function() {
                                 var empName=data['genDetails']['empName'];
                                 var date=data['genDetails']['date'];
                                 
+                                var description='Subject: Reminder to apply for NIO or Leave'+
+                                        "\n\nThis mail is to remind you to apply for NIO or leave, as you did not meet the minimum working hour requirement on "+
+                                        date+".";
+                                
                                 $("#popUp-noStatus").append("<table style='width: 100%'>"+
-                                    "<tr><td style='text-align: left'><b>ATT ID: </b></td><td style='text-align: left'>"+attID+"</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>"+date+"</td></tr>"+
+                                    "<tr><td style='text-align: left'><b>CASE ID: </b></td><td style='text-align: left'>"+caseID+"</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>"+date+"</td></tr>"+
                                     "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>"+empName+"</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>"+empID+"</td></tr>"+
                                    
                                     "</table>"); 
                        
                                 $("#popUp-noStatus").append("<table style='width: 100%'>"+
-                                    "<tr><td style='text-align: left'><b>Description: </b></td></tr></table>"); 
-                                $("#popUp-noStatus").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%'></textarea>");
+                                    "<tr><td style='text-align: left'><b>Message: </b></td></tr></table>"); 
+                                $("#popUp-noStatus").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%'>"+description+"</textarea>");
+                             
+                             
+                                $("#popUp-noStatus").append("<table style='width: 100%'>"+
+                                    "<tr><td style='text-align: left'><b>Login Details: </b></td></tr></table>"); 
+                                 $("#popUp-noStatus").append('<table class="flatTable-heading template-lightBack">'+
+                                    '<tr class="headingTr template-lightBack"><td>In Time</td><td>Out Time</td><td>Duration</td></tr>');
+                                $("#popUp-unapproved").append('</table>');
+                                
+                                var i=0;
+                                while(data[i]){
+                                    $("#popUp-noStatus").append('<table class="flatTable table-row-noStatusTable">'+
+                                        '<tr class="table-row-selectable">'+
+                                        ' <td>'+data[i]['inTime']+'</td>'+
+                                        ' <td>'+data[i]['outTime']+'</td>'+
+                                        ' <td>'+data[i]['duration']+'</td>'+
+                                        ' </tr>'+
+                                        '</table>');
+                                    ++i;
+                                }
+                                if(i==0){
+                                    $("#popUp-noStatus").append('<table class="flatTable table-row-noStatusTable">'+
+                                        '<tr class="table-row-selectable">'+
+                                        ' <td>'+'Did not show up for work'+'</td>'+
+                                        ' </tr>'+
+                                        '</table>');
+                                }
                                 
                             }
                         });  
@@ -674,7 +678,7 @@ $(document).ready(function() {
                     data: [-3, -4, 4, 2, 5, 20, 13, 6]
                 }
                 ];
-                dataToPass=['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas', 'Mango', 'Rose', 'Lily'];
+                dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
                 createGraphLeave(textToPass,seriesToPass,dataToPass);
             }
         }
@@ -704,7 +708,7 @@ $(document).ready(function() {
                     data: [1, 0, 7, 4, 2, 8, 3, 3]
                 }
                 ];
-                dataToPass=['Peacock', 'Tiger', 'Lion', 'Owl', 'Deer', 'Zebra', 'Fox', 'Cow'];
+                dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
                 createGraphLeave(textToPass,seriesToPass,dataToPass);
             }
         }
@@ -747,11 +751,6 @@ $(document).ready(function() {
         }); 
     }, checkUpdate);
 
-    window.setInterval(function() {
-        ++k;
-        var elem = $("#adminSettings").find('.admin-flip-part2');
-        elem.html("<h1 style=\"font-size : 50; text-align: center;padding-top: 30px\">" + k + "</h1>");
-    }, checkUpdate);
     //------------------------------CLICK OF FLIP----------------------
     
     $("#nioCount").click(function(){
