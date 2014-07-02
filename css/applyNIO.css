@@ -47,6 +47,19 @@
     overflow-y:scroll;
 }
 
+.nio-apply-dates{
+    width: 100%;
+}
+
+.nio-row-date{
+    width: 100%;
+    background-color: #F9C775;
+}
+
+.nio-row-date td{
+     padding: 1%;
+}
+
 #nio-apply-reason{
     width: 90%;
     padding: 1%;

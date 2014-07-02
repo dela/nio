@@ -33,6 +33,7 @@
                     <button id="nio-apply-add-description">ADD DESCRIPTION</button>
                     <hr/> 
                     </div>
+                    
                     <table class="nio-apply-dates"></table>
                 </div>
                 

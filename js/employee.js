@@ -19,8 +19,7 @@ var recordNumber=1;
             var i=startDate;
             var format;
             while(i<endDate){
-          
-                $('.nio-apply-dates').append("<tr><td>"+i.format("MMM Do YY")+"</td></tr>");
+                $('.nio-apply-dates').append("<tr class='nio-row-date' date="+i+"><td>"+i.format('ll')+"</td></tr>");
                 i.add('days',1);
             }  
         }
