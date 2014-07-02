@@ -182,10 +182,10 @@
 
         <script type="text/javascript">
             $(document).ready(function() {
-
-
+                
+           
                 var view = "month";
-
+               
                 var DATA_FEED_URL = "php/datafeed.php";
                 var op = {
                     view: view,
@@ -246,8 +246,8 @@
                     switch (type)
                     {
                         case 1:
-                            $("#loadingpannel").hide();
-                            break;
+                          $("#loadingpannel").hide();
+                           break;
                         case 2:
                         case 3:
                         case 4:
@@ -261,7 +261,21 @@
                 }
                 function cal_onerror(type, data)
                 {
-                    $("#errorpannel").show();
+                   // $("#errorpannel").show();
+                    
+                  //  $("#gridcontainer").show();
+                   //document.location.href="#month";
+                  
+                    $("#gridcontainer").reload();
+                    $("#caltoolbar div.fcurrent").each(function() {
+                        $("#showmonthbtn").removeClass("fcurrent");
+                    })
+                    $("#showmonthbtn").addClass("fcurrent");
+                    var p = $("#gridcontainer").swtichView("month").BcalGetOp();
+                    if (p && p.datestrshow) {
+                        $("#txtdatetimeshow").text(p.datestrshow);
+                    }
+                     $("#gridcontainer").reload();
                 }
                 function Edit(data)
                 {

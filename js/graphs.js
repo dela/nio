@@ -12,7 +12,10 @@ $(document).ready(function() {
 
     $('#day').highcharts({
         chart: {
-            type: 'bar'
+            type: 'bar',
+            backgroundColor: '#F9D597',
+            borderColor: '#F9D597',
+            plotBorderColor: '#F9D597'
 
         },
         title: {
@@ -31,21 +34,25 @@ $(document).ready(function() {
         legend: {
             reversed: true
         },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+            valueSuffix: ' hr',
+            shared: true
+        },
         plotOptions: {
             series: {
-                stacking: 'normal'
+                stacking: 'normal',
+                animation: false
 
             }
         },
         series: [{
                 name: 'Yet to work ',
-                color: '#FFB84D',
                 data: [0, 2.75, 1.25, 4, 3.75, .05, 0]
             }, {
-                name: 'Worked out',
-                color: ' #66A3FF',
+                name: 'Work',
                 data: [0, 6, 7.5, 4.75, 5, 8.7, 0]
-            }]
+            }], colors: ['#E77817', '#fcb334']
     });
 
 
@@ -56,7 +63,10 @@ $(document).ready(function() {
 
     $('#week').highcharts({
         chart: {
-            type: 'bar'
+            type: 'bar',
+            backgroundColor: '#F9D597',
+            borderColor: '#F9D597',
+            plotBorderColor: '#F9D597'
         },
         title: {
             text: 'Weekly Analysis chart'
@@ -73,20 +83,24 @@ $(document).ready(function() {
         legend: {
             reversed: true
         },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+            valueSuffix: ' hr',
+            shared: true
+        },
         plotOptions: {
             series: {
-                stacking: 'normal'
+                stacking: 'normal',
+                animation: true
             }
         },
         series: [{
                 name: 'Yet to work ',
-                color: '#FFB84D',
                 data: [4, 24, 2, 10]
             }, {
-                name: 'Worked out',
-                color: '#66A3FF',
+                name: 'Work',
                 data: [40, 20, 42, 34]
-            }]
+            }], colors: ['#E77817', '#fcb334']
     });
 
 
@@ -101,7 +115,10 @@ $(document).ready(function() {
 
     $('#month').highcharts({
         chart: {
-            type: 'bar'
+            type: 'bar',
+            backgroundColor: '#F9D597',
+            borderColor: '#F9D597',
+            plotBorderColor: '#F9D597'
         },
         title: {
             text: 'Monthly Analysis chart'
@@ -118,20 +135,24 @@ $(document).ready(function() {
         legend: {
             reversed: true
         },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+            valueSuffix: ' hr',
+            shared: true
+        },
         plotOptions: {
             series: {
-                stacking: 'normal'
+                stacking: 'normal',
+                animation: true
             }
         },
         series: [{
                 name: 'Yet to work ',
-                color: '#FFB84D',
                 data: [22, 41, 62, 13, 3, 23, 69, 8, 35, 71, 4, 32]
             }, {
-                name: 'Worked out',
-                color: ' #66A3FF',
+                name: 'Work',
                 data: [162, 143, 122, 171, 181, 161, 115, 176, 149, 113, 180, 152]
-            }]
+            }], colors: ['#E77817', '#fcb334']
     });
 
 
@@ -151,7 +172,7 @@ $(document).ready(function() {
 
 
 
- $("#daily_graph").css("background-color", "#e77817");
+    $("#daily_graph").css("background-color", "#e77817");
 
     $("#daily_graph").click(function() {
         $('#day').show();

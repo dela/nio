@@ -9,4 +9,5 @@ $databaseNIO = "hr_mysql_nio";
 
 $hrm_conn = mysqli_connect($serverName, $serverUser, $serverPassword, $databaseHRM);
 $nio_conn = mysqli_connect($serverName, $serverUser, $serverPassword, $databaseNIO);
+
 ?>
