@@ -2,21 +2,26 @@
 $(document).ready(function() {
 
 
-    $("#temptime").datepicker({picker: "<img class='picker' align='middle' src='images/cal-month.png' alt=''/>"});
-    var date = "2010-02-06";
+    //$("#temptime").datepicker({picker: "<img class='picker' align='middle' src='images/cal-month.png' alt=''/>"});
+    var date = "2010-02-05";
     var year="2010";
+    var month="02";
    // console.log(year);
     $.ajax({
         dataType: 'json',
         url: 'ajax/attendancedaygraph.php',
         type: 'post',
         data: {
-            dateselected: date
+            dateselected: date,
+            monthselected:month,
+            yearselected:year
+          
+            
         },
         success: function(data) {
             // console.log(data);
-            var work = data[0];
-            var yettowork = data[1];
+            var work_inday = data[0];
+            var yettowork_inday = data[1];
             var day =data[2];
             console.log(data);
             //startof day graph
@@ -58,10 +63,10 @@ $(document).ready(function() {
                 },
                 series: [{
                         name: 'Yet to work ',
-                        data: yettowork
+                        data: yettowork_inday
                     }, {
                         name: 'Work',
-                        data: work
+                        data: work_inday
                     }], colors: ['#E77817', '#fcb334']
             });
 
