@@ -17,7 +17,7 @@ $(document).ready(function() {
             // console.log(data);
             var work = data[0];
             var yettowork = data[1];
-
+            var day =data[2];
             console.log(data);
             //startof day graph
             $('#day').highcharts({
@@ -32,7 +32,7 @@ $(document).ready(function() {
                     text: 'Daily Analysis chart'
                 },
                 xAxis: {
-                    categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                    categories: day
                 },
                 yAxis: {
                     min: 0,

@@ -11,7 +11,7 @@ $series = array();
 
 $work = array();
 $yettowork = array();
-
+$day=array();
 
 
 
@@ -26,9 +26,9 @@ for ($i = 0; $i < $number_of_days_in_week; $i++) {
     $result = mysqli_query($nio_conn, $query);
     $row = mysqli_fetch_array($result);
     $work[] = $row['duration'] / 60;
-    $yettowork[] = $minimum_working_hours_in_a_day - ($row['duration'] / 60);    
-    $dateselected = ($dateselected + 24 * 3600);
-    $day = date("D", $dateselected);
+    $yettowork[] = $minimum_working_hours_in_a_day - ($row['duration'] / 60);
+    $day[] = date("D", $dateselected);
+    $dateselected = ($dateselected + 24 * 3600); 
      $dateincremented = date('y-m-d', $dateselected);
 }
 
@@ -44,6 +44,6 @@ for ($i = 0; $i < $number_of_days_in_week; $i++) {
 
 $series[] = $work;
 $series[] = $yettowork;
-
+$series[]=$day;
 echo json_encode($series);
 ?>
