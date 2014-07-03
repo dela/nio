@@ -3,7 +3,7 @@ $(document).ready(function() {
 
 
     $("#temptime").datepicker({picker: "<img class='picker' align='middle' src='images/cal-month.png' alt=''/>"});
-    var date = "2010-02-08";
+    var date = "2010-02-06";
     console.log(date);
     $.ajax({
         dataType: 'json',
@@ -11,6 +11,60 @@ $(document).ready(function() {
         type: 'post',
         data: {
             dateselected: date
+        },
+        success: function(data) {
+           // console.log(data);
+            var work = data[0];
+            var yettowork = data[1];
+
+            console.log(data);
+            
+            $('#day').highcharts({
+                chart: {
+                    type: 'bar',
+                    backgroundColor: '#F9D597',
+                    borderColor: '#F9D597',
+                    plotBorderColor: '#F9D597'
+
+                },
+                title: {
+                    text: 'Daily Analysis chart'
+                },
+                xAxis: {
+                    categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Working Hours'
+
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                    valueSuffix: ' hr',
+                    shared: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal',
+                        animation: false
+
+                    }
+                },
+                series: [{
+                        name: 'Yet to work ',
+                        data: yettowork
+                    }, {
+                        name: 'Work',
+                        data: work
+                    }], colors: ['#E77817', '#fcb334']
+            });
+
+
         }
     });
 
@@ -170,59 +224,59 @@ $(document).ready(function() {
 
 
 
-
-
-
-
-
-    $('#day').highcharts({
-        chart: {
-            type: 'bar',
-            backgroundColor: '#F9D597',
-            borderColor: '#F9D597',
-            plotBorderColor: '#F9D597'
-
-        },
-        title: {
-            text: 'Daily Analysis chart'
-        },
-        xAxis: {
-            categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Working Hours'
-
-            }
-        },
-        legend: {
-            reversed: true
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-            valueSuffix: ' hr',
-            shared: true
-        },
-        plotOptions: {
-            series: {
-                stacking: 'normal',
-                animation: false
-
-            }
-        },
-        series: [{
-                name: 'Yet to work ',
-                data: [0, 2.75, 1.25, 4, 3.75, .05, 0]
-            }, {
-                name: 'Work',
-                data: [0, 6, 7.5, 4.75, 5, 8.7, 0]
-            }], colors: ['#E77817', '#fcb334']
-    });
-
-
-
-
+    /*
+     
+     
+     
+     
+     $('#day').highcharts({
+     chart: {
+     type: 'bar',
+     backgroundColor: '#F9D597',
+     borderColor: '#F9D597',
+     plotBorderColor: '#F9D597'
+     
+     },
+     title: {
+     text: 'Daily Analysis chart'
+     },
+     xAxis: {
+     categories: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+     },
+     yAxis: {
+     min: 0,
+     title: {
+     text: 'Working Hours'
+     
+     }
+     },
+     legend: {
+     reversed: true
+     },
+     tooltip: {
+     pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+     valueSuffix: ' hr',
+     shared: true
+     },
+     plotOptions: {
+     series: {
+     stacking: 'normal',
+     animation: false
+     
+     }
+     },
+     series: [{
+     name: 'Yet to work ',
+     data: [0, 2.75, 1.25, 4, 3.75, .05, 0]
+     }, {
+     name: 'Work',
+     data: [0, 6, 7.5, 4.75, 5, 8.7, 0]
+     }], colors: ['#E77817', '#fcb334']
+     });
+     
+     
+     
+     */
 
 
 
