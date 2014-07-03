@@ -34,26 +34,23 @@
                     <button id="nio-apply-add-description">ADD DESCRIPTION</button>
                     <hr/> 
                     </div>
-                    
+                    <div class="nio-cal-control">
+                        <button id="nio-cal-addButton" class="nio-cal-button">ADD</button>
+                        <button id="nio-cal-removeButton" class="nio-cal-button">REMOVE</button>
+                        <input type="checkbox" id="nio-cal-checkbox"/>
+                    </div>
                     <table class="nio-apply-dates"></table>
                 </div>
-                <div class="nio-cal-control">
-                    <span id="nio-cal-checkAll" class="nio-cal-button">Check All</span>
-                    <span id="nio-cal-unCheckAll" class='nio-cal-button'>Un-check All</span>
-                </div>
-                 <div class="nio-cal-control">
-                    <span id="nio-cal-addButton" class="nio-cal-button">Add</span>
-                    <span id="nio-cal-removeButton" class='nio-cal-button'>Remove</span>
-                </div>
-                <div class="nio-cal-control">    
-                    <span id="nio-cal-cancelButton" class='nio-cal-button'>Cancel</span>
-                    <span id="nio-cal-applyButton" class="nio-cal-button">Apply</span>
-                </div>
+                <table class="nio-cal-control">    
+                    <tr><td><button id="nio-cal-cancelButton" class='nio-cal-button'>Cancel</button></td>
+                    <td><button id="nio-cal-applyButton" class="nio-cal-button">Apply</button></td></tr>
+                </table>
             </div>
         </div>
         <div id="popup-nio-apply"></div>
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.js"></script>
+        <script src="js/jquery.qtip-1.0.0-rc3.js"></script>
         <script src="js/jquery.mCustomScrollbar.js"></script>
         <script src="js/moment.min.js"></script>
         <script src="js/fullcalendar.min.js"></script>

@@ -1,6 +1,6 @@
 <div class="template-wrapper template-top template-lightBack">
     <div id="template-header">
-        <h1 class="template-titleColor">NIO</h1>
+        <h1 class="template-titleColor" id="title"><a href='index.php'>NIO</a></h1>
         <p class="template-titleSloganColor">Not in Office</p>
         <div class="template-line"></div>
         <div id="template-navigation" class="template-darkBack">

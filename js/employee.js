@@ -1,4 +1,6 @@
 $(document).ready(function(){
+    $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
+    
     var recordNumber=1;
     var selectedDates =[];
     var dropDown_1="";
@@ -29,12 +31,8 @@ $(document).ready(function(){
         },
         weekMode: 'liquid',
         selectable: true,
-        eventRender: function(event, element) {
-            element.qtip({
-                content: event.description
-            });
-        },
         select:function(start, end, jsEvent, view){
+            $("#nio-cal-checkbox").attr('disabled',false);
             dropDown_1="";
             dropDown_2="";
             var endDate=end;
@@ -62,14 +60,19 @@ $(document).ready(function(){
                 flag=jQuery.inArray(temp.format('ll'), selectedDates);
                 if(flag<0){
                     $('.nio-apply-dates').append("<tr class='nio-row-date' date="+i+">"+
-                        "<td><input type='checkbox'/></td>"+
                         "<td>"+i.format('DD MMM YY ddd')+"</td>"+
-                        "<td>"+dropDown_1+" to "+dropDown_2+"</td><td class='nio-date-remove'>X</td></tr>");
+                        "<td>"+dropDown_1+" to "+dropDown_2+"</td>"+
+                        "<td class='nio-date-remove'><img src='images/close_graph_black.png'/></td>"+
+                        "<td><input type='checkbox'/></td>"+"</tr>");
                     selectedDates.push(temp.format('ll'));
                     console.log(selectedDates);
                 }
                 i.add('days',1);
             }  
+            if(selectedDates.length==0)
+                $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
+            else
+                $("#nio-cal-checkbox").prop('checked',false);
         }
         
     });
@@ -91,6 +94,10 @@ $(document).ready(function(){
                 ++i;
             row=$('.nio-apply-dates tr:nth-child('+i+')');
         }
+        if(selectedDates.length==0)
+            $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
+        else
+            $("#nio-cal-checkbox").prop('checked',false);
     });
 
     $("#nio-cal-addButton").click(function(){
@@ -130,6 +137,10 @@ $(document).ready(function(){
                 ++i;
             row=$('.nio-apply-dates tr:nth-child('+i+')');
         }
+        if(selectedDates.length==0)
+            $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
+        else
+            $("#nio-cal-checkbox").prop('checked',false);
     });
     
     
@@ -170,6 +181,9 @@ $(document).ready(function(){
                     "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>"+nioID+"</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>"+date+"</td></tr>"+
                     "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>"+empName+"</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>"+empID+"</td></tr>"+
                     "</table>"); 
+                             
+                $("#popup-nio-apply").append("<table style='width: 100%'>"+
+                    "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>"+nioID+"</td></tr></table>"); 
                              
                 $("#popup-nio-apply").append("<table style='width: 100%'>"+
                     "<tr><td style='text-align: left'><b>Application: </b></td></tr></table>"); 
@@ -237,13 +251,20 @@ $(document).ready(function(){
     
     });
 
-    $("#nio-cal-checkAll").click(function(){
-        $('.nio-apply-dates input').prop('checked', true);
+    $("#nio-cal-checkbox").click(function(){
+        if($('.nio-apply-dates input').prop('checked')){
+            $('.nio-apply-dates input').prop('checked', false);
+            $('#nio-cal-checkbox').prop('checked', false);
+        }
+            
+        else{
+            $('.nio-apply-dates input').prop('checked', true);
+            $('#nio-cal-checkbox').prop('checked', true);
+        }
+             
     });
-
-    $("#nio-cal-unCheckAll").click(function(){
-        $('.nio-apply-dates input').prop('checked', false);
-    });
+    
+   
     //-------------------Employee NIO History--------------------------
 
     function populateNIOHistoryTable(callBackNIOHistoryTable){
