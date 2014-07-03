@@ -9,7 +9,7 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    width: 75%;
+    width: 73%;
     height: 100%;
     background-color: transparent;
 }
@@ -20,13 +20,13 @@
     top: 0px;
     height: 100%;
     background-color: white;
-    width: 25%;
+    width: 27%;
 }
 
 .nio-cal-control{
     position: relative;
     bottom: 0px;
-    height: 10%;
+    height: 8%;
     width: 100%;
     background-color: #E68A2E;
 }
@@ -42,22 +42,24 @@
 .nio-apply-form{
      position: relative;
     width: 100%;
-    height: 79%;
+    height: 65%;
     background-color: #F9D597;
     overflow-y:scroll;
 }
 
 .nio-apply-dates{
     width: 100%;
+    border-collapse: collapse;
 }
 
 .nio-row-date{
     width: 100%;
     background-color: #F9C775;
+    border-bottom: 1px #F9D597 solid;
 }
 
 .nio-row-date td{
-     padding: 1%;
+     padding: 1px;
 }
 
 #nio-apply-reason{
@@ -78,7 +80,7 @@
 
 .nio-cal-button{
     width: 30%;
-    margin: 3%;
+    margin-top: 2%;
     margin-left: 5%;
     margin-right: 5%;
     text-align: center;
@@ -88,14 +90,39 @@
     cursor: pointer;
 }
 
+.nio-cal-button :hover{
+    border: 1px white solid;
+}
+
 #nio-cal-applyButton{
    background-color: green; 
+  right:  1%;
+}
+
+#nio-cal-checkAll{
+    background-color: green;
+    right: 1%;
+}
+
+#nio-cal-unCheckAll{
+   background-color: red; 
+   left: 1%;
+}
+
+#nio-cal-addButton{
+    background-color: green;
+    right: 1%;
+}
+#nio-cal-removeButton{
+   background-color: red; 
    left: 1%;
 }
 
 #nio-cal-cancelButton{
     background-color: red;
-    float: right;
-    right: 1%;
-    
+    left: 1%;
+}
+
+.nio-date-remove{
+    cursor: pointer;
 }

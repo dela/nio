@@ -10,7 +10,7 @@
                     <a href="index.php"> <li class="template-navList">NIO History</li> </a>
                     <a href="summary.php"> <li class="template-navList">Work Summary</li></a>
                     <a href="supervise.php"> <li class="template-navList">Supervise</li></a>
-                    <a href="admin.php"> <li class="template-navList">Admin</li></a>
+                    <a href="admin.php" class="last"> <li class="template-navList">Admin</li></a>
                 </ul>
             </div>
         </div>

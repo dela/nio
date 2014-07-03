@@ -1,11 +1,26 @@
-var recordNumber=1;
+$(document).ready(function(){
+    var recordNumber=1;
+    var selectedDates =[];
+    //-------------------Application of NIO---------------------------------
+    function minToTimeFormat(time){
+        var min=time%60;
+        var hour=Math.floor(time/60);
+    
+        if(hour<10)
+            hour="0"+hour;
+        if(min<10)
+            min='0'+min;
+    
+        time=hour+":"+min;
+    
+        return time;
+    }
 
-//-------------------Application of NIO---------------------------------
 
- $('#nio-calendar').fullCalendar({
+    $('#nio-calendar').fullCalendar({
         theme: true,
         firstDay: 1,
-        aspectRatio: 2.05,
+        aspectRatio: 2.0,
         header: {
             center: 'title',
             right: 'today next nextYear',
@@ -17,20 +32,85 @@ var recordNumber=1;
             var startDate=start;
             var endDate=end;
             var i=startDate;
-            var format;
+            
+            var startTime=0;
+            var endTime=24*60;
+            var period=30;
+            var j=startTime;
+            var dropDown_1="";
+            var dropDown_2="";
+            
+            while(j<endTime){           //setting options
+                dropDown_1+="<option>"+minToTimeFormat(j)+"</option>";
+                j+=period;
+            }
+            
+            j=startTime+60;
+            
+            while(j<=endTime){          //setting options
+                dropDown_2+="<option>"+minToTimeFormat(j)+"</option>";
+                j+=period;
+            }
+            
+            dropDown_1="<select>"+dropDown_1+"</select>";
+            dropDown_2="<select>"+dropDown_2+"</select>";
+            var flag;       //to keep track if the condtition is true o not
+            var temp;       //to check the entry of a date
             while(i<endDate){
-                $('.nio-apply-dates').append("<tr class='nio-row-date' date="+i+"><td>"+i.format('ll')+"</td></tr>");
-                i.add('days',1);
+                temp=i;
+                flag=jQuery.inArray(temp.format('ll'), selectedDates);
+                if(flag<0){
+                    $('.nio-apply-dates').append("<tr class='nio-row-date' date="+i+">"+
+                        "<td><input type='checkbox'/></td>"+
+                        "<td>"+i.format('DD MMM YY ddd')+"</td>"+
+                        "<td>"+dropDown_1+" to "+dropDown_2+"</td><td class='nio-date-remove'>X</td></tr>");
+                    selectedDates.push(temp.format('ll'));
+                    console.log(selectedDates);
+                }
+               i.add('days',1);
             }  
         }
         
     });
 
+$("#nio-cal-checkAll").click(function(){
+    $('.nio-apply-dates input').prop('checked', true);
+});
 
+$("#nio-cal-unCheckAll").click(function(){
+    $('.nio-apply-dates input').prop('checked', false);
+});
 
-//-------------------Employee NIO History--------------------------
+$("#nio-cal-removeButton").click(function(){
+    var i=1;
+    var date;
+    var input;
+   var row=$('.nio-apply-dates tr:nth-child('+i+')');
+   while(row.length>0){
+       console.log(row+" "+row.find('td input'));
+       input=row.find('input')               ;//$('.nio-apply-dates tr td input:nth-child('+i+')');
+       if(input.prop('checked')){
+           date=row.attr('date');
+           selectedDates.splice(selectedDates.indexOf(date),1);
+           row.remove();
+       }
+       else
+        ++i;
+       row=$('.nio-apply-dates tr:nth-child('+i+')');
+   }
+});
 
-function populateNIOHistoryTable(callBackNIOHistoryTable){
+$("body").delegate(".nio-apply-dates .nio-date-remove","click",function() {
+    alert("ok");
+    var date=$(this).parent('tr').attr('date');
+    selectedDates.splice(selectedDates.indexOf(date),1);
+    $(this).parent('tr').remove();
+    
+});
+
+    //-------------------Employee NIO History--------------------------
+
+    function populateNIOHistoryTable(callBackNIOHistoryTable){
         $.ajax({
             type: "POST",
             url: "ajax/nioHistoryTable.php",
@@ -59,11 +139,14 @@ function populateNIOHistoryTable(callBackNIOHistoryTable){
     }
 
 
-function onLoad(){
-       populateNIOHistoryTable(callBackNIOHistoryTable);
+    function onLoad(){
+        populateNIOHistoryTable(callBackNIOHistoryTable);
     }
     
 
-onLoad();
+    onLoad();
 
+
+
+});
 

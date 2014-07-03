@@ -36,10 +36,17 @@
                     
                     <table class="nio-apply-dates"></table>
                 </div>
-                
                 <div class="nio-cal-control">
-                    <span id="nio-cal-applyButton" class="nio-cal-button">Apply</span>
+                    <span id="nio-cal-checkAll" class="nio-cal-button">Check All</span>
+                    <span id="nio-cal-unCheckAll" class='nio-cal-button'>Un-check All</span>
+                </div>
+                 <div class="nio-cal-control">
+                    <span id="nio-cal-addButton" class="nio-cal-button">Add</span>
+                    <span id="nio-cal-removeButton" class='nio-cal-button'>Remove</span>
+                </div>
+                <div class="nio-cal-control">    
                     <span id="nio-cal-cancelButton" class='nio-cal-button'>Cancel</span>
+                    <span id="nio-cal-applyButton" class="nio-cal-button">Apply</span>
                 </div>
             </div>
         </div>
