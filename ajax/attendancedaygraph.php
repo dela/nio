@@ -2,20 +2,20 @@
 
 include("dbConnection.php");
 $dateselected = $_POST['dateselected'];
-$monthselected=$_POST['monthselected'];
-$yearselected=$_POST['yearselected'];
+$monthselected = $_POST['monthselected'];
+$yearselected = $_POST['yearselected'];
 $number_of_days_in_week = 7;
 $minimum_working_hours_in_a_day = 10;
-$number_of_weeks_in_a_month=5;
-$number_of_months_in_a_year=12;
+$number_of_weeks_in_a_month = 5;
+$number_of_months_in_a_year = 12;
 $minimum_working_hours_in_a_week = 40;
-$minimum_working_hours_in_a_month= 160;
+$minimum_working_hours_in_a_month = 160;
 //echo '$dateselected';
 
 $series = array();
 $work_inday = array();
 $yettowork_inday = array();
-$day=array();
+$day = array();
 
 
 
@@ -32,22 +32,12 @@ for ($i = 0; $i < $number_of_days_in_week; $i++) {
     $work_inday[] = $row['duration'] / 60;
     $yettowork_inday[] = $minimum_working_hours_in_a_day - ($row['duration'] / 60);
     $day[] = date("D", $dateselected);
-    $dateselected = ($dateselected + 24 * 3600); 
-     $dateincremented = date('y-m-d', $dateselected);
+    $dateselected = ($dateselected + 24 * 3600);
+    $dateincremented = date('y-m-d', $dateselected);
 }
 
 $series[] = $work_inday;
 $series[] = $yettowork_inday;
-$series[]=$day;
+$series[] = $day;
 echo json_encode($series);
-
-
-
-
-
-
-
-
-
-
 ?>
