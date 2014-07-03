@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.css"/>
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>
         <link rel="stylesheet" href="css/template.css" type="text/css" />
+        <link rel="stylesheet" href="css/adminTables.css" type="text/css" />
         <link rel="stylesheet" href="css/fullcalendar.css" type="text/css" />
         <link rel="stylesheet" href="css/applyNIO.css" type="text/css" />
         <!-- from the Calender page -->
@@ -50,7 +51,7 @@
                 </div>
             </div>
         </div>
-
+        <div id="popup-nio-apply"></div>
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.js"></script>
         <script src="js/jquery.mCustomScrollbar.js"></script>
