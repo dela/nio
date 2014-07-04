@@ -47,7 +47,7 @@
 }
 
 .graph-container{
-    top: 150px;
+    top: 170px;
     left:20px;
     margin-top: 30px;
     margin-left: 20px;
@@ -123,7 +123,7 @@
     background-color: orange;
     width:500px;
     height:100px;
-    top: 0px;
+    top: 20px;
     position: relative;
     left: 40px;
     cursor: pointer;
@@ -163,3 +163,10 @@
 }
 
 
+
+.datepicker
+{
+    left:1000px;
+    position: absolute;
+    
+}
