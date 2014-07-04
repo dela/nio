@@ -2,8 +2,9 @@
 
 include("dbConnection.php");
 $dateselected = $_POST['dateselected'];
-$monthselected = $_POST['monthselected'];
-$yearselected = $_POST['yearselected'];
+    
+//$monthselected = $_POST['monthselected'];
+//$yearselected = $_POST['yearselected'];
 $number_of_days_in_week = 7;
 $minimum_working_hours_in_a_day = 10;
 $number_of_weeks_in_a_month = 5;
@@ -22,16 +23,17 @@ $day = array();
 
 
 $dateselected = strtotime($dateselected);
+
 $i = 0;
 for ($i = 0; $i < $number_of_days_in_week; $i++) {
 
-    $dateincremented = date('y-m-d', $dateselected);
+    $dateincremented = date('Y-m-d', $dateselected);
     $query = " SELECT * FROM hs_hr_nio_attendance WHERE emp_id=1 AND date='$dateincremented'";
     $result = mysqli_query($nio_conn, $query);
     $row = mysqli_fetch_array($result);
     $work_inday[] = $row['duration'] / 60;
     $yettowork_inday[] = $minimum_working_hours_in_a_day - ($row['duration'] / 60);
-    $day[] = date("D", $dateselected);
+       $day[] = date("d M Y-D", $dateselected);
     $dateselected = ($dateselected + 24 * 3600);
     $dateincremented = date('y-m-d', $dateselected);
 }
