@@ -7,35 +7,34 @@
         <link rel="stylesheet" type="text/css" href="css/custom.css"/>
         <link href="css/dp.css" rel="stylesheet" type="text/css" /> 
         <link rel="stylesheet" href="css/template.css" type="text/css" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 
 
 
-    
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
-        <script src="http://code.highcharts.com/highcharts.js"></script>
-        <script src="js/graphs.js"></script>
+        <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+        <script src="js/highcharts.js"></script>
+        <script src="js/graphs.js"></script>    
 
 
+        
 
        <!--   <script src="js/jquery-1.10.2.js"></script> -->
-        <script src="js/date.js"></script> 
-        <script src="src/Plugins/datepicker_lang_US.js" type="text/javascript"></script>
-        <script src="src/Plugins/jquery.datepicker.js" type="text/javascript"></script>
 
 
     </head>
     <body class="template-bg" >
 
         <?php
-        require_once 'header.php'; 
+        require_once 'header.php';
         ?>
-
-        <div id="datepickbox"  >
-            <input type="text" id="temptime" />
-        </div>
-
-
+        <!--
+                <div id="datepickbox"  >
+                    <input type="text" id="temptime" />
+                </div>
+        
+        -->
 
 
 
@@ -43,6 +42,54 @@
         <div class="summaryeach" id="daily_graph">Daily Analysis</div>
         <div class="summaryeach" id="weekly_graph">Weekly Analysis</div>
         <div class="summaryeach" id="monthly_graph">Monthly  Analysis</div>
+
+
+        <div class="datepicker" id="datechoose">
+            Date1: <input type="text" name="datepicker" id="datepicker"  />
+
+        </div>
+        <script>
+       
+
+            $(function() {
+                $("#datepicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
+
+
+
+
+        <div class="datepicker" id="monthchoose">
+            Date2: <input type="text" id="monthpicker">
+        </div>
+        <script>
+            $(function() {
+                $("#monthpicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
+
+
+
+        <div class="datepicker" id="yearchoose">
+            Date3: <input type="text" id="yearpicker">
+        </div>
+        <script>
+            $(function() {
+                $("#yearpicker").datepicker({
+                    changeMonth: false,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
 
 
         <div class="graph-container" id="day"></div>
