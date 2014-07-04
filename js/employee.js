@@ -5,9 +5,13 @@ $(document).ready(function(){
     var dateObject=[];
     var index=0;
     var recordNumber=1;
-    var selectedDates =[];
     var dropDown_1="";
     var dropDown_2="";
+    
+    var NIOCOLOR='#F9C775';
+    
+    
+    
     //-------------------Application of NIO---------------------------------
     function minToTimeFormat(time){
         var min=time%60;
@@ -61,17 +65,18 @@ $(document).ready(function(){
                     'id':index,
                     'date':temp.unix()*1000,
                     'startTime':'09:00',
-                    'endTime':'17:00'
+                    'endTime':'17:00',
+                    'status':0
                 });
                 index++;
-                selectedDates.push(temp.unix()*1000);
+                
                 i.add('days',1);
             }
             console.log(dateObject);
             $('.nio-apply-dates').empty();
             i=0;
             var date;
-            selectedDates.sort();
+            
             dateObject.sort(function(a,b) {
                 return parseInt(a.date) - parseInt(b.date)
             });
@@ -90,6 +95,13 @@ $(document).ready(function(){
                     if( $(this).attr('id') == dateObject[i].id ){
                         $(this).find('.nio-starttime-drop').val(dateObject[i].startTime);
                         $(this).find('.nio-endtime-drop').val(dateObject[i].endTime);
+                        if(parseInt(dateObject[i].status)==1){
+                            $(this).find('input').prop('checked',true);
+                            $(this).find('.nio-starttime-drop').attr('disabled',true);
+                            $(this).find('.nio-endtime-drop').attr('disabled',true);
+                        } 
+                        else
+                            $(this).find('input').prop('checked',false);
                     }     
                 });
                 i++; 
@@ -104,7 +116,6 @@ $(document).ready(function(){
     $('body').delegate('.nio-row-date .nio-endtime-drop','change',function(){
         var endTime=$(this).val();
         j=0;
-        var temp;
         var id= $(this).parent('td').parent('tr').attr('id');
         $.each(dateObject, function(j){     //function to remove object from the array
             if(dateObject[j].id == parseInt(id)) { 
@@ -128,10 +139,9 @@ $(document).ready(function(){
                 return false;
             }
         });
-       
     });
 
-    $('body').delegate('.nio-row-date td input','change',function(){
+    $('body').delegate('.nio-row-date td input','change',function(){        //Change of checkbox of a single date
         var checkObj=$(this);
         if(checkObj.prop('checked')){
             checkObj.parent('td').parent('tr').find('.nio-endtime-drop').attr('disabled',true);
@@ -146,28 +156,17 @@ $(document).ready(function(){
                     startTime=dateObject[j].startTime;
                     endTime=dateObject[j].endTime;
                     date=dateObject[j].date;
+                    dateObject[j].status=1;
                     return false;
                 }
             });
-            startTime+=":00";
-            endTime+=":00";
-            date=moment(parseInt(date)).format("YYYY-MM-DD");
-            startTime=date+"T"+startTime;
-            endTime=date+"T"+endTime;
-                
-            var eventObject={
-                id: id,
-                title  : 'Event',
-                start  : startTime,
-                end: endTime,
-                color: '#F9C775',
-                textColor: 'black'
-            };
-            $('#nio-calendar').fullCalendar('renderEvent',eventObject,true);
+            createEvent(startTime,endTime,date,id,NIOCOLOR);
             
         }else{
             checkObj.parent('td').parent('tr').find('.nio-endtime-drop').attr('disabled',false);
             checkObj.parent('td').parent('tr').find('.nio-starttime-drop').attr('disabled',false);
+            var id=checkObj.parent('td').parent('tr').attr('id');
+            $('#nio-calendar').fullCalendar( 'removeEvents' , id );
         }
     });
 
@@ -181,6 +180,7 @@ $(document).ready(function(){
             input=row.find('input');
             if(input.prop('checked')){
                 id=row.attr('id');
+                $('#nio-calendar').fullCalendar( 'removeEvents' , id );
                 j=0;
                 $.each(dateObject, function(j){     //function to remove object from the array
                     if(dateObject[j].id === parseInt(id)) {
@@ -194,12 +194,73 @@ $(document).ready(function(){
                 ++i;
             row=$('.nio-apply-dates tr:nth-child('+i+')');
         }
-        if(selectedDates.length==0)
+        if(dateObject.length==0)
             $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
         else
             $("#nio-cal-checkbox").prop('checked',false);
     });
 
+
+    $("#nio-cal-checkbox").click(function(){
+        if(!$('#nio-cal-checkbox').prop('checked')){
+            $('.nio-apply-dates input').prop('checked', false);
+            $('#nio-cal-checkbox').prop('checked', false);
+            $('.nio-starttime-drop').attr('disabled',false);
+            $('.nio-endtime-drop').attr('disabled',false);
+            
+            var i=1;
+            var id;
+            var row=$('.nio-apply-dates tr:nth-child('+i+')');
+            while(row.length>0){
+                id=row.attr('id');
+                 
+                $.each(dateObject, function(j){     //function to remove object from the array
+                    if(dateObject[j].id == parseInt(id)) {
+                        dateObject[j].status=0;
+                        return false;
+                    }
+                });
+                 
+                $('#nio-calendar').fullCalendar( 'removeEvents' , id );
+                ++i;
+                row=$('.nio-apply-dates tr:nth-child('+i+')');
+            }
+        }
+            
+        else{
+            i=1;
+            var startTime;
+            var endTime;
+            var date;
+            var input;
+            row=$('.nio-apply-dates tr:nth-child('+i+')');
+            while(row.length>0){
+                id=row.attr('id');
+                
+                startTime=row.find('.nio-starttime-drop').val();
+                endTime=row.find('.nio-endtime-drop').val();
+                $.each(dateObject, function(j){     //function to remove object from the array
+                    if(dateObject[j].id === parseInt(id)) {
+                        date=dateObject[j].date;
+                        dateObject[j].status=1;
+                        return false;
+                    }
+                });
+                input=row.find('input');
+                if(!input.prop('checked'))
+                    createEvent(startTime,endTime,date,id,NIOCOLOR);
+                ++i;
+                row=$('.nio-apply-dates tr:nth-child('+i+')');
+            }
+            $('.nio-apply-dates input').prop('checked', true);
+            $('#nio-cal-checkbox').prop('checked', true);
+            $('.nio-starttime-drop').attr('disabled',true);
+            $('.nio-endtime-drop').attr('disabled',true);
+        }
+             
+    });
+    
+    
     $("#nio-cal-addButton").click(function(){
         var i=1;
         var date=moment();
@@ -219,7 +280,7 @@ $(document).ready(function(){
                 console.log(date);
                 startTime=date+"T"+startTime;
                 endTime=date+"T"+endTime;
-                selectedDates.splice(selectedDates.indexOf(date),1);
+                
                 row.remove();
                 var eventObject={
                     id: 1,
@@ -237,7 +298,7 @@ $(document).ready(function(){
                 ++i;
             row=$('.nio-apply-dates tr:nth-child('+i+')');
         }
-        if(selectedDates.length==0)
+        if(dateObject.length==0)
             $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
         else
             $("#nio-cal-checkbox").prop('checked',false);
@@ -356,19 +417,28 @@ $(document).ready(function(){
     
     });
 
-    $("#nio-cal-checkbox").click(function(){
-        if($('.nio-apply-dates input').prop('checked')){
-            $('.nio-apply-dates input').prop('checked', false);
-            $('#nio-cal-checkbox').prop('checked', false);
-        }
-            
-        else{
-            $('.nio-apply-dates input').prop('checked', true);
-            $('#nio-cal-checkbox').prop('checked', true);
-        }
-             
-    });
-    
+    function createEvent(startTime,endTime,date,id,color){
+        startTime+=":00";
+        endTime+=":00";
+        date=moment(parseInt(date)).format("YYYY-MM-DD");
+        var start=date+"T"+startTime;
+        var end=date+"T"+endTime;
+        var eventObject={
+            id: id,
+            title  : startTime+" to "+endTime,
+            start  : start,
+            end: end,
+            description: 'This is a cool event',
+            color: '#F9C775',
+            textColor: 'black',
+            eventRender: function(event, element) {
+                element.qtip({
+                    content: event.description
+                });
+            }
+        };
+        $('#nio-calendar').fullCalendar('renderEvent',eventObject,true);
+    }
    
     //-------------------Employee NIO History--------------------------
 
