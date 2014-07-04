@@ -4,7 +4,7 @@
         <title>NIO</title>
 
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        
+
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.css"/>
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>
         <link rel="stylesheet" href="css/template.css" type="text/css" />
@@ -25,26 +25,22 @@
                 <div class="nio-cal-info"></div>
                 <div class="nio-apply-form">
                     <div class="nio-apply-general">
-                       <select id="nio-apply-reason">
-                        <option>Forgot ID</option>
-                        <option>Business Trip</option>
-                        <option>Work from home</option>
-                        <option>Meeting with Client</option>
-                    </select>
-                    <button id="nio-apply-add-description">ADD DESCRIPTION</button>
-                    <hr/> 
+                        <select id="nio-apply-reason">
+                            <option>Forgot ID</option>
+                            <option>Business Trip</option>
+                            <option>Work from home</option>
+                            <option>Meeting with Client</option>
+                        </select>
                     </div>
-                    <div class="nio-cal-control">
-                        <button id="nio-cal-addButton" class="nio-cal-button">ADD</button>
-                        <button id="nio-cal-removeButton" class="nio-cal-button">REMOVE</button>
-                        <input type="checkbox" id="nio-cal-checkbox"/>
-                    </div>
+                    <table class="nio-cal-control">    
+                        <tr>
+                            <td style='margin-left: 0%; padding-left: 0%;;width: 10%;'><input type="checkbox" id="nio-cal-checkbox"/></td>
+                            <td><button id="nio-cal-removeButton" class="nio-cal-button">REMOVE</button></td>
+                            <td><button id="nio-cal-cancelButton" class='nio-cal-button'>Cancel</button></td>
+                            <td><button id="nio-cal-applyButton" class="nio-cal-button">Apply</button></td></tr>
+                    </table>
                     <table class="nio-apply-dates"></table>
                 </div>
-                <table class="nio-cal-control">    
-                    <tr><td><button id="nio-cal-cancelButton" class='nio-cal-button'>Cancel</button></td>
-                    <td><button id="nio-cal-applyButton" class="nio-cal-button">Apply</button></td></tr>
-                </table>
             </div>
         </div>
         <div id="popup-nio-apply"></div>

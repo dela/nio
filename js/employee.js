@@ -1,6 +1,12 @@
 $(document).ready(function(){
     $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
+    var aspectRatio;
     
+    aspectRatio=($(document).width()*0.73)/($(document).height()*0.855);
+    
+    
+    var dateObject=[];
+    var index=0;
     var recordNumber=1;
     var selectedDates =[];
     var dropDown_1="";
@@ -23,7 +29,7 @@ $(document).ready(function(){
     $('#nio-calendar').fullCalendar({
         theme: true,
         firstDay: 1,
-        aspectRatio: 2.0,
+        aspectRatio: aspectRatio,
         header: {
             center: 'title',
             right: 'today next nextYear',
@@ -43,33 +49,63 @@ $(document).ready(function(){
             var j=startTime;
             
             while(j<endTime){           //setting options
-                dropDown_1+="<option>"+minToTimeFormat(j)+"</option>";
+                dropDown_1+="<option value="+minToTimeFormat(j)+">"+minToTimeFormat(j)+"</option>";
                 j+=period;
             }
             j=startTime+60;
             while(j<=endTime){          //setting options
-                dropDown_2+="<option>"+minToTimeFormat(j)+"</option>";
+                dropDown_2+="<option value="+minToTimeFormat(j)+">"+minToTimeFormat(j)+"</option>";
                 j+=period;
             }
-            dropDown_1="<select class='nio-starttime-drop'>"+dropDown_1+"</select>";
-            dropDown_2="<select class='nio-endtime-drop'>"+dropDown_2+"</select>";
-            var flag;       //to keep track if the condtition is true o not
+            dropDown_1=dropDown_1+"</select>";
+            dropDown_2=dropDown_2+"</select>";
+            
             var temp;       //to check the entry of a date
             while(i<endDate){
                 temp=i;
-                flag=jQuery.inArray(temp.format('ll'), selectedDates);
-                if(flag<0){
-                    $('.nio-apply-dates').append("<tr class='nio-row-date' date="+i+">"+
-                        "<td>"+i.format('DD MMM YY ddd')+"</td>"+
-                        "<td>"+dropDown_1+" to "+dropDown_2+"</td>"+
-                        "<td class='nio-date-remove'><img src='images/close_graph_black.png'/></td>"+
-                        "<td><input type='checkbox'/></td>"+"</tr>");
-                    selectedDates.push(temp.format('ll'));
-                    console.log(selectedDates);
-                }
+                dateObject.push({
+                    'id':index,
+                    'date':temp.unix()*1000,
+                    'startTime':'09:00',
+                    'endTime':'17:00'
+                });
+                index++;
+                selectedDates.push(temp.unix()*1000);
+                console.log(selectedDates);
                 i.add('days',1);
-            }  
-            if(selectedDates.length==0)
+            }
+            console.log(dateObject);
+            $('.nio-apply-dates').empty();
+            i=0;
+            var date;
+            selectedDates.sort();
+            dateObject.sort(function(a,b) {
+                return parseInt(a.date) - parseInt(b.date)
+            });
+            console.log(dateObject);
+            
+            while(i<dateObject.length){
+                date=moment(parseInt(dateObject[i].date)).format("YYYY-MM-DD");
+                $('.nio-apply-dates').append("<tr class='nio-row-date' id="+dateObject[i].id+">"+
+                    "<td><input style='margin-left: 1%;float: right' type='checkbox'/></td>"+
+                    "<td style='text-align: left;padding: 2%'>"+date+"</td>"+
+                    "<td>"+"<select class='nio-starttime-drop' >"+dropDown_1+" to "+"<select class='nio-endtime-drop'>"+dropDown_2+"</td>"+
+                    "<td class='nio-date-alert'><img src='images/exclamation18.png'/></td>"+
+                    "<td class='nio-date-remove'><img src='images/close_graph_black.png'/></td>"+
+                    "</tr>");
+                console.log(selectedDates);
+                 $('.nio-row-date').each(function(){
+                    if( $(this).attr('id') == dateObject[i].id ){
+                        $(this).find('.nio-starttime-drop').val(dateObject.startTime);
+                        $(this).find('.nio-endtime-drop').val(dateObject.endTime);
+                    }
+                        
+                });
+                i++;
+               
+            }
+            
+            if(dateObject.length==0)
                 $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
             else
                 $("#nio-cal-checkbox").prop('checked',false);
@@ -79,15 +115,20 @@ $(document).ready(function(){
 
     $("#nio-cal-removeButton").click(function(){
         var i=1;
-        var date;
+        var id;
         var input;
         var row=$('.nio-apply-dates tr:nth-child('+i+')');
         while(row.length>0){
             console.log(row+" "+row.find('td input'));
             input=row.find('input');
             if(input.prop('checked')){
-                date=row.attr('date');
-                selectedDates.splice(selectedDates.indexOf(date),1);
+                id=row.attr('id');
+                $.each(dateObject, function(j){
+                    if(dateObject[j].name === id) {
+                        dateObject.splice(j,1);
+                        return false;
+                    }
+                });
                 row.remove();
             }
             else
