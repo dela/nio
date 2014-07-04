@@ -7,10 +7,10 @@
         <link rel="stylesheet" type="text/css" href="css/custom.css"/>
         <link href="css/dp.css" rel="stylesheet" type="text/css" /> 
         <link rel="stylesheet" href="css/template.css" type="text/css" />
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+         <link rel="stylesheet" href="css/jquery-ui-1.10.4.css" type="text/css" />
 
         <script src="js/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+        <script src="js/jquery-ui-1.10.4.js"></script>
         <script src="js/highcharts.js"></script>
         <script src="js/graphs.js"></script>    
 
@@ -46,7 +46,8 @@
                 $("#datepicker").datepicker({
                     changeMonth: true,
                     changeYear: true,
-                    dateFormat:"yy/mm/dd"
+                    dateFormat:"yy/mm/dd",
+                    showAnim:"clip"
                 });
             });
         </script>
@@ -64,7 +65,8 @@
                     changeYear: true,
                     dateFormat:"yy/mm/dd",
                     showWeek: true,
-                    firstDay: 1
+                    firstDay: 1,
+                    showAnim:"clip"
                 });
             });
         </script>
@@ -79,7 +81,8 @@
                 $("#yearpicker").datepicker({
                     changeMonth: false,
                     changeYear: true,
-                    dateFormat:"yy/mm/dd"
+                    dateFormat:"yy/mm/dd",
+                    showAnim:"clip"
                 });
             });
         </script>
