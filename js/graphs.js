@@ -479,7 +479,7 @@ $(document).ready(function() {
         url: 'ajax/attendancedaygraph.php',
         type: 'post',
         data: {
-            dateselected: date1,
+            dateselected: date1
         },
         success: function(data) {
         var work_inday = data[0];
@@ -601,27 +601,6 @@ $(document).ready(function() {
         $('#yearchoose').show();
 
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
 

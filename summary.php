@@ -9,9 +9,6 @@
         <link rel="stylesheet" href="css/template.css" type="text/css" />
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 
-
-
-
         <script src="js/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
         <script src="js/highcharts.js"></script>
