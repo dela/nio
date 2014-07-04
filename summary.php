@@ -12,7 +12,7 @@
 
 
 
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script> 
+        <script src="js/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
         <script src="js/highcharts.js"></script>
         <script src="js/graphs.js"></script>    
@@ -20,7 +20,6 @@
 
         
 
-       <!--   <script src="js/jquery-1.10.2.js"></script> -->
 
 
     </head>
@@ -29,12 +28,7 @@
         <?php
         require_once 'header.php';
         ?>
-        <!--
-                <div id="datepickbox"  >
-                    <input type="text" id="temptime" />
-                </div>
-        
-        -->
+      
 
 
 
