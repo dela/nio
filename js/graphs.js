@@ -428,6 +428,8 @@ $(document).ready(function() {
                 },
                 xAxis: {
                     categories: day
+                    
+                    
                 },
                 yAxis: {
                     min: 0,
@@ -542,9 +544,17 @@ $(document).ready(function() {
         
 
     });
+    
+    
+    
 
-//
-
+//for week graph dynamic
+    $('#monthpicker').change(function() {
+        var  month = ($(this).val());
+       
+        console.log(month);
+        
+    });
 
 
 
