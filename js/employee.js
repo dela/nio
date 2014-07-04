@@ -1,10 +1,7 @@
 $(document).ready(function(){
     $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
-    var aspectRatio;
-    
+    var aspectRatio; 
     aspectRatio=($(document).width()*0.73)/($(document).height()*0.855);
-    
-    
     var dateObject=[];
     var index=0;
     var recordNumber=1;
@@ -15,14 +12,11 @@ $(document).ready(function(){
     function minToTimeFormat(time){
         var min=time%60;
         var hour=Math.floor(time/60);
-    
         if(hour<10)
             hour="0"+hour;
         if(min<10)
             min='0'+min;
-    
         time=hour+":"+min;
-    
         return time;
     }
     //-------------------------------------------------------------------------
@@ -61,7 +55,7 @@ $(document).ready(function(){
             dropDown_2=dropDown_2+"</select>";
             
             var temp;       //to check the entry of a date
-            while(i<endDate){
+            while(i<endDate){       //Making a list of all the dates selected
                 temp=i;
                 dateObject.push({
                     'id':index,
@@ -71,7 +65,6 @@ $(document).ready(function(){
                 });
                 index++;
                 selectedDates.push(temp.unix()*1000);
-                console.log(selectedDates);
                 i.add('days',1);
             }
             console.log(dateObject);
@@ -93,25 +86,91 @@ $(document).ready(function(){
                     "<td class='nio-date-alert'><img src='images/exclamation18.png'/></td>"+
                     "<td class='nio-date-remove'><img src='images/close_graph_black.png'/></td>"+
                     "</tr>");
-                console.log(selectedDates);
-                 $('.nio-row-date').each(function(){
+                $('.nio-row-date').each(function(){
                     if( $(this).attr('id') == dateObject[i].id ){
-                        $(this).find('.nio-starttime-drop').val(dateObject.startTime);
-                        $(this).find('.nio-endtime-drop').val(dateObject.endTime);
-                    }
-                        
+                        $(this).find('.nio-starttime-drop').val(dateObject[i].startTime);
+                        $(this).find('.nio-endtime-drop').val(dateObject[i].endTime);
+                    }     
                 });
-                i++;
-               
+                i++; 
             }
-            
             if(dateObject.length==0)
                 $("#nio-cal-checkbox").attr('disabled',true).prop('checked',false);
             else
                 $("#nio-cal-checkbox").prop('checked',false);
-        }
-        
+        } 
     });
+
+    $('body').delegate('.nio-row-date .nio-endtime-drop','change',function(){
+        var endTime=$(this).val();
+        j=0;
+        var temp;
+        var id= $(this).parent('td').parent('tr').attr('id');
+        $.each(dateObject, function(j){     //function to remove object from the array
+            if(dateObject[j].id == parseInt(id)) { 
+                dateObject[j].endTime=endTime;
+                temp=j;
+                return false;
+            }
+        });
+       
+    });
+    
+    $('body').delegate('.nio-row-date .nio-starttime-drop','change',function(){
+        var startTime=$(this).val();
+        var id= $(this).parent('td').parent('tr').attr('id');
+        j=0;
+        var temp;
+        $.each(dateObject, function(j){     //function to remove object from the array
+            if(dateObject[j].id == parseInt(id)) {
+                dateObject[j].startTime=startTime;
+                temp=j;
+                return false;
+            }
+        });
+       
+    });
+
+    $('body').delegate('.nio-row-date td input','change',function(){
+        var checkObj=$(this);
+        if(checkObj.prop('checked')){
+            checkObj.parent('td').parent('tr').find('.nio-endtime-drop').attr('disabled',true);
+            checkObj.parent('td').parent('tr').find('.nio-starttime-drop').attr('disabled',true);
+            
+            var id=checkObj.parent('td').parent('tr').attr('id');
+            var startTime;
+            var endTime;
+            var date;
+            $.each(dateObject, function(j){     //function to remove object from the array
+                if(dateObject[j].id == parseInt(id)) {
+                    startTime=dateObject[j].startTime;
+                    endTime=dateObject[j].endTime;
+                    date=dateObject[j].date;
+                    return false;
+                }
+            });
+            startTime+=":00";
+            endTime+=":00";
+            date=moment(parseInt(date)).format("YYYY-MM-DD");
+            startTime=date+"T"+startTime;
+            endTime=date+"T"+endTime;
+                
+            var eventObject={
+                id: id,
+                title  : 'Event',
+                start  : startTime,
+                end: endTime,
+                color: '#F9C775',
+                textColor: 'black'
+            };
+            $('#nio-calendar').fullCalendar('renderEvent',eventObject,true);
+            
+        }else{
+            checkObj.parent('td').parent('tr').find('.nio-endtime-drop').attr('disabled',false);
+            checkObj.parent('td').parent('tr').find('.nio-starttime-drop').attr('disabled',false);
+        }
+    });
+
 
     $("#nio-cal-removeButton").click(function(){
         var i=1;
@@ -119,12 +178,12 @@ $(document).ready(function(){
         var input;
         var row=$('.nio-apply-dates tr:nth-child('+i+')');
         while(row.length>0){
-            console.log(row+" "+row.find('td input'));
             input=row.find('input');
             if(input.prop('checked')){
                 id=row.attr('id');
-                $.each(dateObject, function(j){
-                    if(dateObject[j].name === id) {
+                j=0;
+                $.each(dateObject, function(j){     //function to remove object from the array
+                    if(dateObject[j].id === parseInt(id)) {
                         dateObject.splice(j,1);
                         return false;
                     }
@@ -286,8 +345,13 @@ $(document).ready(function(){
     });
 
     $("body").delegate(".nio-apply-dates .nio-date-remove","click",function() {
-        var date=$(this).parent('tr').attr('date');
-        selectedDates.splice(selectedDates.indexOf(date),1);
+        var id=$(this).parent('tr').attr('id');
+        $.each(dateObject, function(j){     //function to remove object from the array
+            if(dateObject[j].id === parseInt(id)) {
+                dateObject.splice(j,1);
+                return false;
+            }
+        });
         $(this).parent('tr').remove();
     
     });

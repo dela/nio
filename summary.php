@@ -86,6 +86,54 @@
         </script>
 
 
+        <div class="datepicker" id="datechoose">
+            Date1: <input type="text" name="datepicker" id="datepicker"  />
+
+        </div>
+        <script>
+       
+
+            $(function() {
+                $("#datepicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
+
+
+
+
+        <div class="datepicker" id="monthchoose">
+            Date2: <input type="text" id="monthpicker">
+        </div>
+        <script>
+            $(function() {
+                $("#monthpicker").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
+
+
+
+        <div class="datepicker" id="yearchoose">
+            Date3: <input type="text" id="yearpicker">
+        </div>
+        <script>
+            $(function() {
+                $("#yearpicker").datepicker({
+                    changeMonth: false,
+                    changeYear: true,
+                    dateFormat:"yy/mm/dd"
+                });
+            });
+        </script>
+
+
         <div class="graph-container" id="day"></div>
         <div class="graph-container" id="week"></div>
         <div class="graph-container" id="month"></div>
