@@ -96,8 +96,8 @@ $(document).ready(function(){
                 console.log(selectedDates);
                  $('.nio-row-date').each(function(){
                     if( $(this).attr('id') == dateObject[i].id ){
-                        $(this).find('.nio-starttime-drop').val(dateObject.startTime);
-                        $(this).find('.nio-endtime-drop').val(dateObject.endTime);
+                        $(this).find('.nio-starttime-drop').val(dateObject[i].startTime);
+                        $(this).find('.nio-endtime-drop').val(dateObject[i].endTime);
                     }
                         
                 });
