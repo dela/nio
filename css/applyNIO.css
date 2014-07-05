@@ -96,6 +96,10 @@
     
 }
 
+.nio-cal-alert{
+    display: none;
+}
+
 .nio-cal-button :hover{
     border: 1px white solid;
 }
@@ -117,4 +121,16 @@
 
 .nio-date-remove{
     cursor: pointer;
+}
+
+.description-nio{
+    width: 100%;
+}
+
+.fc-sat, .fc-sun{
+    background-color: #DFECEF !important;
+    color: black;
+    }    
+.ui-widget-header{
+    border: none;
 }
