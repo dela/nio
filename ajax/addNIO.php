@@ -8,7 +8,7 @@ $data = $_POST['data'];
 $description = "Forgot ID card";
 $nioType = 1;
 $nioStatus = 0;
-$appDate = '12-12-2010';
+$appDate = date('Y-m-d H:i:s');
 $duration = 10;
 
 $dataLength = count($data);
