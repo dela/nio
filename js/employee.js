@@ -147,7 +147,7 @@ else
 
         if(startTime>endTime)           //Simple validation check startTime endTIme
             return false;
-        
+
         /*
             Now check for dates that user adds date are conflicting for a day.
             eg : 2014-01-01         startTime: 9:00         endTime: 17:00
@@ -157,7 +157,7 @@ else
                  var temp;
             $.each(dateObject, function(j) {  //function to remove object from the array
                 console.log(date);
-                console.log(moment(parseInt(dateObject[j].date)).format("YYYY-MM-DD")); 
+                console.log(moment(parseInt(dateObject[j].date)).format("YYYY-MM-DD"));
                 temp=dateObject[j].date;
                 if (moment(parseInt(temp)).format("YYYY-MM-DD")===date) {
                     if(dateObject[j].status==1){  //Only check with cases that are added as events else not required
@@ -178,14 +178,17 @@ else
                             flag=0;
                         }
 
-
                     }
                 }
             });
-    if(!flag)
+    if(!flag)               //False for the validation of date entries in NIOs
         return false;
-
         //------end of conflicting day formating---//
+
+        //------------Validating with the existing date entry from database--------------------------//
+
+
+
 
         return true;
 
@@ -244,7 +247,7 @@ else
                             checkObj.parent('td').parent('tr').find('.nio-endtime-drop').attr('disabled', true);
                             checkObj.parent('td').parent('tr').find('.nio-starttime-drop').attr('disabled', true);
                             createEvent(startTime, endTime, date, id, NIO_CURR);
-                            dateObject[j].status = 1; 
+                            dateObject[j].status = 1;
                             checkObj.parent('td').parent('tr').find('.nio-cal-alert').css({'display':'none'});
                         }
                         else{
@@ -343,20 +346,28 @@ else
                     $.each(dateObject, function(j) {     //function to remove object from the array
                         if (dateObject[j].id === parseInt(id)) {
                             date = dateObject[j].date;
+                            startTime = dateObject[j].startTime;
+                            endTime = dateObject[j].endTime;
+                            if(dateValidation(date,startTime,endTime)){
+                            row.find('.nio-endtime-drop').attr('disabled', true);
+                            row.find('.nio-starttime-drop').attr('disabled', true);
+                            createEvent(startTime, endTime, date, id, NIO_CURR);
                             dateObject[j].status = 1;
+                            row.find('.nio-cal-alert').css({'display':'none'});
+                            row.find('input').prop('checked', true);
+                        }
+                        else{
+                            row.find('.nio-cal-alert').css({'display':'block'});
+                            row.find('.nio-apply-dates input').prop('checked', false);
+
+                        }
                             return false;
                         }
                     });
                     input = row.find('input');
-                    if (!input.prop('checked'))
-                        createEvent(startTime, endTime, date, id, NIO_CURR);
                     ++i;
                     row = $('.nio-apply-dates tr:nth-child(' + i + ')');
                 }
-                $('.nio-apply-dates input').prop('checked', true);
-                $('#nio-cal-checkbox').prop('checked', true);
-                $('.nio-starttime-drop').attr('disabled', true);
-                $('.nio-endtime-drop').attr('disabled', true);
             }
 
         });
@@ -379,7 +390,7 @@ else
                 startTime += ":00";
                 endTime += ":00";
                 date = moment(parseInt(date)).format("YYYY-MM-DD");
-                
+
                 startTime = date + "T" + startTime;
                 endTime = date + "T" + endTime;
 
@@ -426,6 +437,22 @@ else
             {
                 text: "Apply",
                 click: function() {
+                  var nioType=1;
+                  $.ajax({
+                    dataType: 'json',
+                    url: 'ajax/addNIO.php',
+                    type: 'post',
+                    data:{
+                        data: dateObject,
+                        nioType: nioType
+                    },
+                    success:function(data){
+                      console.log('okay good');
+                    }
+                  });
+
+                  //redirect the page to applyNIO.php after the mail has been sent
+                    document.location='applyNIO.php';
                 }
 
             },
@@ -442,6 +469,7 @@ else
                 var empID = 1;
                 var date = '7-3-2014';
                 var empName = "Roshan David";
+                var startTime, endTime;
                 $("#popup-nio-apply").append("<table style='width: 100%'>" +
                     "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>" + nioID + "</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>" + date + "</td></tr>" +
                     "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>" + empName + "</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>" + empID + "</td></tr>" +
@@ -456,18 +484,27 @@ else
                     '<tr class="headingTr template-lightBack"><td>Date</td><td>From</td><td>To</td><td>Duration</td></tr>');
                 $("#popup-nio-apply").append('</table>');
 
-                var i = 0;
-                while (i < 5) {
-                    $("#popup-nio-apply").append('<table class="flatTable table-row-noStatusTable">' +
+
+                $.each(dateObject,function(j){
+                        if(dateObject[j].status==1){
+                            date=dateObject[j].date;
+                            startTime=dateObject[j].startTime;
+                            endTime=dateObject[j].endTime;
+                           date=moment(parseInt(date)).format('YYYY-MM-DD');
+                            duration=8;
+
+                            $("#popup-nio-apply").append('<table class="flatTable table-row-noStatusTable">' +
                         '<tr class="table-row-selectable">' +
-                        ' <td>' + "12-12-2009" + '</td>' +
-                        ' <td>' + "9:00" + '</td>' +
-                        ' <td>' + "17:00" + '</td>' +
-                        ' <td>' + "8.0h" + '</td>' +
+                        ' <td>' + date + '</td>' +
+                        ' <td>' + startTime + '</td>' +
+                        ' <td>' + endTime + '</td>' +
+                        ' <td>' + duration + '</td>' +
                         ' </tr>' +
                         '</table>');
-                    ++i;
-                }
+
+                        }
+                });
+
             }
         });
 }
@@ -636,4 +673,3 @@ else
         onLoad();
 
     });
-
