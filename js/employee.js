@@ -5,7 +5,8 @@ $(document).ready(function() {
     aspectRatio = ($(document).width() * 0.73) / ($(document).height() * 0.855);
 
 
-    var dateObject = [];        //Array that stores the detail of the NIO
+    var dateObject = [];        //Array that stores the detail of the CURRENT NIO
+    var dateObjectHistory=[];   //Array that stotes the details of ALL THE APPLICATIONS
     var index = 0;          //Uniquw Number to access the NIO dates and the events
     var recordNumber = 1;       //Keep track of the number of entries in the table of NIO History
     var dropDown_1 = "";        // 00 to 2330
@@ -14,12 +15,46 @@ $(document).ready(function() {
     //-------------------COLORS-------------------------
 
     var NIO_CURR = '#F9C775';       //curretly applying NIO color
-    var NIO_APPLIED = 'black';          //already applied NIO
+    var NIO_APPLIED = 'lightgreen';          //already applied NIO
     var LEAVE_APPLIED = 'red';           //Leave applied
 
+    //-------------------End Of Colors-----------------
+    //-------------------Fetch Employee History of NIO----------------------
+    
+    function fetchEmployeeHistory(fetchHistoryCallBack){
+                $.ajax({
+                            dataType: 'json',
+                            url: 'ajax/fetchEmployeeApplicationHistory.php',
+                            type: 'post',
+                            data: {
+                               
+                            },
+                            success: fetchHistoryCallBack
+                        });
+    }
+    
+    function fetchHistoryCallBack(data){
+        var i=0;
+       // console.log(data);
+        while(data[i]){
+            dateObjectHistory.push({
+                'date':data[i]['date'],
+                'startTime': data[i]['startTime'],
+                'endTime': data[i]['endTime'],
+                'status': data[i]['status'],
+                'type': data[i]['type']
+            });
+            if(data[i]['type']===1)
+             createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED);
+             
+            ++i;
+        }
+        console.log(dateObjectHistory);
+    }
+    
+    fetchEmployeeHistory(fetchHistoryCallBack);
 
-
-    //------------End of colors-----------------
+    //------------End of Employee History----------------
 
     $('.fc-day .fc-sat .ui-widget-content .fc-future').css({'background': 'red !important'});
 
@@ -180,7 +215,7 @@ $(document).ready(function() {
                     if ((validatedStartTime < endTime && startTime < validatedStartTime) || (validatedEndTime < endTime && startTime < validatedEndTime))
                         flag = 0;
 
-                    if ((endTime == validatedEndTime && startTime === validatedStartTime)) {
+                    if ((endTime === validatedEndTime && startTime === validatedStartTime)) {
                         flag = 0;
                     }
 
@@ -192,7 +227,31 @@ $(document).ready(function() {
         //------end of conflicting day formating---//
 
         //------------Validating with the existing date entry from database--------------------------//
+         $.each(dateObjectHistory, function(j) {  //function to remove object from the array
+            console.log(date);
+            temp = dateObjectHistory[j].date;
+            if (moment(temp).format('YYYY-MM-DD') === date) {
+                    validatedStartTime = dateObjectHistory[j].startTime;
+                    validatedEndTime = dateObjectHistory[j].endTime;
 
+                    validatedStartTime = moment(date + "T" + validatedStartTime).unix();
+                    validatedEndTime = moment(date + "T" + validatedEndTime).unix();
+
+                    if ((startTime < validatedEndTime && startTime > validatedStartTime) || (endTime < validatedEndTime && endTime > validatedStartTime)) {
+                        flag = 0;
+                    }
+                    if ((validatedStartTime < endTime && startTime < validatedStartTime) || (validatedEndTime < endTime && startTime < validatedEndTime))
+                        flag = 0;
+
+                    if ((endTime == validatedEndTime && startTime === validatedStartTime)) {
+                        flag = 0;
+                    }
+
+                }
+            
+        });
+        if (!flag)               //False for the validation of date entries in NIOs
+            return false;
 
 
 
@@ -615,11 +674,9 @@ $(document).ready(function() {
 
     });
 
-    ///-----------------Function to add the event to date----------
+    ///-----------------Function to add the event to Calendar----------
 
     function createEvent(startTime, endTime, date, id, color) {
-        startTime += ":00";
-        endTime += ":00";
         date = moment(parseInt(date)).format("YYYY-MM-DD");
         var start = date + "T" + startTime;
         var end = date + "T" + endTime;
