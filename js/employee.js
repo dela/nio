@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $("#nio-cal-checkbox").attr('disabled', true).prop('checked', false);  //setting the global checkbox disabled and unchecked
     var aspectRatio;
-    aspectRatio = ($(document).width() * 0.73) / ($(document).height() * 0.855);
+    aspectRatio = ($(document).width() * 0.73) / ($(document).height() * 0.79);
 
 
     var dateObject = [];        //Array that stores the detail of the CURRENT NIO
@@ -15,27 +15,29 @@ $(document).ready(function() {
     //-------------------COLORS-------------------------
 
     var NIO_CURR = '#F9C775';       //curretly applying NIO color
-    var NIO_APPLIED = 'lightgreen';          //already applied NIO
+    var NIO_APPLIED_APPROVED = 'lightgreen';          //already applied NIO
+    var NIO_APPLIED_REJECTED='#F76262';
+    var NIO_APPLIED_PENDING='#FFFF00';
     var LEAVE_APPLIED = 'red';           //Leave applied
 
     //-------------------End Of Colors-----------------
     //-------------------Fetch Employee History of NIO----------------------
     
     function fetchEmployeeHistory(fetchHistoryCallBack){
-                $.ajax({
-                            dataType: 'json',
-                            url: 'ajax/fetchEmployeeApplicationHistory.php',
-                            type: 'post',
-                            data: {
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/fetchEmployeeApplicationHistory.php',
+            type: 'post',
+            data: {
                                
-                            },
-                            success: fetchHistoryCallBack
-                        });
+            },
+            success: fetchHistoryCallBack
+        });
     }
     
     function fetchHistoryCallBack(data){
         var i=0;
-       // console.log(data);
+        // console.log(data);
         while(data[i]){
             dateObjectHistory.push({
                 'date':data[i]['date'],
@@ -44,30 +46,23 @@ $(document).ready(function() {
                 'status': data[i]['status'],
                 'type': data[i]['type']
             });
-            if(data[i]['type']===1)
-             createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED);
-             
+            if(data[i]['type']===1){
+                if(data[i]['status']==1)
+                    createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED_APPROVED);
+                else if(data[i]['status']==-1)
+                    createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED_REJECTED);
+                else
+                    createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED_PENDING);
+            }       
             ++i;
         }
-        console.log(dateObjectHistory);
     }
     
     fetchEmployeeHistory(fetchHistoryCallBack);
 
     //------------End of Employee History----------------
-
-    $('.fc-day .fc-sat .ui-widget-content .fc-future').css({'background': 'red !important'});
-
-    // --------------Prevent jQuery UI dialog from blocking focusin
-    $(document).on('focusin', function(e) {
-        if ($(e.target).closest(".mce-window").length) {
-            e.stopImmediatePropagation();
-        }
-    });
-
-
-
-    //-------------------Application of NIO---------------------------------
+    //
+    //-------------------DROP DOWN CREATION---------------------------------
     function minToTimeFormat(time) {
         var min = time % 60;
         var hour = Math.floor(time / 60);
@@ -78,7 +73,7 @@ $(document).ready(function() {
         time = hour + ":" + min;
         return time;
     }
-    //-------------------------------------------------------------------------
+    //--------------------------DECLARATION OF NIO CALENDAR-----------------------------------------------
     $('#nio-calendar').fullCalendar({
         theme: true,
         firstDay: 0,
@@ -138,12 +133,12 @@ $(document).ready(function() {
             while (i < dateObject.length) {
                 date = moment(parseInt(dateObject[i].date)).format("YYYY-MM-DD ddd");
                 $('.nio-apply-dates').append("<tr class='nio-row-date' id=" + dateObject[i].id + ">" +
-                        "<td><input style='margin-left: 1%;float: right' type='checkbox'/></td>" +
-                        "<td style='text-align: left;padding: 2%'>" + date + "</td>" +
-                        "<td>" + "<select class='nio-starttime-drop' >" + dropDown_1 + " to " + "<select class='nio-endtime-drop'>" + dropDown_2 + "</td>" +
-                        "<td class='nio-date-alert'><img class='nio-cal-alert' src='images/exclamation18.png'/></td>" +
-                        "<td class='nio-date-remove'><img class='nio-cal-cross' src='images/close_graph_black.png'/></td>" +
-                        "</tr>");
+                    "<td><input style='margin-left: 1%;float: right' type='checkbox'/></td>" +
+                    "<td style='text-align: left;padding: 2%'>" + date + "</td>" +
+                    "<td>" + "<select class='nio-starttime-drop' >" + dropDown_1 + " to " + "<select class='nio-endtime-drop'>" + dropDown_2 + "</td>" +
+                    "<td class='nio-date-alert'><img class='nio-cal-alert' src='images/exclamation18.png'/></td>" +
+                    "<td class='nio-date-remove'><img class='nio-cal-cross' src='images/close_graph_black.png'/></td>" +
+                    "</tr>");
                 $('.nio-row-date').each(function() {
                     if ($(this).attr('id') == dateObject[i].id) {
                         $(this).find('.nio-starttime-drop').val(dateObject[i].startTime);
@@ -159,7 +154,9 @@ $(document).ready(function() {
 
                         //if the date has status 1 means it is already validated no need to worry!
                         if (dateObject[i].status == 0 && !dateValidation(dateObject[i].date, dateObject[i].startTime, dateObject[i].endTime)) {
-                            $(this).find('.nio-cal-alert').css({'display': 'block'});
+                            $(this).find('.nio-cal-alert').css({
+                                'display': 'block'
+                            });
                         }
                     }
                 });
@@ -227,27 +224,27 @@ $(document).ready(function() {
         //------end of conflicting day formating---//
 
         //------------Validating with the existing date entry from database--------------------------//
-         $.each(dateObjectHistory, function(j) {  //function to remove object from the array
+        $.each(dateObjectHistory, function(j) {  //function to remove object from the array
             console.log(date);
             temp = dateObjectHistory[j].date;
             if (moment(temp).format('YYYY-MM-DD') === date) {
-                    validatedStartTime = dateObjectHistory[j].startTime;
-                    validatedEndTime = dateObjectHistory[j].endTime;
+                validatedStartTime = dateObjectHistory[j].startTime;
+                validatedEndTime = dateObjectHistory[j].endTime;
 
-                    validatedStartTime = moment(date + "T" + validatedStartTime).unix();
-                    validatedEndTime = moment(date + "T" + validatedEndTime).unix();
+                validatedStartTime = moment(date + "T" + validatedStartTime).unix();
+                validatedEndTime = moment(date + "T" + validatedEndTime).unix();
 
-                    if ((startTime < validatedEndTime && startTime > validatedStartTime) || (endTime < validatedEndTime && endTime > validatedStartTime)) {
-                        flag = 0;
-                    }
-                    if ((validatedStartTime < endTime && startTime < validatedStartTime) || (validatedEndTime < endTime && startTime < validatedEndTime))
-                        flag = 0;
-
-                    if ((endTime == validatedEndTime && startTime === validatedStartTime)) {
-                        flag = 0;
-                    }
-
+                if ((startTime < validatedEndTime && startTime > validatedStartTime) || (endTime < validatedEndTime && endTime > validatedStartTime)) {
+                    flag = 0;
                 }
+                if ((validatedStartTime < endTime && startTime < validatedStartTime) || (validatedEndTime < endTime && startTime < validatedEndTime))
+                    flag = 0;
+
+                if ((endTime == validatedEndTime && startTime === validatedStartTime)) {
+                    flag = 0;
+                }
+
+            }
             
         });
         if (!flag)               //False for the validation of date entries in NIOs
@@ -313,11 +310,15 @@ $(document).ready(function() {
                         checkObj.parent('td').parent('tr').find('.nio-starttime-drop').attr('disabled', true);
                         createEvent(startTime, endTime, date, id, NIO_CURR);
                         dateObject[j].status = 1;
-                        checkObj.parent('td').parent('tr').find('.nio-cal-alert').css({'display': 'none'});
+                        checkObj.parent('td').parent('tr').find('.nio-cal-alert').css({
+                            'display': 'none'
+                        });
                     }
                     else {
                         checkObj.prop('checked', false);
-                        checkObj.parent('td').parent('tr').find('.nio-cal-alert').css({'display': 'block'});
+                        checkObj.parent('td').parent('tr').find('.nio-cal-alert').css({
+                            'display': 'block'
+                        });
                     }
 
                     return false;
@@ -418,11 +419,15 @@ $(document).ready(function() {
                             row.find('.nio-starttime-drop').attr('disabled', true);
                             createEvent(startTime, endTime, date, id, NIO_CURR);
                             dateObject[j].status = 1;
-                            row.find('.nio-cal-alert').css({'display': 'none'});
+                            row.find('.nio-cal-alert').css({
+                                'display': 'none'
+                            });
                             row.find('input').prop('checked', true);
                         }
                         else {
-                            row.find('.nio-cal-alert').css({'display': 'block'});
+                            row.find('.nio-cal-alert').css({
+                                'display': 'block'
+                            });
                             row.find('.nio-apply-dates input').prop('checked', false);
 
                         }
@@ -437,51 +442,7 @@ $(document).ready(function() {
 
     });
 
-    //---------------------------------------------------------------
-
-    $("#nio-cal-addButton").click(function() {
-        var i = 1;
-        var date = moment();
-        var input;
-        var startTime;
-        var endTime;
-        var row = $('.nio-apply-dates tr:nth-child(' + i + ')');
-        while (row.length > 0) {
-            input = row.find('input')
-            if (input.prop('checked')) {
-                date = row.attr('date');
-                startTime = row.find('.nio-starttime-drop').val();
-                endTime = row.find('.nio-endtime-drop').val();
-                startTime += ":00";
-                endTime += ":00";
-                date = moment(parseInt(date)).format("YYYY-MM-DD");
-
-                startTime = date + "T" + startTime;
-                endTime = date + "T" + endTime;
-
-                row.remove();
-                var eventObject = {
-                    id: 1,
-                    title: 'Event',
-                    start: startTime,
-                    end: endTime,
-                    description: 'This is a cool event',
-                    color: '#F9C775',
-                    textColor: 'black'
-                };
-                $('#nio-calendar').fullCalendar('renderEvent', eventObject, true);
-
-            }
-            else
-                ++i;
-            row = $('.nio-apply-dates tr:nth-child(' + i + ')');
-        }
-        if (dateObject.length == 0)
-            $("#nio-cal-checkbox").attr('disabled', true).prop('checked', false);
-        else
-            $("#nio-cal-checkbox").prop('checked', false);
-    });
-
+    
     //------------------Apply for NIO pops the details of the NIO in table----------------
     function applyForNIO() {
         var title = "NIO APPLICATION";
@@ -499,34 +460,34 @@ $(document).ready(function() {
             width: 700,
             height: 550,
             buttons: [
-                {
-                    text: "Apply",
-                    click: function() {
-                        var nioType = 1;
-                        $.ajax({
-                            url: 'ajax/addNIO.php',
-                            type: 'post',
-                            data: {
-                                data: dateObject,
-                                nioType: nioType
-                            },
-                            success: function(data) {
-                                console.log('okay good');
-                                document.location = 'applyNIO.php';
-                            }
-                        });
+            {
+                text: "Apply",
+                click: function() {
+                    var nioType = 1;
+                    $.ajax({
+                        url: 'ajax/addNIO.php',
+                        type: 'post',
+                        data: {
+                            data: dateObject,
+                            nioType: nioType
+                        },
+                        success: function(data) {
+                            console.log('okay good');
+                            document.location = 'applyNIO.php';
+                        }
+                    });
 
-                        //redirect the page to applyNIO.php after the mail has been sent
+                //redirect the page to applyNIO.php after the mail has been sent
                         
-                    }
-
-                },
-                {
-                    text: "Cancel",
-                    click: function() {
-                    }
-
                 }
+
+            },
+            {
+                text: "Cancel",
+                click: function() {
+                }
+
+            }
             ],
             open: function(event, ui) {
                 $("#popup-nio-apply").empty();
@@ -536,17 +497,17 @@ $(document).ready(function() {
                 var empName = "Roshan David";
                 var startTime, endTime;
                 $("#popup-nio-apply").append("<table style='width: 100%'>" +
-                        "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>" + nioID + "</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>" + date + "</td></tr>" +
-                        "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>" + empName + "</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>" + empID + "</td></tr>" +
-                        "</table>");
+                    "<tr><td style='text-align: left'><b>NIO ID: </b></td><td style='text-align: left'>" + nioID + "</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>" + date + "</td></tr>" +
+                    "<tr><td style='text-align: left'><b>Employee Name: </b></td><td style='text-align: left'>" + empName + "</td><td style='text-align: left'><b>Employee ID: </b></td><td style='text-align: left'>" + empID + "</td></tr>" +
+                    "</table>");
 
                 $("#popup-nio-apply").append("<table style='width: 100%'>" +
-                        "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>" + nioID + "</td></tr></table>");
+                    "<tr><td style='text-align: left'><b>Reason: </b></td><td style='text-align: left'>" + nioID + "</td></tr></table>");
 
                 $("#popup-nio-apply").append("<table style='width: 100%'>" +
-                        "<tr><td style='text-align: left'><b>Application: </b></td></tr></table>");
+                    "<tr><td style='text-align: left'><b>Application: </b></td></tr></table>");
                 $("#popup-nio-apply").append('<table class="flatTable-heading template-lightBack">' +
-                        '<tr class="headingTr template-lightBack"><td>Date</td><td>From</td><td>To</td><td>Duration</td></tr>');
+                    '<tr class="headingTr template-lightBack"><td>Date</td><td>From</td><td>To</td><td>Duration</td></tr>');
                 $("#popup-nio-apply").append('</table>');
 
 
@@ -559,13 +520,13 @@ $(document).ready(function() {
                         duration = 8;
 
                         $("#popup-nio-apply").append('<table class="flatTable table-row-noStatusTable">' +
-                                '<tr class="table-row-selectable">' +
-                                ' <td>' + date + '</td>' +
-                                ' <td>' + startTime + '</td>' +
-                                ' <td>' + endTime + '</td>' +
-                                ' <td>' + duration + '</td>' +
-                                ' </tr>' +
-                                '</table>');
+                            '<tr class="table-row-selectable">' +
+                            ' <td>' + date + '</td>' +
+                            ' <td>' + startTime + '</td>' +
+                            ' <td>' + endTime + '</td>' +
+                            ' <td>' + duration + '</td>' +
+                            ' </tr>' +
+                            '</table>');
 
                     }
                 });
@@ -574,7 +535,7 @@ $(document).ready(function() {
         });
     }
 
-    //------------------------This pops the description field----
+    //------------------------This pops the description field--------
 
     $("#nio-cal-applyButton").click(function() {
         $("#popup-nio-description").dialog({
@@ -589,20 +550,20 @@ $(document).ready(function() {
             width: 700,
             height: 550,
             buttons: [
-                {
-                    text: "Proceed",
-                    click: function() {
-                        applyForNIO();
-                    }
+            {
+                text: "Proceed",
+                click: function() {
+                    applyForNIO();
+                }
 
-                },
-                {
-                    text: "Cancel",
-                    click: function() {
-
-                    }
+            },
+            {
+                text: "Cancel",
+                click: function() {
 
                 }
+
+            }
             ]
         });
     });
@@ -625,19 +586,19 @@ $(document).ready(function() {
             width: 300,
             height: 150,
             buttons: [
-                {
-                    text: "Yes",
-                    click: function() {
-                        $(this).dialog("close");
-                        window.location = 'index.php';
-                    }
-                },
-                {
-                    text: "No",
-                    click: function() {
-                        $(this).dialog("close");
-                    }
+            {
+                text: "Yes",
+                click: function() {
+                    $(this).dialog("close");
+                    window.location = 'index.php';
                 }
+            },
+            {
+                text: "No",
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
             ],
             open: function(event, ui) {
                 $("#popup-nio-apply").empty();
@@ -698,9 +659,9 @@ $(document).ready(function() {
         var i = 0;
         while (data[i]) {
             $(".table-row-nioHistoryTable").append(" <tr class=\"table-row-selectable\" nioID=" + data[i]['nioID'] + "><td>" +
-                    data[i]['nioID'] + "</td><td>" + data[i]['reqID'] + "</td><td>" +
-                    data[i]['reason'] + "</td><td>" + data[i]['appDate'] +
-                    "</td><td>" + data[i]['status'] + "</td> <td>" + data[i]['duration'] + "</td></tr>");
+                data[i]['nioID'] + "</td><td>" + data[i]['reqID'] + "</td><td>" +
+                data[i]['reason'] + "</td><td>" + data[i]['appDate'] +
+                "</td><td>" + data[i]['status'] + "</td> <td>" + data[i]['duration'] + "</td></tr>");
             ++i;
             recordNumber++;
         }
