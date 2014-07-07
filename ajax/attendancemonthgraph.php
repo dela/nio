@@ -4,7 +4,7 @@ include("dbConnection.php");
 $yearselected = $_POST['yearselected'];
 
 $minimum_working_hours_in_a_week = 40;
-$minimum_working_hours_in_a_month = 160;
+$minimum_working_hours_in_a_month = 250;
 $series = array();
 $work = array();
 $yettowork = array();
@@ -49,7 +49,7 @@ for ($i = 1; $i <= 12; $i++) {
     $firstdate = firstDay($i, $year);
     $lastdate = lastday($i, $year);
    // $yearincremented = date('Y-m-d', $yearselected);
-    $query = "SELECT SUM(duration) AS duration FROM hs_hr_nio_attendance WHERE emp_id=1 AND date BETWEEN $firstdate AND  $lastdate";
+    $query = "SELECT SUM(duration) AS duration FROM hs_hr_nio_attendance WHERE emp_id=1 AND date BETWEEN '$firstdate' AND  '$lastdate'";
     $result = mysqli_query($nio_conn, $query);
     $row = mysqli_fetch_array($result);
     $work[] = $row['duration'] / 60;

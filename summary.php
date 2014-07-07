@@ -47,7 +47,8 @@
                     changeMonth: true,
                     changeYear: true,
                     dateFormat:"yy/mm/dd",
-                    showAnim:"clip"
+                    showAnim:"clip",
+                     firstDay: 1
                 });
             });
         </script>

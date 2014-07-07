@@ -834,6 +834,81 @@ $(document).ready(function() {
         $('#datechoose').hide();
         $('#monthchoose').hide();
         $('#yearchoose').show();
+        
+        
+        var d = new Date();
+
+        var curr_date = d.getDate();
+
+        var curr_month = d.getMonth();
+
+        var curr_year = d.getFullYear();
+
+        var datetoday = (curr_year + "/" + curr_month + "/" + curr_date);
+          $.ajax({
+            dataType: 'json',
+            url: 'ajax/attendancemonthgraph.php',
+            type: 'post',
+            data: {
+                yearselected: datetoday,
+            },
+            success: function(data) {
+                var work = data[0];
+                var yettowork = data[1];
+                var month = data[2];
+               console.log(data);
+                //startof day graph
+                $('#month').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F9D597',
+                        borderColor: '#F9D597',
+                        plotBorderColor: '#F9D597'
+
+                    },
+                    title: {
+                        text: 'Daily Analysis chart'
+                    },
+                    xAxis: {
+                        categories: month
+
+
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Working Hours'
+
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                        valueSuffix: ' hr',
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            animation: false
+
+                        }
+                    },
+                    series: [{
+                            name: 'Yet to work ',
+                            data: yettowork
+                        }, {
+                            name: 'Work',
+                            data: work
+                        }], colors: ['#E77817', '#fcb334']
+                });
+
+            }
+
+
+        });
 
     });
 

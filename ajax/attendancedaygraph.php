@@ -23,7 +23,8 @@ $day = array();
 
 
 $dateselected = strtotime($dateselected);
-
+$dateselected = date('Y-m-d', strtotime('this week last monday', $dateselected));
+$dateselected = strtotime($dateselected);
 $i = 0;
 for ($i = 0; $i < $number_of_days_in_week; $i++) {
 
