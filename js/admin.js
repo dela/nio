@@ -121,6 +121,14 @@ $(document).ready(function() {
     $(".nio-reasons-box").mCustomScrollbar({
         theme:"dark"
     });
+    
+    $("body").delegate(".nio-reason table tr td img","click",function(){
+        $(this).parent().parent().parent().parent().parent().css({
+            "margin":"0px",
+            "padding":"0px"
+        });
+        $(this).parent().parent().parent().parent().empty();
+    });
  
     $(".add-nio-reason").click(function(){
         var nioReason=$("#nio-reason-to-add").val();
@@ -134,29 +142,7 @@ $(document).ready(function() {
         }
     });
     
-    $("body").delegate(".nio-reason table tr td img","click",function(){
-        $(this).parent().parent().parent().parent().parent().css({
-            "margin":"0px",
-            "padding":"0px"
-        });
-        $(this).parent().parent().parent().parent().empty();
-    });
+    
 
-    //--------------------------Hide And Show Graph     --------------------------------
-    $(".admin-graph-controlShow" ).tooltip({
-        content: "Show Graph"
-    });
-    $("#closeGraph img" ).tooltip({
-        content: "Close Graph"
-    });
-    
-    $(".searchBox input" ).tooltip({
-        content: "Employee Name"
-    });
-    
-    $(".searchBox select" ).tooltip({
-        content: "Select Employee Designation"
-    });
-      
+   
 });
-    

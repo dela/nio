@@ -81,7 +81,7 @@
                             <tr>
                                 <td>
                                     <h3>Reasons</h3>
-                                    <div class="nio-reasons-box">
+                                    <div class="nio-reasons-box" id='nio-reason-type'>
                                         <ul>
                                             <li class="nio-reason">
                                                 <table>
@@ -94,12 +94,12 @@
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-reason-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason">ADD</span>
+                                    <span class="general-button orange-button add-nio-reason" id="nio-reason-to-add-button">ADD</span>
                                 </td>
 
                                 <td>
                                     <h3>Department</h3>
-                                    <div class="nio-reasons-box">
+                                    <div class="nio-reasons-box" id="nio-reason-department">
                                         <ul>
                                             <li class="nio-reason">
                                                 <table>
@@ -112,12 +112,12 @@
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-department-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason">ADD</span>
+                                    <span class="general-button orange-button add-nio-reason" id="nio-department-to-add-button">ADD</span>
                                 </td>
 
                                 <td>
                                     <h3>Exception Employee</h3>
-                                    <div class="nio-reasons-box">
+                                    <div class="nio-reasons-box" id="nio-reason-employee">
                                         <ul>
                                             <li class="nio-reason">
                                                 <table>
@@ -130,7 +130,7 @@
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-employee-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason">ADD</span>
+                                    <span class="general-button orange-button add-nio-reason" id="nio-employee-to-add-button">ADD</span>
                                 </td>
                             </tr>
                         </table>

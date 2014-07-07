@@ -53,11 +53,7 @@
     background:#F9D597 ;/*#F9D597      #FFFBED      */
     font-weight: normal;
 }
-/*
-.flatTable tr:nth-child(even) {
-    background-color: #F7BA59;
-}
-*/
+
 td{    
     box-sizing:border-box;
     padding-left:20px;
