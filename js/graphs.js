@@ -553,10 +553,148 @@ $(document).ready(function() {
         var  month = ($(this).val());
        
         console.log(month);
+         $.ajax({
+        dataType: 'json',
+        url: 'ajax/attendanceweekgraph.php',
+        type: 'post',
+        data: {
+            monthselected: month,
+        },
+        success: function(data) {
+            var work = data[0];
+            var yettowork = data[1];
+            var day = data[2];
+            //console.log(data);
+            //startof day graph
+            $('#day').highcharts({
+                chart: {
+                    type: 'bar',
+                    backgroundColor: '#F9D597',
+                    borderColor: '#F9D597',
+                    plotBorderColor: '#F9D597'
+
+                },
+                title: {
+                    text: 'Daily Analysis chart'
+                },
+                xAxis: {
+                    categories: week
+                    
+                    
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Working Hours'
+
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                    valueSuffix: ' hr',
+                    shared: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal',
+                        animation: false
+
+                    }
+                },
+                series: [{
+                        name: 'Yet to work ',
+                        data: yettowork
+                    }, {
+                        name: 'Work',
+                        data: work
+                    }], colors: ['#E77817', '#fcb334']
+            });
+
+        }
+
+
+    });
+
+        
         
     });
 
+//for year graph dynaimc 
+$('#yearpicker').change(function(){
+   var year=( $(this).val());
+   console.log(year);
+     $.ajax({
+        dataType: 'json',
+        url: 'ajax/attendancemonthgraph.php',
+        type: 'post',
+        data: {
+            yearselected: year,
+        },
+        success: function(data) {
+            var work = data[0];
+            var yettowork = data[1];
+            var month = data[2];
+            //console.log(data);
+            //startof day graph
+            $('#day').highcharts({
+                chart: {
+                    type: 'bar',
+                    backgroundColor: '#F9D597',
+                    borderColor: '#F9D597',
+                    plotBorderColor: '#F9D597'
 
+                },
+                title: {
+                    text: 'Daily Analysis chart'
+                },
+                xAxis: {
+                    categories:month
+                    
+                    
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Working Hours'
+
+                    }
+                },
+                legend: {
+                    reversed: true
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                    valueSuffix: ' hr',
+                    shared: true
+                },
+                plotOptions: {
+                    series: {
+                        stacking: 'normal',
+                        animation: false
+
+                    }
+                },
+                series: [{
+                        name: 'Yet to work ',
+                        data: yettowork
+                    }, {
+                        name: 'Work',
+                        data: work
+                    }], colors: ['#E77817', '#fcb334']
+            });
+
+        }
+
+
+    });
+   
+   
+   
+   
+});
 
 
     $("#daily_graph").click(function() {
