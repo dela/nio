@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     $("#nio-cal-checkbox").attr('disabled', true).prop('checked', false);  //setting the global checkbox disabled and unchecked
     var aspectRatio;
-    aspectRatio = ($(document).width() * 0.73) / ($(document).height() * 0.79);
+    aspectRatio = ($(document).width() * 0.73) / ($(document).height() * 0.792);
 
 
     var dateObject = [];        //Array that stores the detail of the CURRENT NIO
