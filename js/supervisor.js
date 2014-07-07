@@ -94,6 +94,27 @@ $(document).ready(function() {
         nioChartPageNumber--;
     }
     
+    function leaveChart(leaveChartCallBack){
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/leaveGraph.php',
+            type: 'post',
+            data:{
+                page: nioChartPageNumber
+            },
+            success: function(data){
+                console.log(data);
+                dataToPass=data[2];
+                
+            }
+        });
+    }
+    
+    
+    function decrementLeaveChartPage(){
+        leaveChartPageNumber--;
+    }
+    
     
     //-------------------Scroll Function-----------------------
     
@@ -236,6 +257,7 @@ $(document).ready(function() {
         }
         ];
         dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
+        nioLeave();
         createGraphLeave(textToPass,seriesToPass,dataToPass);
         
         $("#table-noStatusTable .table-row-noStatusTable").empty();
