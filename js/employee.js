@@ -659,9 +659,9 @@ $(document).ready(function() {
         var i = 0;
         while (data[i]) {
             $(".table-row-nioHistoryTable").append(" <tr class=\"table-row-selectable\" nioID=" + data[i]['nioID'] + "><td>" +
-                data[i]['nioID'] + "</td><td>" + data[i]['reqID'] + "</td><td>" +
+                data[i]['nioID'] + "</td><td>" +
                 data[i]['reason'] + "</td><td>" + data[i]['appDate'] +
-                "</td><td>" + data[i]['status'] + "</td> <td>" + data[i]['duration'] + "</td></tr>");
+                "</td><td>" + data[i]['status'] + "</td> <td>" + parseInt(data[i]['duration']/60)+"h "+(data[i]['duration'])%60+"min" + "</td></tr>");
             ++i;
             recordNumber++;
         }
@@ -678,5 +678,105 @@ $(document).ready(function() {
 
 
     onLoad();
+    
+    $('body').delegate('.table-row-selectable','click',function (){
+        var nioID=$(this).attr('nioID');
+        $("#niohistory-popup").dialog({
+            position: {
+                my: "center",
+                at: "center",
+                of: window
+            },
+            modal: true,
+            draggable: false,
+            title: "NIO DETAILS",
+            closeText: "hide",
+            dialogClass: 'no-close success-dialog',
+            width: 700,
+            height: 600,
+            buttons: [
+            {
+                text: "Cancel Application",
+                click: function() {
+                    $.ajax({
+                        type: "POST",
+                        url: "ajax/changeNioStatus.php",
+                        dataType: 'json',
+                        data: {
+                            nioID: nioID,
+                            status: -2
+                        },
+                        success : function(data){
+                            console.log(data);
+                            alert("Cancelled");           
+                        }
+                    });
+                    $(this).dialog("close");
+                }
+            },
+            {
+                text: "Send Reminder",
+                click: function() {
+                    $(this).dialog("close");
+                }
+            }
+            ],
+            open: function(event, ui) {
+                $("#niohistory-popup").empty();
+                
+                var description="Okay I am off";
+                var date='12-12-1992';
+                
+                $.ajax({
+                    url: 'ajax/nioDetails.php',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{
+                        nioID: nioID
+                    }, 
+                    success: function(data){
+                      
+                        date=data['genDetails']['dateApplied'];
+                        $("#niohistory-popup").append("<table style='width: 100%'>"+
+                            "<tr><td style='text-align: left'><b>NIO ID: </b> "+nioID+"</td><td style='text-align: right'><b>Date: </b>"+date+"</td></tr>"+               
+                            "</table>"); 
+                       
+                        $("#niohistory-popup").append("<table style='width: 100%'>"+
+                            "<tr><td style='text-align: left'><b>Message: </b></td></tr></table>"); 
+                        $("#popUp-noStatus").append("<textarea rows='4' style='resize:none;width: 95%; padding: 3px; margin: 10px 2.5% 10px 2%'>"+description+"</textarea>");
+                             
+                             
+                        $("#niohistory-popup").append("<table style='width: 100%'>"+
+                            "<tr><td style='text-align: left'><b>Login Details: </b></td></tr></table>"); 
+                        $("#niohistory-popup").append('<table class="flatTable-heading template-lightBack">'+
+                            '<tr class="headingTr template-lightBack"><td>Date</td><td>Start Time</td><td>End Time</td><td>Duration</td></tr>');
+                        $("#niohistory-popup").append('</table>');
+                        
+                        var i=0;
+                        while(data[i]){
+                            $("#niohistory-popup").append('<table class="flatTable table-row-noStatusTable">'+
+                                '<tr class="table-row-selectable">'+
+                                ' <td>'+data[i]['date']+'</td>'+
+                                ' <td>'+data[i]['startTime']+'</td>'+
+                                ' <td>'+data[i]['endTime']+'</td>'+
+                                ' <td>'+data[i]['duration']+'</td>'+
+                                ' </tr>'+
+                                '</table>');
+                            ++i;
+                        }
+                        if(i==0){
+                            $("#niohistory-popup").append('<table class="flatTable table-row-noStatusTable">'+
+                                '<tr class="table-row-selectable">'+
+                                ' <td>'+'Did not show up for work'+'</td>'+
+                                ' </tr>'+
+                                '</table>');
+                        
+                        }
+                    }
+                });
+            }
+        });
+        
+    });
 
 });

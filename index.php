@@ -18,7 +18,6 @@
                     <table class="flatTable-heading template-lightBack">
                         <tr class="headingTr template-lightBack">
                             <td>NIO ID</td>
-                            <td>REQUEST ID</td>
                             <td>REASON</td>
                             <td>APPLIED ON</td>
                             <td>STATUS</td>
@@ -32,6 +31,7 @@
                     </div>
                 </div>
             </div>
+            <div id="niohistory-popup"></div>
             <script src="js/jquery-1.10.2.js"></script>
             <script src="js/jquery-ui-1.10.4.js"></script>
             <script src="js/jquery.mCustomScrollbar.js"></script>

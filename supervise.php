@@ -90,8 +90,7 @@
                             <tr class="headingTr template-lightBack">
                                 <td>EMPLOYEE ID</td>
                                 <td>EMPLOYEE NAME</td>
-                                <td>APPLICATION DATE </td>
-                                <td>NIO_ID</td>
+                                <td>REASON</td>
                                 <td>START DATE</td>
                                 <td>END DATE</td>
                                 <td>DURATION</td>
@@ -109,8 +108,7 @@
                             <tr class="headingTr template-lightBack">
                                 <td>EMPLOYEE ID</td>
                                 <td>EMPLOYEE NAME</td>
-                                <td>APPLICATION DATE </td>
-                                <td>NIO_ID</td>
+                                <td>REASON</td>
                                 <td>START DATE</td>
                                 <td>END DATE</td>
                                 <td>DURATION</td>

@@ -133,7 +133,7 @@ $(document).ready(function() {
         while(data[i]){
             $(".table-row-unapprovedTable").append(" <tr class=\"table-row-selectable\" tableNumber=2 nio_id="+data[i]['nioID']+"><td>"+
                 data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
-                data[i]['appDate']+"</td><td>"+data[i]['nioID']+
+                data[i]['reason']+
                 "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['endDate']+"</td> <td>"
                 +data[i]['duration']+"</td></tr>");  
             ++i;
@@ -163,8 +163,8 @@ $(document).ready(function() {
         var i=0;
         while(data[i]){
             $(".table-row-approvedTable").append(" <tr class=\"table-row-selectable\" tableNumber=3 nio_id="+data[i]['nioID']+"><td>"+
-                data[i]['empID']+"</td><td>"+data[i]['empName']+"</td><td>"+
-                data[i]['appDate']+"</td><td>"+data[i]['nioID']+
+                data[i]['empID']+"</td><td>"+data[i]['empName']+"</td>"+
+                "<td>"+data[i]['reason']+
                 "</td><td>"+data[i]['startDate']+"</td> <td>"+data[i]['endDate']+"</td> <td>"
                 +data[i]['duration']+"</td></tr>");  
             ++i;
@@ -238,7 +238,7 @@ $(document).ready(function() {
         dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
         createGraphLeave(textToPass,seriesToPass,dataToPass);
         
-          $("#table-noStatusTable .table-row-noStatusTable").empty();
+        $("#table-noStatusTable .table-row-noStatusTable").empty();
         populateNoStatusTable(callBackNoStatusTable);
     }
   
@@ -252,7 +252,7 @@ $(document).ready(function() {
         $(".admin-table-div").hide();
         $("#table-noStatusTable").show();
         
-         $("#table-noStatusTable .table-row-noStatusTable").empty();
+        $("#table-noStatusTable .table-row-noStatusTable").empty();
       
         table[0]=1;      //reset to fetch the first record.
              
@@ -289,7 +289,7 @@ $(document).ready(function() {
         console.log(table.attr('tableNumber'));
         tableNumber = parseInt($(this).attr('tableNumber'), 10);
         switch (tableNumber) {
-            case 1: 
+            case 1:
                 var caseID=$(this).attr('attID');
                 
                 $("#popUp-noStatus").dialog({
@@ -309,25 +309,6 @@ $(document).ready(function() {
                     {
                         text: "Send Reminder",
                         click: function() {
-                            $.ajax({
-                                type: "POST",
-                                url: "ajax/changeNioStatus.php",
-                                dataType: 'json',
-                                data: {
-                                    caseID: caseID,
-                                    status: 1
-                                },
-                                success : function(data){
-                                    console.log(data);
-                                    alert("Accepted");
-                                    
-                                }
-                            });
-                            element.css({
-                                "margin":"0px",
-                                "padding":"0px"
-                            });
-                            element.remove();
                             $( this ).dialog( "close" );
                         },
                         'class':"orange-button"
@@ -349,8 +330,8 @@ $(document).ready(function() {
                                 var date=data['genDetails']['date'];
                                 
                                 var description='Subject: Reminder to apply for NIO or Leave'+
-                                        "\n\nThis mail is to remind you to apply for NIO or leave, as you did not meet the minimum working hour requirement on "+
-                                        date+".";
+                                "\n\nThis mail is to remind you to apply for NIO or leave, as you did not meet the minimum working hour requirement on "+
+                                date+".";
                                 
                                 $("#popUp-noStatus").append("<table style='width: 100%'>"+
                                     "<tr><td style='text-align: left'><b>CASE ID: </b></td><td style='text-align: left'>"+caseID+"</td><td style='text-align: left'><b>Date: </b></td><td style='text-align: left'>"+date+"</td></tr>"+
@@ -365,7 +346,7 @@ $(document).ready(function() {
                              
                                 $("#popUp-noStatus").append("<table style='width: 100%'>"+
                                     "<tr><td style='text-align: left'><b>Login Details: </b></td></tr></table>"); 
-                                 $("#popUp-noStatus").append('<table class="flatTable-heading template-lightBack">'+
+                                $("#popUp-noStatus").append('<table class="flatTable-heading template-lightBack">'+
                                     '<tr class="headingTr template-lightBack"><td>In Time</td><td>Out Time</td><td>Duration</td></tr>');
                                 $("#popUp-unapproved").append('</table>');
                                 
@@ -435,7 +416,7 @@ $(document).ready(function() {
                             element.remove();
                             if(chartNumber==2){
                                 nioChartPageNumber=1;
-                                 nioChart();
+                                nioChart();
                             }
                             $( this ).dialog( "close" );
                         },
@@ -464,7 +445,7 @@ $(document).ready(function() {
                             element.remove();
                             if(chartNumber==2){
                                 nioChartPageNumber=1;
-                                 nioChart();
+                                nioChart();
                             }
                             $( this ).dialog( "close" );
                         },
@@ -560,7 +541,7 @@ $(document).ready(function() {
                             element.remove();
                             if(chartNumber==2){
                                 nioChartPageNumber=1;
-                                 nioChart();
+                                nioChart();
                             }
                             $( this ).dialog( "close" );
                         },
@@ -589,7 +570,7 @@ $(document).ready(function() {
                             element.remove();
                             if(chartNumber==2){
                                 nioChartPageNumber=1;
-                                 nioChart();
+                                nioChart();
                             }
                             $( this ).dialog( "close" );
                         },
