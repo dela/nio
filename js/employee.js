@@ -504,7 +504,6 @@ $(document).ready(function() {
                     click: function() {
                         var nioType = 1;
                         $.ajax({
-                            dataType: 'json',
                             url: 'ajax/addNIO.php',
                             type: 'post',
                             data: {
@@ -513,11 +512,12 @@ $(document).ready(function() {
                             },
                             success: function(data) {
                                 console.log('okay good');
+                                document.location = 'applyNIO.php';
                             }
                         });
 
                         //redirect the page to applyNIO.php after the mail has been sent
-                        document.location = 'applyNIO.php';
+                        
                     }
 
                 },
@@ -605,18 +605,7 @@ $(document).ready(function() {
                 }
             ]
         });
-        $('textarea').tinymce({
-            selector: "textarea",
-            toolbar: 'link',
-            plugins: [
-                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
-                "searchreplace wordcount visualblocks visualchars code fullscreen",
-                "insertdatetime media nonbreaking save table contextmenu directionality",
-                "emoticons template paste textcolor colorpicker textpattern"
-            ]
-        });
     });
-
 
     //---------------------Press on cancel button one goes to history page----
 
@@ -685,14 +674,8 @@ $(document).ready(function() {
             title: startTime + " to " + endTime,
             start: start,
             end: end,
-            description: 'This is a cool event',
             color: color,
-            textColor: 'black',
-            eventRender: function(event, element) {
-                element.qtip({
-                    content: event.description
-                });
-            }
+            textColor: 'black'
         };
         $('#nio-calendar').fullCalendar('renderEvent', eventObject, true);
     }

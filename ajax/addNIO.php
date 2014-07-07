@@ -50,3 +50,6 @@ while ($i < $dataLength) {
 $query = "INSERT INTO hs_hr_nio (nio_id,nio_status,nio_request_id,nio_type,emp_id,nio_duration) VALUES ('$nioID','$nioStatus','$nioRequestID','$nioType','$empID','$duration')";
 $result = mysqli_query($nio_conn, $query);
 
+
+echo "okay";
+?>

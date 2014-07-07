@@ -47,11 +47,9 @@
         <div id="popup-nio-description" style="display: none"><textarea></textarea></div>
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.js"></script>
-        <script src="js/jquery.qtip-1.0.0-rc3.js"></script>
         <script src="js/jquery.mCustomScrollbar.js"></script>
         <script src="js/moment.min.js"></script>
         <script src="js/fullcalendar.min.js"></script>
-        <script src="js/tinymce.min.js"></script>
         <script src="js/employee.js"></script>
     </body>
 </html>
