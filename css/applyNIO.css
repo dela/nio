@@ -127,10 +127,7 @@
     width: 100%;
 }
 
-.fc-sat, .fc-sun{
-    background-color: #DFECEF !important;
-    color: black;
-    }    
+    
 .ui-widget-header{
     border: none;
 }

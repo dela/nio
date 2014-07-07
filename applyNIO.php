@@ -51,7 +51,6 @@
         <script src="js/jquery.mCustomScrollbar.js"></script>
         <script src="js/moment.min.js"></script>
         <script src="js/fullcalendar.min.js"></script>
-        <script src="js/tinymce.min.js"></script>
         <script src="js/employee.js"></script>
     </body>
 </html>
