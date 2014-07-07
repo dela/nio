@@ -39,10 +39,10 @@ while ($i < $dataLength) {
     $status = $data[$i]['status'];
 
     $duration = $duration+(strtotime($endTime) - strtotime($startTime)) / 60;
-
+    if($status){
     $query = "INSERT INTO hs_hr_nio_details (nio_id,nio_date,nio_start_time,nio_end_time) VALUES ('$nioID','$nioDate','$startTime','$endTime')";
     $result = mysqli_query($nio_conn, $query);
-
+    }
 
     $i++;
 }
