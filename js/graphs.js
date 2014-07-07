@@ -413,7 +413,7 @@ $(document).ready(function() {
             var work_inday = data[0];
             var yettowork_inday = data[1];
             var day = data[2];
-            //console.log(data);
+            // console.log(day);
             //startof day graph
             $('#day').highcharts({
                 chart: {
@@ -428,8 +428,8 @@ $(document).ready(function() {
                 },
                 xAxis: {
                     categories: day
-                    
-                    
+
+
                 },
                 yAxis: {
                     min: 0,
@@ -471,230 +471,234 @@ $(document).ready(function() {
 
 // for day from date box 
     $('#datepicker').change(function() {
-        var  date1 = ($(this).val());
-       
+        var date1 = ($(this).val());
+
         console.log(date1);
-        
-        
-    $.ajax({
-        dataType: 'json',
-        url: 'ajax/attendancedaygraph.php',
-        type: 'post',
-        data: {
-            dateselected: date1
-        },
-        success: function(data) {
-        var work_inday = data[0];
-            var yettowork_inday = data[1];
-            var day = data[2];
-            //console.log(data);
-            //startof day graph
-            $('#day').highcharts({
-                chart: {
-                    type: 'bar',
-                    backgroundColor: '#F9D597',
-                    borderColor: '#F9D597',
-                    plotBorderColor: '#F9D597'
 
-                },
-                title: {
-                    text: 'Daily Analysis chart'
-                },
-                xAxis: {
-                    categories: day
-                },
-                yAxis: {
-                    min: 0,
+
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/attendancedaygraph.php',
+            type: 'post',
+            data: {
+                dateselected: date1
+            },
+            success: function(data) {
+                var work_inday = data[0];
+                var yettowork_inday = data[1];
+                var day = data[2];
+                //console.log(data);
+                //startof day graph
+                $('#day').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F9D597',
+                        borderColor: '#F9D597',
+                        plotBorderColor: '#F9D597'
+
+                    },
                     title: {
-                        text: 'Working Hours'
+                        text: 'Daily Analysis chart'
+                    },
+                    xAxis: {
+                        categories: day
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Working Hours'
 
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-                    valueSuffix: ' hr',
-                    shared: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal',
-                        animation: false
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                        valueSuffix: ' hr',
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            animation: false
 
-                    }
-                },
-                series: [{
-                        name: 'Yet to work ',
-                        data: yettowork_inday
-                    }, {
-                        name: 'Work',
-                        data: work_inday
-                    }], colors: ['#E77817', '#fcb334']
-            });
-        }
-        
-        
+                        }
+                    },
+                    series: [{
+                            name: 'Yet to work ',
+                            data: yettowork_inday
+                        }, {
+                            name: 'Work',
+                            data: work_inday
+                        }], colors: ['#E77817', '#fcb334']
+                });
+            }
+
+
+        });
+
+
+
+
+
+
     });
-        
-        
-        
-        
-        
 
-    });
-    
-    
-    
+
+
 
 //for week graph dynamic
     $('#monthpicker').change(function() {
-        var  month = ($(this).val());
-       
+        var month = ($(this).val());
+
         console.log(month);
-         $.ajax({
-        dataType: 'json',
-        url: 'ajax/attendanceweekgraph.php',
-        type: 'post',
-        data: {
-            monthselected: month,
-        },
-        success: function(data) {
-            var work = data[0];
-            var yettowork = data[1];
-            var day = data[2];
-            //console.log(data);
-            //startof day graph
-            $('#day').highcharts({
-                chart: {
-                    type: 'bar',
-                    backgroundColor: '#F9D597',
-                    borderColor: '#F9D597',
-                    plotBorderColor: '#F9D597'
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/attendanceweekgraph.php',
+            type: 'post',
+            data: {
+                monthselected: month,
+            },
+            success: function(data) {
+                var workinweek = data[0];
+                var yettoworkinweek = data[1];
+                var week = data[2];
+                // console.log(data);
+                console.log(workinweek);
+                console.log(yettoworkinweek);
+                console.log(workinweek);
 
-                },
-                title: {
-                    text: 'Daily Analysis chart'
-                },
-                xAxis: {
-                    categories: week
-                    
-                    
-                },
-                yAxis: {
-                    min: 0,
+
+                $('#week').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F9D597',
+                        borderColor: '#F9D597',
+                        plotBorderColor: '#F9D597'
+
+                    },
                     title: {
-                        text: 'Working Hours'
-
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-                    valueSuffix: ' hr',
-                    shared: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal',
-                        animation: false
-
-                    }
-                },
-                series: [{
-                        name: 'Yet to work ',
-                        data: yettowork
-                    }, {
-                        name: 'Work',
-                        data: work
-                    }], colors: ['#E77817', '#fcb334']
-            });
-
-        }
+                        text: 'Weekly Analysis chart'
+                    },
+                    xAxis: {
+                        categories: week
 
 
-    });
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Working Hours'
 
-        
-        
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                        valueSuffix: ' hr',
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            animation: false
+
+                        }
+                    },
+                    series: [{
+                            name: 'Yet to work ',
+                            data: yettoworkinweek
+                        }, {
+                            name: 'Work',
+                            data: workinweek
+                        }], colors: ['#E77817', '#fcb334']
+                });
+
+            }
+
+
+        });
+
+
+
     });
 
 //for year graph dynaimc 
-$('#yearpicker').change(function(){
-   var year=( $(this).val());
-   console.log(year);
-     $.ajax({
-        dataType: 'json',
-        url: 'ajax/attendancemonthgraph.php',
-        type: 'post',
-        data: {
-            yearselected: year,
-        },
-        success: function(data) {
-            var work = data[0];
-            var yettowork = data[1];
-            var month = data[2];
-            //console.log(data);
-            //startof day graph
-            $('#day').highcharts({
-                chart: {
-                    type: 'bar',
-                    backgroundColor: '#F9D597',
-                    borderColor: '#F9D597',
-                    plotBorderColor: '#F9D597'
+    $('#yearpicker').change(function() {
+        var year = ($(this).val());
+        console.log(year);
+        $.ajax({
+            dataType: 'json',
+            url: 'ajax/attendancemonthgraph.php',
+            type: 'post',
+            data: {
+                yearselected: year,
+            },
+            success: function(data) {
+                var work = data[0];
+                var yettowork = data[1];
+                var month = data[2];
+                //console.log(data);
+                //startof day graph
+                $('#year').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F9D597',
+                        borderColor: '#F9D597',
+                        plotBorderColor: '#F9D597'
 
-                },
-                title: {
-                    text: 'Daily Analysis chart'
-                },
-                xAxis: {
-                    categories:month
-                    
-                    
-                },
-                yAxis: {
-                    min: 0,
+                    },
                     title: {
-                        text: 'Working Hours'
+                        text: 'Daily Analysis chart'
+                    },
+                    xAxis: {
+                        categories: month
 
-                    }
-                },
-                legend: {
-                    reversed: true
-                },
-                tooltip: {
-                    pointFormat: '{series.name}: <b>{point.y}</b><br/>',
-                    valueSuffix: ' hr',
-                    shared: true
-                },
-                plotOptions: {
-                    series: {
-                        stacking: 'normal',
-                        animation: false
 
-                    }
-                },
-                series: [{
-                        name: 'Yet to work ',
-                        data: yettowork
-                    }, {
-                        name: 'Work',
-                        data: work
-                    }], colors: ['#E77817', '#fcb334']
-            });
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Working Hours'
 
-        }
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                        valueSuffix: ' hr',
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            animation: false
+
+                        }
+                    },
+                    series: [{
+                            name: 'Yet to work ',
+                            data: yettowork
+                        }, {
+                            name: 'Work',
+                            data: work
+                        }], colors: ['#E77817', '#fcb334']
+                });
+
+            }
+
+
+        });
+
+
 
 
     });
-   
-   
-   
-   
-});
 
 
     $("#daily_graph").click(function() {
@@ -730,6 +734,89 @@ $('#yearpicker').change(function(){
         $('#datechoose').hide();
         $('#monthchoose').show();
         $('#yearchoose').hide();
+
+
+        //on click default week grpah
+        var d = new Date();
+
+        var curr_date = d.getDate();
+
+        var curr_month = d.getMonth();
+
+        var curr_year = d.getFullYear();
+
+        var datetoday = (curr_year + "/" + curr_month + "/" + curr_date);
+
+        console.log(datetoday);
+         $.ajax({
+            dataType: 'json',
+            url: 'ajax/attendanceweekgraph.php',
+            type: 'post',
+            data: {
+                monthselected: datetoday
+            },
+            success: function(data) {
+                var workinweek = data[0];
+                var yettoworkinweek = data[1];
+                var week = data[2];
+                // console.log(data);
+                console.log(workinweek);
+                console.log(yettoworkinweek);
+                console.log(workinweek);
+
+
+                $('#week').highcharts({
+                    chart: {
+                        type: 'bar',
+                        backgroundColor: '#F9D597',
+                        borderColor: '#F9D597',
+                        plotBorderColor: '#F9D597'
+
+                    },
+                    title: {
+                        text: 'Weekly Analysis chart'
+                    },
+                    xAxis: {
+                        categories: week
+
+
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Working Hours'
+
+                        }
+                    },
+                    legend: {
+                        reversed: true
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.y}</b><br/>',
+                        valueSuffix: ' hr',
+                        shared: true
+                    },
+                    plotOptions: {
+                        series: {
+                            stacking: 'normal',
+                            animation: false
+
+                        }
+                    },
+                    series: [{
+                            name: 'Yet to work ',
+                            data: yettoworkinweek
+                        }, {
+                            name: 'Work',
+                            data: workinweek
+                        }], colors: ['#E77817', '#fcb334']
+                });
+
+            }
+
+
+        });
+
 
 
     });

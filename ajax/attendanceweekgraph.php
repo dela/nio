@@ -1,31 +1,42 @@
 <?php
 
 include("dbConnection.php");
-$weekselected= $_POST['weekselected'];
+$monthselected = $_POST['monthselected'];
+$monthstr = strtotime($monthselected);
+$monthdate = date('Y-m-d', $monthstr);
+//$monthname=date("m", $monthstr);
 $minimum_working_hours_in_a_week = 40;
 $series = array();
-$work = array();
-$yettowork = array();
+$workinweek = array();
+$yettoworkinweek = array();
 $week = array();
-
-$weekselected = strtotime($weekselected);
+//$monthselected=date('Y-m-d',$monthselected);
 $i = 0;
+$nextweekstart = strtotime(date("Y-m-d", strtotime($monthselected)) . " +7 days");
+$nextweek = date('Y-m-d', $nextweekstart);
 for ($i = 0; $i < 4; $i++) {
-
-    $weekincremented = date('Y-m-d', $weekselected);
-   // $query = " SELECT * FROM hs_hr_nio_attendance WHERE emp_id=1 AND date='$weekincremented'";
+    //to get next 7 days
+    // $monthincremented = date('Y-m-d', $monthselected);
+    $query = "SELECT SUM(duration) AS duration FROM hs_hr_nio_attendance WHERE emp_id=1 AND date BETWEEN $monthdate AND  $nextweek";
+    // $query = " SELECT * FROM hs_hr_nio_attendance WHERE emp_id=1 AND date='$weekincremented'";
     $result = mysqli_query($nio_conn, $query);
     $row = mysqli_fetch_array($result);
-    $work_inweek[] = $row['duration'] / 60;
-    $yettowork_inweek[] = $minimum_working_hours_in_a_week - ($row['duration'] / 60);
-       $day[] = date("d M Y-D", $weekselected);
-    $weekselected = ($weekselected + 7*24 * 3600);
-    $weekincremented = date('y-m-d', $weekselected);
+    $workinweek[] = $row['duration'] / 60;
+    $yettoworkinweek[] = $minimum_working_hours_in_a_week - ($row['duration'] / 60);
+    $from=date('W-M/Y',strtotime($monthdate));
+     $to=date('W-M/Y',strtotime($nextweek));
+    $week[]='week:'.$monthdate.'-->'.$nextweek;
+    $nextweektime = strtotime(date("Y-m-d", strtotime($nextweek)) . " +7 days");
+    $nextweek= date('Y-m-d', $nextweektime);
+    $monthdatetime = strtotime(date("Y-m-d", strtotime($monthdate)) . " +7 days");
+    $monthdate= date('Y-m-d', $monthdatetime );
+    //  $day[] = date("d M Y-D", $monthselected);
+    //  $monthselected = ($monthselected + 7 * 24 * 3600);
+    // $weekincremented = date('y-m-d', $monthselected);
 }
 
-$series[] = $work;
-$series[] = $yettowork;
+$series[] = $workinweek;
+$series[] = $yettoworkinweek;
 $series[] = $week;
 echo json_encode($series);
-
 ?>
