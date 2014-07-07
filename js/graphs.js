@@ -399,7 +399,7 @@ $(document).ready(function() {
 
     var datetoday = (curr_year + "-" + curr_month + "-" + curr_date);
 
-    console.log(datetoday);
+   // console.log(datetoday);
 
 
     $.ajax({
@@ -473,7 +473,7 @@ $(document).ready(function() {
     $('#datepicker').change(function() {
         var date1 = ($(this).val());
 
-        console.log(date1);
+      //  console.log(date1);
 
 
         $.ajax({
@@ -552,7 +552,7 @@ $(document).ready(function() {
     $('#monthpicker').change(function() {
         var month = ($(this).val());
 
-        console.log(month);
+      //  console.log(month);
         $.ajax({
             dataType: 'json',
             url: 'ajax/attendanceweekgraph.php',
@@ -565,9 +565,9 @@ $(document).ready(function() {
                 var yettoworkinweek = data[1];
                 var week = data[2];
                 // console.log(data);
-                console.log(workinweek);
-                console.log(yettoworkinweek);
-                console.log(workinweek);
+             //   console.log(workinweek);
+             //   console.log(yettoworkinweek);
+            //    console.log(workinweek);
 
 
                 $('#week').highcharts({
@@ -629,7 +629,7 @@ $(document).ready(function() {
 //for year graph dynaimc 
     $('#yearpicker').change(function() {
         var year = ($(this).val());
-        console.log(year);
+     //   console.log(year);
         $.ajax({
             dataType: 'json',
             url: 'ajax/attendancemonthgraph.php',
@@ -641,9 +641,9 @@ $(document).ready(function() {
                 var work = data[0];
                 var yettowork = data[1];
                 var month = data[2];
-                //console.log(data);
+               console.log(data);
                 //startof day graph
-                $('#year').highcharts({
+                $('#month').highcharts({
                     chart: {
                         type: 'bar',
                         backgroundColor: '#F9D597',
@@ -747,7 +747,7 @@ $(document).ready(function() {
 
         var datetoday = (curr_year + "/" + curr_month + "/" + curr_date);
 
-        console.log(datetoday);
+        //console.log(datetoday);
          $.ajax({
             dataType: 'json',
             url: 'ajax/attendanceweekgraph.php',
@@ -760,9 +760,9 @@ $(document).ready(function() {
                 var yettoworkinweek = data[1];
                 var week = data[2];
                 // console.log(data);
-                console.log(workinweek);
-                console.log(yettoworkinweek);
-                console.log(workinweek);
+                //console.log(workinweek);
+              //  console.log(yettoworkinweek);
+              //  console.log(workinweek);
 
 
                 $('#week').highcharts({
