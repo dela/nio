@@ -674,14 +674,8 @@ $(document).ready(function() {
             title: startTime + " to " + endTime,
             start: start,
             end: end,
-            description: 'This is a cool event',
             color: color,
-            textColor: 'black',
-            eventRender: function(event, element) {
-                element.qtip({
-                    content: event.description
-                });
-            }
+            textColor: 'black'
         };
         $('#nio-calendar').fullCalendar('renderEvent', eventObject, true);
     }
