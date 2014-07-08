@@ -1,8 +1,8 @@
 $(document).ready(function() {
     var checkUpdate = 15000;            //check for update in how much time
     var i = 1;      //flips
-    var leaveChartPageNumber;  //page in leave chart  
-    var nioChartPageNumber;     //page in nio chart
+    var leaveChartPageNumber=1;  //page in leave chart  
+    var nioChartPageNumber=1;     //page in nio chart
     var tableNumber=1;
     var chartNumber=1;          //
     var options;                //used in chart
@@ -41,7 +41,7 @@ $(document).ready(function() {
         $(this).removeClass('template-lightColor');
         $(this).addClass('template-textWhite');
         chartNumber=$(this).attr('chartNumber');
-        if(chartNumber=="1"){
+        if(chartNumber==1){
             //Leave Chart
             textToPass="Total number of leaves";
             seriesToPass=[{
@@ -62,7 +62,7 @@ $(document).ready(function() {
         }
     });
     
-    function nioChart(nioChartCallBack){
+    function nioChart(){
         $.ajax({
             dataType: 'json',
             url: 'ajax/nioGraph.php',
@@ -73,8 +73,8 @@ $(document).ready(function() {
             success: function(data){
                 dataToPass=data[2];
                 textToPass="Total number of NIOs";
-                var nioApplied=[0,0,0,0,0,0,0,0];
-                var nioAccepted=[0,0,0,0,0,0,0,0];
+                var nioApplied=[];
+                var nioAccepted=[];
                 var i=0;
                 while(data[0][i]){
                     nioApplied[i]=parseInt(data[0][i],10);
@@ -94,17 +94,33 @@ $(document).ready(function() {
         nioChartPageNumber--;
     }
     
-    function leaveChart(leaveChartCallBack){
+    function leaveChart(){
         $.ajax({
             dataType: 'json',
             url: 'ajax/leaveGraph.php',
             type: 'post',
             data:{
-                page: nioChartPageNumber
+                page: leaveChartPageNumber
             },
             success: function(data){
-                console.log(data);
-                dataToPass=data[2];
+                console.log(data);   
+                textToPass="Total number of leaves";
+                seriesToPass=[{
+                    name: 'Leaves left',
+                    data: data[2]
+                }, {
+                    name: 'Leaves Taken',
+                    data: data[1]
+                }
+                ];
+                dataToPass=data[0];
+                
+                console.log(data[0].length);
+                
+                if(data[0].length==8)
+                    createGraphLeave(textToPass,seriesToPass,dataToPass);
+                else
+                    decrementLeaveChartPage();
                 
             }
         });
@@ -231,9 +247,6 @@ $(document).ready(function() {
     
     
     function onLoad(){
-        index=0;
-        var i=0;
-        
         $.ajax({
             type: "POST",
             url: "ajax/flip.php",
@@ -247,18 +260,22 @@ $(document).ready(function() {
             }
         }); 
         
-        textToPass="Total number of leaves";
-        seriesToPass=[{
-            name: 'Leaves left',
-            data: [2, 2, 3, 2, 1, 10, 12, 8]
-        }, {
-            name: 'Leaves Taken',
-            data: [-3, -4, 4, 2, 5, 20, 13, 6]
-        }
-        ];
-        dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
-        nioLeave();
-        createGraphLeave(textToPass,seriesToPass,dataToPass);
+        
+        $.ajax({
+            type: "POST",
+            url: "ajax/flip.php",
+            dataType: 'json',
+            data: {
+                flip: 1
+            },
+            success :function( data ) {
+                var elem = $("#leaveCount").find('.admin-flip-part2');
+                elem.html("<h1 style=\"font-size : 50; text-align: center;padding-top: 30px\">" + data[0]['leaveCount'] + "</h1>");
+            }
+        }); 
+      
+        leaveChart();
+     
         
         $("#table-noStatusTable .table-row-noStatusTable").empty();
         populateNoStatusTable(callBackNoStatusTable);
@@ -681,23 +698,12 @@ $(document).ready(function() {
      
     //--------------------Graph Pagination-----------------------
     $("#admin-graph-left").click(function(){
-        if(chartNumber=="1"){
+        if(chartNumber==1){
             leaveChartPageNumber--;
             if(leaveChartPageNumber==0){
                 ++leaveChartPageNumber;
-            }
-            else{
-                textToPass="Total number of leaves";
-                seriesToPass=[{
-                    name: 'Leaves left',
-                    data: [2, 2, 3, 2, 1, 10, 12, 8]
-                }, {
-                    name: 'Leaves Taken',
-                    data: [-3, -4, 4, 2, 5, 20, 13, 6]
-                }
-                ];
-                dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
-                createGraphLeave(textToPass,seriesToPass,dataToPass);
+            }else{ 
+                leaveChart();
             }
         }
         else{
@@ -711,24 +717,9 @@ $(document).ready(function() {
     });
 
     $("#admin-graph-right").click(function(){
-        if(chartNumber=="1"){
+        if(chartNumber==1){
             leaveChartPageNumber++;
-            if(leaveChartPageNumber==6){
-                --leaveChartPageNumber;
-            }
-            else{
-                textToPass="Total number of leaves";
-                seriesToPass=[{
-                    name: 'Leaves left',
-                    data: [3, 5, 6, 2, 8, 1, 6, 7]
-                }, {
-                    name: 'Leaves Taken',
-                    data: [1, 0, 7, 4, 2, 8, 3, 3]
-                }
-                ];
-                dataToPass=['user1', 'user2', 'user3', 'user4', 'user5', 'user6', 'user7', 'user8'];
-                createGraphLeave(textToPass,seriesToPass,dataToPass);
-            }
+            leaveChart();
         }
         else{
             nioChartPageNumber++;
@@ -750,8 +741,19 @@ $(document).ready(function() {
 
     window.setInterval(function() {
         ++i;
-        var elem = $("#leaveCount").find('.admin-flip-part2');
-        elem.html("<h1 style=\"font-size : 50; text-align: center;padding-top: 30px\">" + i + "</h1>");
+        
+        $.ajax({
+            type: "POST",
+            url: "ajax/flip.php",
+            dataType: 'json',
+            data: {
+                flip: 1
+            },
+            success :function( data ) {
+                var elem = $("#leaveCount").find('.admin-flip-part2');
+                elem.html("<h1 style=\"font-size : 50; text-align: center;padding-top: 30px\">" + data[0]['leaveCount'] + "</h1>");
+            }
+        }); 
     }, checkUpdate);
 
     window.setInterval(function() {

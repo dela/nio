@@ -37,8 +37,9 @@ $(document).ready(function() {
     
     function fetchHistoryCallBack(data){
         var i=0;
-        // console.log(data);
-        while(data[i]){
+        console.log(data);
+        var dataLength=data.length;
+        while(i<dataLength){
             dateObjectHistory.push({
                 'date':data[i]['date'],
                 'startTime': data[i]['startTime'],
@@ -52,6 +53,7 @@ $(document).ready(function() {
                 else if(data[i]['status']==-1)
                     createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED_REJECTED);
                 else
+                    if(data[i]['status']==0)
                     createEvent(data[i]['startTime'], data[i]['endTime'], data[i]['date'], 'NIO', NIO_APPLIED_PENDING);
             }       
             ++i;
@@ -92,7 +94,7 @@ $(document).ready(function() {
             var endDate = end;
             var i = start;
             var startTime = 0;
-            var endTime = 24 * 60;
+            var endTime = 24 * 60 -1;
             var period = 30;
             var j = startTime;
 
@@ -105,6 +107,7 @@ $(document).ready(function() {
                 dropDown_2 += "<option value=" + minToTimeFormat(j) + ">" + minToTimeFormat(j) + "</option>";
                 j += period;
             }
+            dropDown_2 += "<option value=" + minToTimeFormat(endTime) + ">" + minToTimeFormat(endTime) + "</option>";
             dropDown_1 = dropDown_1 + "</select>";
             dropDown_2 = dropDown_2 + "</select>";
 
@@ -410,7 +413,7 @@ $(document).ready(function() {
                 startTime = row.find('.nio-starttime-drop').val();
                 endTime = row.find('.nio-endtime-drop').val();
                 $.each(dateObject, function(j) {     //function to remove object from the array
-                    if (dateObject[j].id === parseInt(id)) {
+                    if (dateObject[j].id === parseInt(id) &&dateObject[j].status==0) {
                         date = dateObject[j].date;
                         startTime = dateObject[j].startTime;
                         endTime = dateObject[j].endTime;

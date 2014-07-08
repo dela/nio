@@ -2,12 +2,14 @@
 
 include 'dbConnection.php';
 
-$query = "SELECT * FROM hs_hr_employee";
+$leavePage=$_POST['page']-1;
+
+$query = "SELECT * FROM hs_hr_employee LIMIT $leavePage,8";
 $result = mysqli_query($hrm_conn, $query);
 
 $empNames=array();
-$takenLeave=array();
-$total=array();
+$leaveLeft=array();
+$leaveTaken=array();
 
 while ($row = mysqli_fetch_array($result)) {
     $empID=$row['emp_number'];
@@ -19,15 +21,16 @@ while ($row = mysqli_fetch_array($result)) {
         $totalNumber+=$rowLeave['no_of_days_allotted'];
         $taken+=$rowLeave['leave_taken'];
     }
-    $empNames[]=$row['emp_firstname']+" "+$row['emp_lastname'];
-    $takenLeave[]=$taken;
-    $total[]=$totalNumber;
+    $name=$row['emp_firstname']." ".$row['emp_lastname'];
+    $empNames[]=$name;
+    $leaveLeft[]=$totalNumber-$taken;
+    $leaveTaken[]=$taken;
 }
 
 $jsonData=array();
 $jsonData[]=$empNames;
-$jsonData[]=$taken;
-$jsonData[]=$total;
+$jsonData[]=$leaveTaken;
+$jsonData[]=$leaveLeft;
 
-json_encode($jsonData);
+echo json_encode($jsonData);
 ?>
