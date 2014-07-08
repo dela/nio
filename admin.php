@@ -83,14 +83,7 @@
                                     <h3>Reasons</h3>
                                     <div class="nio-reasons-box" id='nio-reason-type'>
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Business Trip</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+                                            
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-reason-to-add"/><br/>
@@ -101,14 +94,7 @@
                                     <h3>Department</h3>
                                     <div class="nio-reasons-box" id="nio-reason-department">
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Development</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+                                            
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-department-to-add"/><br/>
@@ -119,14 +105,7 @@
                                     <h3>Exception Employee</h3>
                                     <div class="nio-reasons-box" id="nio-reason-employee">
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Roshan David</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+                                            
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-employee-to-add"/><br/>

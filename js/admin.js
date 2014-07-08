@@ -1,4 +1,10 @@
 $(document).ready(function() {
+    
+    var nio=[];
+    var selectedNIO=0;
+    var nioID=1;
+    var nioName="";
+    
     $(".titleTd").click(function() {
         $(".titleTd").addClass('template-darkBack');
         $(".titleTd").removeClass('template-textWhite');
@@ -9,23 +15,23 @@ $(document).ready(function() {
         $(this).addClass('template-textWhite');
     });
         
-        $("#admin-settings").show();
-        $("#settings-general").show();
-        $("#settings-privilege").hide();
-        $("#settings-nio").hide();
-        $("#settings-general").addClass('template-textWhite');
+    $("#admin-settings").show();
+    $("#settings-general").show();
+    $("#settings-privilege").hide();
+    $("#settings-nio").hide();
+    $("#settings-general").addClass('template-textWhite');
         
          
-        $("#settings-privilege-tab").addClass('template-darkBack');  
-        $("#settings-privilege-tab").addClass('template-lightColor');
+    $("#settings-privilege-tab").addClass('template-darkBack');  
+    $("#settings-privilege-tab").addClass('template-lightColor');
         
-        $("#settings-nio-tab").addClass('template-darkBack');
-        $("#settings-nio-tab").addClass('template-lightColor');
+    $("#settings-nio-tab").addClass('template-darkBack');
+    $("#settings-nio-tab").addClass('template-lightColor');
        
-        $("#settings-general-tab").removeClass('template-lightColor');
-        $("#settings-general-tab").removeClass('template-darkBack');
-        $("#settings-general-tab").addClass('template-textWhite');
-        $("#settings-general-tab").addClass('template-lightBack');  
+    $("#settings-general-tab").removeClass('template-lightColor');
+    $("#settings-general-tab").removeClass('template-darkBack');
+    $("#settings-general-tab").addClass('template-textWhite');
+    $("#settings-general-tab").addClass('template-lightBack');  
    
     
     $("#settings-privilege-tab").click(function(){
@@ -117,32 +123,189 @@ $(document).ready(function() {
         }
     });  
    
-    $(".nio-reasons-box ul").sortable();
     $(".nio-reasons-box").mCustomScrollbar({
         theme:"dark"
     });
     
-    $("body").delegate(".nio-reason table tr td img","click",function(){
+    //-----------------------------NIO TAB------------------------------------
+    //------ structure ---------
+    //{
+    //nioID             : 1
+    //nioName           : "Forgot ID Card"
+    //nioDepartment     : []
+    //nioEmployee       : []
+    //}
+    //
+    
+    function loadDepartment(nioID){
+        $.each(nio,function(j){
+            if(nio[j].nioID==nioID){
+                $("#nio-reason-department ul").empty();
+                $.each(nio[j].nioDepartment,function(i){
+                    $("#nio-reason-department ul").append("<li class=\"nio-reason-department\"><table><tr><td style=\"width: 75%\">"+nio[j].nioDepartment[i]+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+                });
+            } 
+        });
+    }
+    
+    function loadEmployee(nioID){
+        $.each(nio,function(j){
+            if(nio[j].nioID==nioID){
+                $("#nio-reason-employee ul").empty();
+                $.each(nio[j].nioEmployee,function(i){
+                    $("#nio-reason-employee ul").append("<li class=\"nio-reason-department\"><table><tr><td style=\"width: 75%\">"+nio[j].nioEmployee[i]+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+                });
+            } 
+        });
+    }
+    
+    
+    $("body").delegate(".nio-reason-type table tr td img","click",function(){       //Removing a reason
         $(this).parent().parent().parent().parent().parent().css({
             "margin":"0px",
             "padding":"0px"
         });
+        $("#nio-reason-department ul").empty();
+        $("#nio-reason-employee ul").empty();
+        var id=$(this).parent().parent().parent().parent().parent().attr('id');
+        $.each(nio,function(j){
+            if(nio[j].nioID==id){
+                nio.splice(j,1);
+                return false;
+            } 
+        });
         $(this).parent().parent().parent().parent().empty();
+        if(selectedNIO==id&&nio.length>0){
+            $("#"+nio[0]['nioID']+' table tr td').css({
+                'background-color':'lightgrey'
+            });
+            selectedNIO=nio[0].nioID;
+            loadDepartment(selectedNIO);
+            loadEmployee(selectedNIO);
+        }
+    });
+    
+    $("body").delegate(".nio-reason-employee table tr td img","click",function(){       //Removing a Employee
+        $(this).parent().parent().parent().parent().parent().css({
+            "margin":"0px",
+            "padding":"0px"
+        });
+        var employeeID=$(this).parent().parent().parent().parent().parent().attr('id');
+        $(this).parent().parent().parent().parent().empty();
+        
+        console.log(employeeID);
+        $.each(nio,function(j){
+            if(nio[j].nioID==selectedNIO){
+                $.each(nio[j].nioEmployee,function(i){
+                    if(nio[j].nioEmployee[i]==employeeID){
+                        nio[j].nioEmployee.splice(i,1);
+                        return false;
+                    } 
+                });
+                return false;
+            } 
+        });
+    });
+    
+    $("body").delegate(".nio-reason-department table tr td img","click",function(){       //Removing a Department
+       
+       $(this).parent().parent().parent().parent().parent().css({
+            "margin":"0px",
+            "padding":"0px"
+        });
+        var departmentID=$(this).parent().parent().parent().parent().parent().attr('id');
+        $(this).parent().parent().parent().parent().empty();
+        
+        console.log(departmentID);
+        $.each(nio,function(j){
+            if(nio[j].nioID==selectedNIO){
+                $.each(nio[j].nioDepartment,function(i){
+                    if(nio[j].nioDepartment[i]==departmentID){
+                        nio[j].nioDepartment.splice(i,1);
+                        return false;
+                    } 
+                });
+                return false;
+            } 
+        });
     });
  
-    $(".add-nio-reason").click(function(){
+    //--------------Selecting NIO--------------------
+ 
+    $('body').delegate('.nio-reason-type table tr .niotype-clickable','click',function(){        //Selecting a reason
+        $('.nio-reason-type table tr td').css({
+            'background-color':'#e68a2e'
+        });
+        var id=$(this).parent().parent().parent().parent().attr('id');
+        console.log(id);
+        $("#"+id+' table tr td').css({
+            'background-color':'lightgrey'
+        }); 
+        selectedNIO=id;
+        loadDepartment(id);
+        loadEmployee(id);
+    });
+    
+    $("#nio-reason-to-add-button").click(function(){            //Adding a reason
         var nioReason=$("#nio-reason-to-add").val();
         if( nioReason.length){
+            nio.push({
+                'nioID':nioID,
+                'nioName':nioReason,
+                'nioDepartment':[],
+                'nioEmployee':[]
+            });
+            console.log(nio);
             $("#nio-reason-to-add").val("");
-            $("#element-nio-reason div ul").append("<li class=\"nio-reason\"><table><tr><td style=\"width: 75%\">"+nioReason+"</td><td><img src=\"images/close_graph.png\"></td></tr></table></li>");
+            $("#nio-reason-type ul").append("<li class=\"nio-reason-type\" id="+nioID+"><table><tr><td class='niotype-clickable' style=\"width: 75%\">"+nioReason+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
             $(".nio-reasons-box").mCustomScrollbar("update");
             $(".nio-reasons-box").mCustomScrollbar("scrollTo","h2:last",{       
                 theme:"dark"
             });
+            if(nio.length==1){
+                $("#"+nioID+' table tr td').css({
+                    'background-color':'lightgrey'
+                }); 
+                selectedNIO=nioID;
+            }
+            nioID++;
         }
-    });
+    }); 
     
     
-
-   
+    $("#nio-department-to-add-button").click(function(){        //Adding Department
+        var nioDepartment=$("#nio-department-to-add").val();
+        if( nioDepartment.length&&nio.length>0){
+            $("#nio-department-to-add").val("");
+            $("#nio-reason-department ul").append("<li class=\"nio-reason-department\" id="+nioDepartment+"><table><tr><td style=\"width: 75%\">"+nioDepartment+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+            $(".nio-reasons-box").mCustomScrollbar("update");
+            $(".nio-reasons-box").mCustomScrollbar("scrollTo","h2:last",{       
+                theme:"dark"
+            });
+            
+            $.each(nio,function(j){
+                if(nio[j].nioID==selectedNIO){
+                    nio[j].nioDepartment.push(nioDepartment);
+                } 
+            });
+        }
+    }); 
+    
+    $("#nio-employee-to-add-button").click(function(){              //Adding Employee
+        var employee=$("#nio-employee-to-add").val();
+        if( employee.length&&nio.length>0){
+            $("#nio-employee-to-add").val("");
+            $("#nio-reason-employee ul").append("<li class=\"nio-reason-employee\" id="+employee+"><table><tr><td style=\"width: 75%\">"+employee+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+            $(".nio-reasons-box").mCustomScrollbar("update");
+            $(".nio-reasons-box").mCustomScrollbar("scrollTo","h2:last",{       
+                theme:"dark"
+            });
+            
+            $.each(nio,function(j){
+                if(nio[j].nioID==selectedNIO){
+                    nio[j].nioEmployee.push(employee);
+                } 
+            });
+        }
+    }); 
 });
