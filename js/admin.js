@@ -5,7 +5,7 @@ $(document).ready(function() {
     var nioID=1;
     var empList=[];
     var designationList=[];
-    
+    var desigIDs=[];
     
     $(".titleTd").click(function() {
         $(".titleTd").addClass('template-darkBack');
@@ -22,8 +22,7 @@ $(document).ready(function() {
     $("#settings-privilege").hide();
     $("#settings-nio").hide();
     $("#settings-general").addClass('template-textWhite');
-        
-         
+     
     $("#settings-privilege-tab").addClass('template-darkBack');  
     $("#settings-privilege-tab").addClass('template-lightColor');
         
@@ -37,27 +36,33 @@ $(document).ready(function() {
    
     
     $("#settings-privilege-tab").click(function(){
-        $("#privilege-access-tab").addClass('template-darkBack');
-        $("#privilege-access-tab").addClass('template-border');
-        $("#privilege-access-tab").addClass('template-lightColor');
+        $("#privilege-admin-tab").addClass('template-darkBack');
+        $("#privilege-admin-tab").addClass('template-border');
+        $("#privilege-admin-tab").addClass('template-lightColor');
        
         $("#privilege-candid-tab").removeClass('template-lightColor');
         $("#privilege-candid-tab").addClass('template-textWhite');
         $("#privilege-candid-tab").removeClass('template-darkBack').addClass('template-lightBack');
         $("#privilege-candid-tab").addClass('template-border'); 
         
-        $("#table-access").hide();
-        $("#table-candid").show();
+        $("#table-admin").show();
+        $("#table-super-admin").hide();
+        $("#table-non-nio").hide();
     });
     
-    $("#privilege-access-tab").click(function(){
-        $("#table-access").show();
-        $("#table-candid").hide();
+    $("#privilege-admin-tab").click(function(){
+        $(".admin-table-div").hide();
+        $("#table-admin").show();
     });
     
-    $("#privilege-candid-tab").click(function(){
-        $("#table-access").hide();
-        $("#table-candid").show();
+    $("#privilege-super-admin-tab").click(function(){
+        $(".admin-table-div").hide();
+        $("#table-super-admin").show();
+    });
+    
+    $("#privilege-non-nio-tab").click(function(){
+        $(".admin-table-div").hide();
+        $("#table-non-nio").show();
     });
     
     //---------------ADMIN SETTINGS------------------------------------
@@ -136,6 +141,7 @@ $(document).ready(function() {
     //nioName           : "Forgot ID Card"
     //nioDepartment     : []
     //nioEmployee       : []
+    //id                : -1            //THIS IS ID IN THE DATABASE 
     //}
     //
     
@@ -159,10 +165,10 @@ $(document).ready(function() {
         var flag=1;
         $.each(nio,function(j){
             if(nio[j].nioID==selectedNIO)
-            $.each(nio[j].nioEmployee,function(i){
-                if(nio[j].nioEmployee[i]==id)
-                    flag=0;
-            });
+                $.each(nio[j].nioEmployee,function(i){
+                    if(nio[j].nioEmployee[i]==id)
+                        flag=0;
+                });
         });
         if(flag==0)
             return false;
@@ -174,10 +180,10 @@ $(document).ready(function() {
         var flag=1;
         $.each(nio,function(j){
             if(nio[j].nioID==selectedNIO)
-            $.each(nio[j].nioDepartment,function(i){
-                if(nio[j].nioDepartment[i]==id)
-                    flag=0;
-            });
+                $.each(nio[j].nioDepartment,function(i){
+                    if(nio[j].nioDepartment[i]==id)
+                        flag=0;
+                });
         });
         if(flag==0)
             return false;
@@ -187,13 +193,47 @@ $(document).ready(function() {
     
     
     function callBackGetList(data){
+        
         empList=data['empName'];
         designationList=data['designations'];
-       // console.log(empList);
-       
+        var designationID;
+        $.each(designationList,function(i){
+            designationID=designationList[i].value;
+            desigIDs.push(designationID);    
+        });
+        
+        var i=0;
+        while(data['nio'][i]){
+            selectedNIO=1;
+            nio.push(data['nio'][i]);
+            if($(data['nio'][i]['nioDepartment']).not(desigIDs).length == 0 && $(desigIDs).not(data['nio'][i]['nioDepartment']).length == 0)
+                data['nio'][i]['nioDepartment']=[];
+           nioID++;
+            ++i;
+        }
+        console.log(nio);
+        loadDepartment(selectedNIO);
+        loadEmployee(selectedNIO);
+        
+        $.each(nio,function(j){
+            var nioID=nio[j].nioID;
+            var nioReason=nio[j].nioName;
+            $("#nio-reason-type ul").append("<li class=\"nio-reason-type\" id="+nioID+"><table><tr><td class='niotype-clickable' style=\"width: 75%\">"+nioReason+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+            $(".nio-reasons-box").mCustomScrollbar("update");
+            $(".nio-reasons-box").mCustomScrollbar("scrollTo","h2:last",{       
+                theme:"dark"
+            });
+            if(j==0){
+                $("#"+nioID+' table tr td').css({
+                    'background-color':'lightgrey'
+                }); 
+            }
+        });
+         
         $('#nio-employee-to-add').autocomplete({
             source: empList,
             appendTo: "",
+            minLength: 0,
             select: function( event, ui ) { 
                 var employeeID=ui.item.value;
                 var employeeName=ui.item.label;
@@ -211,8 +251,8 @@ $(document).ready(function() {
                         } 
                     });
                 }
-                 $("#nio-employee-to-add").val("");
-                 return false;
+                $("#nio-employee-to-add").val("");
+                return false;
             }
         });
         
@@ -234,10 +274,9 @@ $(document).ready(function() {
                         } 
                     });
                 }
-                 $("#nio-department-to-add").val("");
-                 return false;
-             }
-                            
+                $("#nio-department-to-add").val("");
+                return false;
+            }                  
         });     
         
         $("#nio-department-to-add").val("");
@@ -265,9 +304,10 @@ $(document).ready(function() {
                 $("#nio-reason-department ul").empty();
                 $.each(nio[j].nioDepartment,function(i){
                     $.each(designationList,function(k){
+                        console.log(nio[j].nioDepartment[i]);
                         if(designationList[k].value==nio[j].nioDepartment[i]){
                             designationName=designationList[k].label;
-                             designationID=designationList[k].value;
+                            designationID=designationList[k].value;
                         } 
                     });
                     $("#nio-reason-department ul").append("<li class=\"nio-reason-department\" departmentID="+designationID+"><table><tr><td style=\"width: 75%\">"+designationName+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
@@ -289,7 +329,7 @@ $(document).ready(function() {
                             employeeID=empList[k].value;
                         } 
                     });
-                    $("#nio-reason-employee ul").append("<li class=\"nio-reason-department\" employeeID="+employeeID+"><table><tr><td style=\"width: 75%\">"+employeeName+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
+                    $("#nio-reason-employee ul").append("<li class=\"nio-reason-employee\" employeeID="+employeeID+"><table><tr><td style=\"width: 75%\">"+employeeName+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
                 });
             } 
         });
@@ -318,8 +358,7 @@ $(document).ready(function() {
             selectedNIO=nio[0].nioID;
             loadDepartment(selectedNIO);
             loadEmployee(selectedNIO);
-        }
-        console.log(nio);
+        }  
     });
     
     $("body").delegate(".nio-reason-employee table tr td img","click",function(){       //Removing a Employee
@@ -327,10 +366,9 @@ $(document).ready(function() {
             "margin":"0px",
             "padding":"0px"
         });
-        var employeeID=$(this).parent().parent().parent().parent().parent().attr('employeeID');
+        var employeeID=$(this).parents('.nio-reason-employee').attr('employeeID');
         $(this).parent().parent().parent().parent().empty();
         
-        console.log(employeeID);
         $.each(nio,function(j){
             if(nio[j].nioID==selectedNIO){
                 $.each(nio[j].nioEmployee,function(i){
@@ -341,26 +379,20 @@ $(document).ready(function() {
                 });
                 return false;
             } 
-        });
-        console.log(nio);
+        });      
     });
     
-    $("body").delegate(".nio-reason-department table tr td img","click",function(){       //Removing a Department
-       
+    $("body").delegate(".nio-reason-department table tr td img","click",function(){       //Removing a Department      
         $(this).parent().parent().parent().parent().parent().css({
             "margin":"0px",
             "padding":"0px"
         });
         var departmentID=$(this).parents('.nio-reason-department').attr('departmentID');
-        $(this).parent().parent().parent().parent().empty();
-        
-        console.log(departmentID);
+        $(this).parent().parent().parent().parent().empty();  
         $.each(nio,function(j){
             if(nio[j].nioID==selectedNIO){
                 $.each(nio[j].nioDepartment,function(i){
                     if(nio[j].nioDepartment[i]==departmentID){
-                        console.log(departmentID);
-                        console.log(nio[j].nioDepartment);
                         nio[j].nioDepartment.splice(i,1);
                         return false;
                     } 
@@ -368,7 +400,6 @@ $(document).ready(function() {
                 return false;
             } 
         });
-        console.log(nio);
     });
  
     //--------------Selecting NIO--------------------
@@ -391,13 +422,13 @@ $(document).ready(function() {
         var key = e.which;
         if(key == 13)  {
             var nioReason=$("#nio-reason-to-add").val();
-            console.log(nioReason);
             if( nioReason.length&&validateReason(nioReason)){
                 nio.push({
                     'nioID':nioID,
                     'nioName':nioReason,
                     'nioDepartment':[],
-                    'nioEmployee':[]
+                    'nioEmployee':[],
+                    'id':-1
                 });
                 $("#nio-reason-to-add").val("");
                 $("#nio-reason-type ul").append("<li class=\"nio-reason-type\" id="+nioID+"><table><tr><td class='niotype-clickable' style=\"width: 75%\">"+nioReason+"</td><td><img src=\"images/close_graph_black.png\"></td></tr></table></li>");
@@ -405,6 +436,7 @@ $(document).ready(function() {
                 $(".nio-reasons-box").mCustomScrollbar("scrollTo","h2:last",{       
                     theme:"dark"
                 });
+                
                 if(nio.length==1){
                     $("#"+nioID+' table tr td').css({
                         'background-color':'lightgrey'
@@ -416,4 +448,24 @@ $(document).ready(function() {
         }
     });
     
+    //--------------------Saving NIO-----------------------
+    $('#save-nio-type').click(function(){
+        if(nio.length>0){
+            $.ajax({
+                data:{
+                    data:nio
+                },
+                type: 'post',
+                url: 'ajax/saveNIO.php',
+                success: function(data){
+                    alert("Saved");
+                    window.location='admin.php';
+                }
+            });
+        }
+    });
+   
+    $('#cancel-nio-type').click(function(){
+        window.location='admin.php';
+    });
 });

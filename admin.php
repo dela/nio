@@ -86,12 +86,8 @@
 
                                         </ul>
                                     </div>
-                                   
-                                        <input type="text" id="nio-reason-to-add"/><br/>
-                              
-
+                                    <input type="text" id="nio-reason-to-add"/><br/>
                                 </td>
-
                                 <td>
                                     <h3>Department</h3>
                                     <div class="nio-reasons-box" id="nio-reason-department">
@@ -101,7 +97,6 @@
                                     </div>
                                     <input type="text" id="nio-department-to-add"/><br
                                 </td>
-
                                 <td>
                                     <h3>Exception Employee</h3>
                                     <div class="nio-reasons-box" id="nio-reason-employee">
@@ -110,10 +105,14 @@
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-employee-to-add"/><br/>
-
                                 </td>
                             </tr>
+                            <tr><td></td>
+                                <td><span class="general-button green-button" id='save-nio-type'>SAVE</span>
+                                    <span class='general-button orange-button' id="cancel-nio-type">CANCEL</span></td>
+                                <td></td></tr>
                         </table>
+
                     </div>
                 </div>
 
@@ -128,12 +127,13 @@
                     <div class="admin-data-container" id="privilege-tables">
                         <table class="adminTable-menu">
                             <tr class="titleTr template-lightBack">
-                                <td class="titleTd" id="privilege-candid-tab">Candidates</td>
-                                <td class="titleTd" id="privilege-access-tab">Access</td>
+                                <td class="titleTd" id="privilege-admin-tab">Admin</td>
+                                <td class="titleTd" id="privilege-super-admin-tab">Super Admin</td>
+                                <td class="titleTd" id="privilege-non-nio-tab">Non NIO</td>
                             </tr>
                         </table>
 
-                        <div class="admin-table-div" id="table-candid">
+                        <div class="admin-table-div" id="table-admin">
                             <table class="flatTable-heading template-lightBack">
                                 <tr class="headingTr template-lightBack">
                                     <td>EMPLOYEE ID</td>
@@ -156,7 +156,7 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="admin-table-div" id="table-access">
+                        <div class="admin-table-div" id="table-super-admin">
                             <table class="flatTable-heading template-lightBack">
                                 <tr class="headingTr template-lightBack">
                                     <td>EMPLOYEE ID</td>
@@ -172,6 +172,30 @@
                                     <tr class="table-row-selectable">
                                         <td>#2331212</td>
                                         <td>Prasad</td>
+                                        <td>Feb 21,2013</td>
+                                        <td>34634</td>
+                                        <td>Feb 21,2013</td>
+                                        <td>2 Days</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="admin-table-div" id="table-non-nio">
+                            <table class="flatTable-heading template-lightBack">
+                                <tr class="headingTr template-lightBack">
+                                    <td>EMPLOYEE ID</td>
+                                    <td>EMPLOYEE NAME</td>
+                                    <td>DATE </td>
+                                    <td>NIO ID</td>
+                                    <td>DATE</td>
+                                    <td>DURATION</td>
+                                </tr>
+                            </table>
+                            <div class="admin-table-container">
+                                <table class="flatTable table-row-approvedTable">
+                                    <tr class="table-row-selectable">
+                                        <td>#2331212</td>
+                                        <td>Pramod</td>
                                         <td>Feb 21,2013</td>
                                         <td>34634</td>
                                         <td>Feb 21,2013</td>
