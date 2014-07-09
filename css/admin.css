@@ -287,7 +287,7 @@ ul{
     z-index: 100;
     margin: 2%;
     width: 95%;
-    
+
 }
 
 #nio-negative li div{
@@ -402,7 +402,7 @@ td h3{
     z-index: 100;
 }
 
-.nio-reason{
+.nio-reason-type{
     width: 295px;
     margin-left: 2px;
     background-color: #E68A2E;
@@ -412,31 +412,107 @@ td h3{
     z-index: 100;
 }
 
-.nio-reason table{
+.nio-reason-type table{
+    border-collapse: collapse;
     width: 100%;
-    background-color: #E68A2E;
+    background-color: transparent;
     z-index: 100;
 }
 
-.nio-reason table tr{
-    background-color: #E68A2E;
+.nio-reason-type table tr{
+    background-color: transparent;
     padding-top: 5px;
     padding-bottom: 5px;
     z-index: 100;
 }
 
-.nio-reason table tr td{
+.nio-reason-type table tr td{
     background-color: #E68A2E;
     text-align: left; 
     z-index: 100;
 }
 
-.nio-reason table tr td img{
+.nio-reason-type table tr td img{
     width: 20px;
     height: 20px;
     cursor:pointer;
     z-index: 100;
 }
+
+.nio-reason-department{
+    width: 295px;
+    margin-left: 2px;
+    background-color: #E68A2E;
+    color: black;
+    margin-top: 4px;
+    text-align: left;
+    z-index: 100;
+}
+
+.nio-reason-department table{
+    border-collapse: collapse;
+    width: 100%;
+    background-color: transparent;
+    z-index: 100;
+}
+
+.nio-reason-department table tr{
+    background-color: transparent;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    z-index: 100;
+}
+
+.nio-reason-department table tr td{
+    background-color: #E68A2E;
+    text-align: left; 
+    z-index: 100;
+}
+
+.nio-reason-department table tr td img{
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+    z-index: 100;
+}
+
+.nio-reason-employee{
+    width: 295px;
+    margin-left: 2px;
+    background-color: #E68A2E;
+    color: black;
+    margin-top: 4px;
+    text-align: left;
+    z-index: 100;
+}
+
+.nio-reason-employee table{
+    border-collapse: collapse;
+    width: 100%;
+    background-color: transparent;
+    z-index: 100;
+}
+
+.nio-reason-employee table tr{
+    background-color: transparent;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    z-index: 100;
+}
+
+.nio-reason-employee table tr td{
+    background-color: #E68A2E;
+    text-align: left; 
+    z-index: 100;
+}
+
+.nio-reason-employee table tr td img{
+    width: 20px;
+    height: 20px;
+    cursor:pointer;
+    z-index: 100;
+}
+
 
 .leave-prio-box{
     height: 180px;

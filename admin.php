@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>NIO-Administrator</title>
-        
+
         <link rel="stylesheet" type="text/css"  href="css/jquery.mCustomScrollbar.css"/>
         <link rel="stylesheet" type="text/css" href="css/colorCombo.css"/>
         <link rel="stylesheet" type="text/css" href="css/magnific-popup.css"/>
@@ -13,7 +13,7 @@
         <link rel="stylesheet" type="text/css" href="css/jquery-ui-1.10.4.css"/>
     </head>
     <body class="template-bg">
-        <?php 
+        <?php
         require_once("header.php");
         ?>
         <div class="template-wrapper template-contents">
@@ -83,54 +83,34 @@
                                     <h3>Reasons</h3>
                                     <div class="nio-reasons-box" id='nio-reason-type'>
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Business Trip</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+
                                         </ul>
                                     </div>
-                                    <input type="text" id="nio-reason-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason" id="nio-reason-to-add-button">ADD</span>
+                                   
+                                        <input type="text" id="nio-reason-to-add"/><br/>
+                              
+
                                 </td>
 
                                 <td>
                                     <h3>Department</h3>
                                     <div class="nio-reasons-box" id="nio-reason-department">
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Development</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+
                                         </ul>
                                     </div>
-                                    <input type="text" id="nio-department-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason" id="nio-department-to-add-button">ADD</span>
+                                    <input type="text" id="nio-department-to-add"/><br
                                 </td>
 
                                 <td>
                                     <h3>Exception Employee</h3>
                                     <div class="nio-reasons-box" id="nio-reason-employee">
                                         <ul>
-                                            <li class="nio-reason">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 75%">Roshan David</td>
-                                                        <td><img src="images/close_graph_black.png"></td>
-                                                    </tr>
-                                                </table>
-                                            </li>
+
                                         </ul>
                                     </div>
                                     <input type="text" id="nio-employee-to-add"/><br/>
-                                    <span class="general-button orange-button add-nio-reason" id="nio-employee-to-add-button">ADD</span>
+
                                 </td>
                             </tr>
                         </table>
@@ -204,12 +184,11 @@
                 </div>
             </div>
         </div><!--END OF CONTENTS-->
-        
+
         <script src="js/jquery-1.10.2.js"></script>
         <script src="js/jquery-ui-1.10.4.js"></script>
         <script src="js/jquery-radiobutton-2.0.js"></script>
         <script src="js/jquery.mCustomScrollbar.js"></script>
-        <script src="js/highcharts.js"></script>
         <script language="javascript" type="text/javascript" src="js/admin.js"></script>
     </body>
 </html>

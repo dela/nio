@@ -29,6 +29,7 @@ $result=  mysqli_query($nio_conn, $query);
          
          $startTime=$rowDetail['nio_start_time'];
          $endTime=$rowDetail['nio_end_time'];
+         if($status!=-2)
          $data[]=array('date'=>$date,'startTime'=>$startTime,'endTime'=>$endTime,'type'=>$type,'status'=>$status);
      }
  }
